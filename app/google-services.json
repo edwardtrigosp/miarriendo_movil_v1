@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "546201962383",
+    "firebase_url": "https://miarriendo-ff0a9-default-rtdb.firebaseio.com",
+    "project_id": "miarriendo-ff0a9",
+    "storage_bucket": "miarriendo-ff0a9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546201962383:android:5344c40549568ccb27edfa",
+        "android_client_info": {
+          "package_name": "com.example.miarriendo_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnmIVoElfWNv7Zn_rWOTcnhJ7Acwf4TB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

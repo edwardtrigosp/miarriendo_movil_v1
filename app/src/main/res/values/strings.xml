@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">miarriendo_v1</string>
+    <string name="brand_name">miarriendo</string>
+    <string name="login_title">Ingresa a tu cuenta</string>
+    <string name="login_subtitle">Accede para gestionar tus arriendos activos</string>
+    <string name="label_email">CORREO ELECTRÓNICO</string>
+    <string name="hint_email">nombre@correo.com</string>
+    <string name="label_password">CONTRASEÑA</string>
+    <string name="hint_password">••••••••</string>
+    <string name="btn_login">Iniciar Sesión</string>
+    <string name="footer_new_user">¿Eres nuevo en la plataforma? </string>
+    <string name="footer_create_account">Crea una cuenta</string>
+    <string name="menu_content_description">Menú</string>
+
+    <!-- Register Screen -->
+    <string name="step_1">1</string>
+    <string name="step_2">2</string>
+    <string name="label_personal_data">Datos personales</string>
+    <string name="label_security">Seguridad</string>
+    <string name="register_title">Regístrate gratis</string>
+    <string name="register_subtitle">Crea tu perfil único de usuario hoy mismo</string>
+    <string name="section_personal_data">DATOS PERSONALES</string>
+    <string name="label_name">NOMBRE</string>
+    <string name="hint_name">Ej. Juan</string>
+    <string name="label_last_name">APELLIDOS</string>
+    <string name="hint_last_name">Ej. Pérez</string>
+    <string name="hint_email_register">tu@email.com</string>
+    <string name="label_phone">TELÉFONO (Opcional)</string>
+    <string name="hint_phone">+57 300 000 0000</string>
+    <string name="btn_next">Siguiente</string>
+    <string name="footer_already_registered">¿Ya posees una cuenta registrada? </string>
+    <string name="footer_login">Inicia sesión</string>
+
+    <!-- Register Step 2 -->
+    <string name="section_security">SEGURIDAD</string>
+    <string name="hint_password_step2">Mínimo 8 caracteres</string>
+    <string name="helper_password">Usa al menos 8 caracteres.</string>
+    <string name="label_confirm_password">CONFIRMAR CONTRASEÑA</string>
+    <string name="hint_confirm_password">Repite tu contraseña</string>
+    <string name="checkbox_terms_cookies">Acepto los términos y la política de cookies</string>
+    <string name="btn_back">Atrás</string>
+    <string name="btn_register">Crear Cuenta</string>
+    <string name="check_content_description">Completado</string>
+
+    <!-- Mobile Menu -->
+    <string name="menu_arriendos">Arriendos</string>
+    <string name="menu_blog">Blog</string>
+    <string name="menu_sobre_nosotros">Sobre Nosotros</string>
+    <string name="btn_registrarse">Registrarse</string>
+    <string name="close_content_description">Cerrar menú</string>
+
+    <!-- Propiedades -->
+    <string name="hint_search">¿Dónde quieres vivir?</string>
+    <string name="filter_tipo">Tipo</string>
+    <string name="filter_precio">Precio</string>
+    <string name="filter_ubicacion">Ubicación</string>
+    <string name="prop_title_1">Apartamento Moderno en El Poblado</string>
+    <string name="prop_loc_1">El Poblado, Medellín</string>
+    <string name="prop_price_1">$2.350.000 / mes</string>
+    <string name="prop_features_1_hab">2 Hab</string>
+    <string name="prop_features_1_bath">2 Baños</string>
+    <string name="prop_features_1_area">65 m²</string>
+    <string name="prop_title_2">Boutique Loft con Terraza</string>
+    <string name="prop_loc_2">Laureles, Medellín</string>
+    <string name="prop_price_2">$1.800.000 / mes</string>
+    <string name="fav_content_description">Favorito</string>
+</resources>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tipografía del diseño (Roboto Flex → Roboto del sistema) -->
+    <style name="TextAppearance.Miarriendo.H1" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.BodyMedium" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.BodyMedium.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.BodySmall" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.BodySmall.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/brand_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.H2" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">32sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.H3" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.BodyLarge.Medium" parent="">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.Caption" parent="">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.Caption.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/brand_primary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.LabelSmall.Medium" parent="">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:lineHeight">16.5sp</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.FieldLabel" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <!-- TextField: campo con etiqueta flotante (componente 40:710) -->
+    <style name="Widget.Miarriendo.TextField" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/field_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/field_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/field_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/field_radius</item>
+        <item name="boxStrokeColor">@color/field_stroke</item>
+        <item name="boxStrokeWidth">@dimen/border_width</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="expandedHintEnabled">false</item>
+        <item name="hintTextAppearance">@style/TextAppearance.Miarriendo.FieldLabel</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="placeholderTextColor">@color/text_placeholder</item>
+        <item name="startIconTint">@color/text_secondary</item>
+        <!-- Estado=Error (208:632): borde, etiqueta y mensaje en state/error, sin ícono -->
+        <item name="boxStrokeErrorColor">@color/state_error</item>
+        <item name="errorTextColor">@color/state_error</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="errorTextAppearance">@style/TextAppearance.Miarriendo.Caption</item>
+    </style>
+
+    <!-- Alert (component set 208:658): la variante define fondo y color de ícono/texto -->
+    <style name="Widget.Miarriendo.Alert" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/bg_alert</item>
+        <item name="android:paddingHorizontal">@dimen/spacing_md</item>
+        <item name="android:paddingVertical">@dimen/spacing_sm</item>
+    </style>
+
+    <!-- TextField con menú desplegable (Duración, Fecha de disponibilidad) -->
+    <style name="Widget.Miarriendo.TextField.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxCornerRadiusTopStart">@dimen/field_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/field_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/field_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/field_radius</item>
+        <item name="boxStrokeColor">@color/field_stroke</item>
+        <item name="boxStrokeWidth">@dimen/border_width</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="expandedHintEnabled">false</item>
+        <item name="hintTextAppearance">@style/TextAppearance.Miarriendo.FieldLabel</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="startIconTint">@color/text_secondary</item>
+        <item name="endIconDrawable">@drawable/ic_arrow_drop_down</item>
+        <item name="endIconTint">@color/text_secondary</item>
+    </style>
+
+    <!-- TextArea (componente 52:1207): etiqueta flotante, alto de 120dp -->
+    <style name="Widget.Miarriendo.TextArea.EditText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">120dp</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:inputType">textMultiLine|textCapSentences</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Chip (componente 40:898): fondo brand/container, check al seleccionarse -->
+    <style name="Widget.Miarriendo.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/brand_container</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipCornerRadius">8dp</item>
+        <item name="chipMinHeight">32dp</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipEndPadding">12dp</item>
+        <item name="textStartPadding">0dp</item>
+        <item name="textEndPadding">0dp</item>
+        <item name="iconStartPadding">0dp</item>
+        <item name="iconEndPadding">8dp</item>
+        <item name="chipIconSize">18dp</item>
+        <item name="checkedIcon">@drawable/ic_check</item>
+        <item name="checkedIconTint">@color/brand_on_container</item>
+        <item name="checkedIconVisible">true</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+        <item name="android:textColor">@color/brand_on_container</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.Chip</item>
+    </style>
+
+    <!-- Opción de filtro (Inquilino / Filtros de búsqueda): borde border/subtle; seleccionada en brand/container con borde brand/primary -->
+    <style name="Widget.Miarriendo.Chip.Filtro">
+        <item name="chipBackgroundColor">@color/chip_filter_background</item>
+        <item name="chipStrokeColor">@color/chip_filter_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+    </style>
+
+    <!-- TopAppBar (40:977): botón atrás + título H3, alto 64 -->
+    <style name="Widget.Miarriendo.TopAppBar" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+
+    <!-- IconButton (43:1524): círculo de 40 con ícono de 24 en text/secondary -->
+    <style name="Widget.Miarriendo.IconButton" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:tint">@color/text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.Chip" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.007</item>
+        <item name="android:textColor">@color/brand_on_container</item>
+    </style>
+
+    <style name="Widget.Miarriendo.ChipGroup" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="chipSpacingHorizontal">@dimen/spacing_xs</item>
+        <item name="chipSpacingVertical">@dimen/spacing_xs</item>
+    </style>
+
+    <style name="Widget.Miarriendo.TextField.EditText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- PrimaryButton (componente 40:278) -->
+    <style name="Widget.Miarriendo.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/surface_white</item>
+        <item name="backgroundTint">@color/brand_primary</item>
+        <item name="cornerRadius">@dimen/button_radius</item>
+    </style>
+
+    <style name="ShapeAppearance.Miarriendo.Rounded8" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Miarriendo.Rounded12" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Miarriendo.Rounded16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- Avatar (component set 223:824), Tamaño=Pequeño: iniciales sobre brand/container -->
+    <style name="Widget.Miarriendo.Avatar" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_circle_brand_container</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.BodyMedium.Medium</item>
+        <item name="android:textColor">@color/brand_on_container</item>
+    </style>
+
+    <!-- Círculo de 40 con ícono de 20 (PaymentList y MaintenanceItem) -->
+    <style name="Widget.Miarriendo.IconCircle" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/bg_circle_brand_container</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <!-- Título de sección en el detalle (Inquilino, Pagos, Solicitudes) -->
+    <style name="Widget.Miarriendo.SectionTitle" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_lg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.BodyMedium.Medium</item>
+    </style>
+
+    <!-- Texto de sección vacía en el detalle -->
+    <style name="Widget.Miarriendo.SectionEmpty" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_sm</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.BodySmall</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- StatusChip (component set 189:455): la variante define el fondo y el color del texto -->
+    <style name="Widget.Miarriendo.StatusChip" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:paddingHorizontal">@dimen/spacing_xs</item>
+        <item name="android:paddingVertical">@dimen/spacing_micro</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.LabelSmall.Medium</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Primario">
+        <item name="android:backgroundTint">@color/status_primary</item>
+        <item name="android:textColor">@color/status_on_primary</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Exito">
+        <item name="android:backgroundTint">@color/status_success</item>
+        <item name="android:textColor">@color/status_on_success</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Advertencia">
+        <item name="android:backgroundTint">@color/status_warning</item>
+        <item name="android:textColor">@color/status_on_warning</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Error">
+        <item name="android:backgroundTint">@color/status_error</item>
+        <item name="android:textColor">@color/status_on_error</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Info">
+        <item name="android:backgroundTint">@color/status_info</item>
+        <item name="android:textColor">@color/status_on_info</item>
+    </style>
+
+    <style name="Widget.Miarriendo.StatusChip.Neutral">
+        <item name="android:backgroundTint">@color/status_neutral</item>
+        <item name="android:textColor">@color/status_on_neutral</item>
+    </style>
+
+    <!-- SecondaryButton (component set 192:428): botón con borde. Tono Default y Destructivo -->
+    <style name="Widget.Miarriendo.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">@dimen/spacing_lg</item>
+        <item name="android:paddingEnd">@dimen/spacing_lg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/brand_primary</item>
+        <item name="strokeColor">@color/border_default</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">@dimen/button_radius</item>
+        <item name="iconSize">20dp</item>
+        <item name="iconPadding">@dimen/spacing_xs</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/brand_primary</item>
+    </style>
+
+    <style name="Widget.Miarriendo.Button.Secondary.Destructivo">
+        <item name="android:textColor">@color/state_error</item>
+        <item name="strokeColor">@color/state_error</item>
+        <item name="iconTint">@color/state_error</item>
+        <item name="rippleColor">@color/state_error</item>
+    </style>
+
+    <!-- ListItem (43:1424) dentro de MenuSection (52:1239) -->
+    <style name="Widget.Miarriendo.ListItem" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/spacing_md</item>
+        <item name="android:paddingVertical">@dimen/spacing_sm</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <!-- Switch (component set 201:578). Deshabilitado: Material aplica el 38% automáticamente -->
+    <style name="Widget.Miarriendo.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="trackTint">@color/switch_track</item>
+        <item name="thumbTint">@color/switch_thumb</item>
+        <item name="trackDecorationTint">@color/switch_track_border</item>
+    </style>
+
+    <!-- Columna de ProfileStatsCard (43:1738) -->
+    <style name="Widget.Miarriendo.StatColumn" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingVertical">14dp</item>
+    </style>
+
+    <style name="TextAppearance.Miarriendo.StatLabel" parent="TextAppearance.Miarriendo.Caption">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <!-- Opción de rol (Option - Tenant / Owner) -->
+    <style name="Widget.Miarriendo.RoleOption" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">57dp</item>
+        <item name="android:background">@drawable/bg_role_option</item>
+        <item name="android:button">@drawable/radio_role</item>
+        <item name="android:paddingStart">@dimen/spacing_sm</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.BodyMedium.Medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+</resources>

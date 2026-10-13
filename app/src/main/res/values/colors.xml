@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Dashboard Purple Theme -->
+    <color name="primary_purple_m3">#7C3AED</color>
+    <color name="secondary_purple_m3">#A855F7</color>
+    <color name="surface_lavender">#E9E3F5</color>
+    <color name="card_lavender_bg">#F3EFFB</color>
+    <color name="lavender_soft">#E1D9FF</color>
 
-    <!-- Branding Colors -->
-    <color name="primary_purple">#7C3AED</color>
-    <color name="background_light">#F9F7FF</color>
-    <color name="text_gray">#6B7280</color>
-    <color name="text_dark">#111827</color>
-    <color name="border_gray">#E5E7EB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="divider_soft">#E2E8F0</color>
+
+    <!-- Material Design 3 Complete Palette -->
+    <color name="md_theme_primary">#7C3AED</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <!-- Los roles de Material apuntan a los tokens de Figma (colors_tokens.xml) para que no se desalineen -->
+    <color name="md_theme_primaryContainer">@color/brand_container</color>
+    <color name="md_theme_onPrimaryContainer">@color/brand_on_container</color>
+
+    <color name="md_theme_secondary">#625B71</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#E8DEF8</color>
+    <color name="md_theme_onSecondaryContainer">#1D192B</color>
+
+    <color name="md_theme_tertiary">#7D5260</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#FFD8E4</color>
+    <color name="md_theme_onTertiaryContainer">#31111D</color>
+
+    <color name="md_theme_error">@color/state_error</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#410002</color>
+
+    <!-- Fondo de ventana y superficies de Material en blanco (igual que surface_default) -->
+    <color name="md_theme_background">#FFFFFF</color>
+    <color name="md_theme_onBackground">@color/text_primary</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_onSurface">@color/text_primary</color>
+    <color name="md_theme_surfaceVariant">#E7E0EC</color>
+    <color name="md_theme_onSurfaceVariant">@color/text_secondary</color>
+    <color name="md_theme_outline">@color/border_default</color>
 </resources>

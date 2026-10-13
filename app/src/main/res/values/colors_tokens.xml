@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tokens del diseño "Design-miarriendo-v2" (Figma) -->
+    <color name="surface_default">@color/surface_white</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="text_primary">#1D1B20</color>
+    <color name="text_secondary">#49454F</color>
+    <color name="text_terms">#414941</color>
+    <color name="border_default">#79747E</color>
+    <color name="border_subtle">#CAC4D0</color>
+    <color name="brand_primary">#7C3AED</color>
+    <color name="brand_container">#EDE9FE</color>
+    <color name="brand_on_container">#2E1065</color>
+    <!-- Jerarquía de superficies (Figma: surface/*) -->
+    <!-- surface_default: fondo de pantalla · surface_card: tarjetas y listas · surface_high: pistas de controles -->
+    <color name="surface_high">@color/purple_100</color>
+    <color name="surface_navigation">#F3EDF7</color>
+    <color name="surface_card">@color/surface_white</color>
+    <!-- Borde de tarjetas y divisores internos (Figma: border/card) -->
+    <color name="border_card">@color/purple_100</color>
+    <!-- Fondo del mapa mientras cargan los mosaicos (Figma: Surface / Background) -->
+    <color name="surface_background">#FAF8FF</color>
+    <!-- Acciones destructivas (Figma: state/error) -->
+    <color name="state_error">#BA1A1A</color>
+
+    <!-- Paleta principal (Miarriendo / Primitives · purple-*) -->
+    <color name="purple_050">#F5F3FF</color>
+    <color name="purple_100">#EDE9FE</color>
+    <color name="purple_200">#DDD6FE</color>
+    <color name="purple_300">#C4B5FD</color>
+    <color name="purple_400">#A78BFA</color>
+    <color name="purple_500">#7C3AED</color>
+    <color name="purple_600">#6D28D9</color>
+    <color name="purple_700">#5B21B6</color>
+    <color name="purple_800">#4C1D95</color>
+    <color name="purple_900">#2E1065</color>
+
+    <!-- Estados (Miarriendo / Semantic · status/*), usados por StatusChip -->
+    <color name="status_primary">@color/purple_100</color>
+    <color name="status_on_primary">@color/purple_700</color>
+    <color name="status_success">#D1F3EE</color>
+    <color name="status_on_success">#0F766E</color>
+    <color name="status_warning">#FEF3C7</color>
+    <color name="status_on_warning">#B45309</color>
+    <color name="status_error">#FFE4E6</color>
+    <color name="status_on_error">#BE123C</color>
+    <color name="status_info">#E0F2FE</color>
+    <color name="status_on_info">#0369A1</color>
+    <color name="status_neutral">#E7E0EC</color>
+    <color name="status_on_neutral">@color/text_secondary</color>
+    <!-- text/placeholder: sugerencia en campos vacíos (neutral-500, 4,6:1 sobre blanco) -->
+    <color name="text_placeholder">#79747E</color>
+    <!-- brand/accent-soft: borde punteado de "Agregar fotos" -->
+    <color name="brand_accent_soft">@color/purple_200</color>
+</resources>

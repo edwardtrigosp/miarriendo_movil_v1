@@ -15,6 +15,10 @@ interface ModuloInicio {
     /** Registra los listeners de Firebase (onStart). */
     void iniciar(ContextoInicio ctx);
 
+    /** Cambiaron los datos base pero no el plan: el módulo se vuelve a pintar si los usa. */
+    default void actualizar(ContextoInicio ctx) {
+    }
+
     /** Quita los listeners (onStop). */
     void detener();
 }

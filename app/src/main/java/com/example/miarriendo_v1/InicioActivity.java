@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,20 @@ public class InicioActivity extends AppCompatActivity {
     private CargaDatosInicio carga;
     private final List<ModuloInicio> activos = new ArrayList<>();
     private List<PlanDeInicio.Modulo> planActual;
+
+    /** Catálogo compartido por los módulos; se vuelve a pedir cada vez que la pantalla regresa. */
+    private List<Propiedad> catalogo;
+    private final List<Catalogo.Resultado> esperandoCatalogo = new ArrayList<>();
+    private boolean cargandoCatalogo;
+
+    /** Filtros → Resultados con los filtros elegidos. */
+    private final ActivityResultLauncher<Intent> elegirFiltros =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), r -> {
+                if (r.getResultCode() == RESULT_OK && r.getData() != null) {
+                    startActivity(new Intent(this, ResultadosActivity.class).putExtra(FiltrosActivity.EXTRA_FILTROS,
+                            r.getData().getSerializableExtra(FiltrosActivity.EXTRA_FILTROS)));
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +101,16 @@ public class InicioActivity extends AppCompatActivity {
     private void armar(DatosInicio datos) {
         loading.setVisibility(View.GONE);
         List<PlanDeInicio.Modulo> plan = PlanDeInicio.modulos(datos);
+        ContextoInicio ctx = new ContextoInicio(this, uid, datos);
         if (plan.equals(planActual)) {
+            for (ModuloInicio m : activos) {
+                m.actualizar(ctx);
+            }
             return;
         }
         planActual = plan;
         detenerModulos();
         contenedor.removeAllViews();
-        ContextoInicio ctx = new ContextoInicio(this, uid, datos);
         for (PlanDeInicio.Modulo tipo : plan) {
             ModuloInicio modulo = crearModulo(tipo);
             if (modulo == null) {
@@ -105,7 +124,54 @@ public class InicioActivity extends AppCompatActivity {
 
     /** Fábrica de módulos. Los que aún no existen devuelven null y no se dibujan. */
     private ModuloInicio crearModulo(PlanDeInicio.Modulo tipo) {
-        return null;
+        switch (tipo) {
+            case ENCABEZADO:
+                return new ModuloEncabezado();
+            case TU_SOLICITUD:
+                return new ModuloTuSolicitud();
+            case ATAJOS:
+                return new ModuloAtajos();
+            case PARA_TI:
+                return new ModuloParaTi();
+            default:
+                return null;
+        }
+    }
+
+    void elegirFiltros(FiltrosBusqueda filtros) {
+        elegirFiltros.launch(new Intent(this, FiltrosActivity.class).putExtra(FiltrosActivity.EXTRA_FILTROS, filtros));
+    }
+
+    void catalogo(Catalogo.Resultado resultado) {
+        if (catalogo != null) {
+            resultado.listo(catalogo);
+            return;
+        }
+        esperandoCatalogo.add(resultado);
+        if (cargandoCatalogo) {
+            return;
+        }
+        cargandoCatalogo = true;
+        Catalogo.cargar(new Catalogo.Resultado() {
+            @Override
+            public void listo(List<Propiedad> disponibles) {
+                cargandoCatalogo = false;
+                catalogo = disponibles;
+                for (Catalogo.Resultado r : new ArrayList<>(esperandoCatalogo)) {
+                    r.listo(disponibles);
+                }
+                esperandoCatalogo.clear();
+            }
+
+            @Override
+            public void error(Exception e) {
+                cargandoCatalogo = false;
+                for (Catalogo.Resultado r : new ArrayList<>(esperandoCatalogo)) {
+                    r.error(e);
+                }
+                esperandoCatalogo.clear();
+            }
+        });
     }
 
     private void mostrarError(Exception e) {
@@ -128,5 +194,8 @@ public class InicioActivity extends AppCompatActivity {
         }
         detenerModulos();
         planActual = null;
+        // Al volver se recarga, por si se publicó o se arrendó alguna propiedad.
+        catalogo = null;
+        esperandoCatalogo.clear();
     }
 }

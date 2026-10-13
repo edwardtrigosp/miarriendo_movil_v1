@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inicio unificado · Módulo / Encabezado (446:3435) -->
+    <string name="home_greeting">Hola, %1$s</string>
+    <string name="home_greeting_generic">Hola</string>
+    <string name="home_subtitle_search">Encuentra tu próximo hogar</string>
+    <string name="home_tip_how_it_works">Así funciona: solicitas, el propietario acepta y pagas con Nequi</string>
+    <plurals name="home_tip_new_this_week">
+        <item quantity="one">%d arriendo nuevo esta semana</item>
+        <item quantity="other">%d arriendos nuevos esta semana</item>
+    </plurals>
+
+    <!-- Módulo / Atajos (446:3523) -->
+    <string name="shortcut_map">Mapa</string>
+    <string name="shortcut_filters">Filtros</string>
+    <string name="shortcut_requests">Solicitudes</string>
+    <string name="shortcut_profile">Mi perfil</string>
+
+    <!-- Módulo / Tu solicitud (446:3671) y PasosSolicitud (441:3080) -->
+    <string name="your_request_title">Tu solicitud</string>
+    <string name="your_request_detail">%1$s · %2$s · Propietario: %3$s</string>
+    <string name="your_request_detail_no_owner">%1$s · %2$s</string>
+    <string name="your_request_status_review">En revisión</string>
+    <string name="your_request_status_accepted">Aceptada</string>
+    <string name="your_request_status_rejected">No aceptada</string>
+    <string name="your_request_review_text">%1$s está revisando tu solicitud. Aquí verás su respuesta.</string>
+    <string name="your_request_review_text_generic">El propietario está revisando tu solicitud. Aquí verás su respuesta.</string>
+    <string name="your_request_accepted_text">%1$s aceptó tu solicitud. Ya puedes ver tu arriendo.</string>
+    <string name="your_request_accepted_text_generic">El propietario aceptó tu solicitud. Ya puedes ver tu arriendo.</string>
+    <string name="your_request_rejected_text">%1$s no aceptó tu solicitud para %2$s. Estos hogares se parecen a lo que buscabas.</string>
+    <string name="your_request_rejected_text_generic">El propietario no aceptó tu solicitud. Estos hogares se parecen a lo que buscabas.</string>
+    <string name="your_request_see">Ver mi solicitud</string>
+    <string name="your_request_see_rental">Ver mi arriendo</string>
+    <string name="your_request_see_similar">Ver hogares similares</string>
+    <string name="step_sent">Enviada</string>
+    <string name="step_in_review">En revisión</string>
+    <string name="step_reviewed">Revisada</string>
+    <string name="step_answer">Respuesta</string>
+
+    <!-- Módulo / Para ti (446:3634) -->
+    <string name="for_you_keep_looking">Sigue buscando</string>
+    <string name="for_you_similar">Hogares parecidos</string>
+</resources>

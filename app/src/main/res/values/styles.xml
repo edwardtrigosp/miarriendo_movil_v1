@@ -385,4 +385,35 @@
         <item name="android:textAppearance">@style/TextAppearance.Miarriendo.BodyMedium.Medium</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
+
+    <!-- PasosSolicitud (441:3080): paso de 84 con círculo de 24 y etiqueta Caption / Medium -->
+    <style name="Widget.Miarriendo.PasoSolicitud" parent="">
+        <item name="android:layout_width">84dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.Miarriendo.PasoSolicitud.Circulo" parent="">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <style name="Widget.Miarriendo.PasoSolicitud.Texto" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.Caption.Medium</item>
+    </style>
+
+    <style name="Widget.Miarriendo.PasoSolicitud.Conector" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginTop">11dp</item>
+    </style>
 </resources>

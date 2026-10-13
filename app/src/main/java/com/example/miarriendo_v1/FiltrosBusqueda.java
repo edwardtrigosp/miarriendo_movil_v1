@@ -46,6 +46,16 @@ public class FiltrosBusqueda implements Serializable {
         return habitaciones == 0 || p.habitaciones == habitaciones;
     }
 
+    /** "Hogares parecidos" a una solicitud no aceptada: precio entre 70 % y 130 % del que pidió. */
+    static FiltrosBusqueda parecidosA(long precio) {
+        FiltrosBusqueda f = new FiltrosBusqueda();
+        if (precio > 0) {
+            f.precioMin = precio * 7 / 10;
+            f.precioMax = precio * 13 / 10;
+        }
+        return f;
+    }
+
     List<Propiedad> aplicar(List<Propiedad> propiedades) {
         List<Propiedad> resultado = new ArrayList<>();
         for (Propiedad p : propiedades) {

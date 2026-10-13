@@ -51,7 +51,7 @@ final class PlanDeInicio {
                 if (solicitudEnviada) {
                     m.add(Modulo.TU_SOLICITUD);
                 }
-                m.add(Modulo.BUSCAR_HOGAR);
+                // Sin Buscar hogar: el buscador va en el Encabezado y los resultados en Para ti.
                 m.add(Modulo.ATAJOS);
                 m.add(Modulo.PARA_TI);
                 break;

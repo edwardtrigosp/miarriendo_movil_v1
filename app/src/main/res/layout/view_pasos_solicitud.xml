@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PasosSolicitud (441:3080): tres pasos de 84 con círculo de 24 unidos por conectores de 2.
+     Los colores e íconos de cada estado los pone PasosSolicitudView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:orientation="horizontal">
+
+    <LinearLayout style="@style/Widget.Miarriendo.PasoSolicitud">
+
+        <ImageView
+            android:id="@+id/paso1"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Circulo" />
+
+        <TextView
+            android:id="@+id/tv_paso1"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Texto"
+            android:text="@string/step_sent" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/conector1"
+        style="@style/Widget.Miarriendo.PasoSolicitud.Conector" />
+
+    <LinearLayout style="@style/Widget.Miarriendo.PasoSolicitud">
+
+        <ImageView
+            android:id="@+id/paso2"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Circulo" />
+
+        <TextView
+            android:id="@+id/tv_paso2"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Texto"
+            android:text="@string/step_in_review" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/conector2"
+        style="@style/Widget.Miarriendo.PasoSolicitud.Conector" />
+
+    <LinearLayout style="@style/Widget.Miarriendo.PasoSolicitud">
+
+        <ImageView
+            android:id="@+id/paso3"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Circulo" />
+
+        <TextView
+            android:id="@+id/tv_paso3"
+            style="@style/Widget.Miarriendo.PasoSolicitud.Texto"
+            android:text="@string/step_answer" />
+    </LinearLayout>
+</LinearLayout>

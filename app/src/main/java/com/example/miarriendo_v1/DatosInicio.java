@@ -41,9 +41,34 @@ final class DatosInicio {
         return PlanDeInicio.Perfil.DESCONOCIDO;
     }
 
-    /** El inquilino tiene alguna solicitud enviada (cuál se muestra lo decide el módulo Tu solicitud). */
+    /** Una solicitud ya respondida se sigue mostrando en el inicio durante este tiempo desde que se envió. */
+    static final long VIGENCIA_RESPONDIDA_MS = 30L * 24 * 60 * 60 * 1000;
+
+    /** El inquilino tiene una solicitud que mostrar en "Tu solicitud". */
     boolean tieneSolicitudEnviada() {
-        return esInquilino() && !solicitudes.isEmpty();
+        return solicitudParaMostrar(System.currentTimeMillis()) != null;
+    }
+
+    /**
+     * La solicitud del módulo "Tu solicitud": la pendiente más reciente; si no hay, la última respondida
+     * enviada hace menos de {@link #VIGENCIA_RESPONDIDA_MS} (no se guarda cuándo se respondió). Null si ninguna.
+     */
+    SolicitudArriendo solicitudParaMostrar(long ahora) {
+        if (!esInquilino()) {
+            return null;
+        }
+        SolicitudArriendo pendiente = null, respondida = null;
+        for (SolicitudArriendo s : solicitudes) {
+            if (s.pendiente()) {
+                if (pendiente == null || s.creadaEn > pendiente.creadaEn) {
+                    pendiente = s;
+                }
+            } else if (ahora - s.creadaEn < VIGENCIA_RESPONDIDA_MS
+                    && (respondida == null || s.creadaEn > respondida.creadaEn)) {
+                respondida = s;
+            }
+        }
+        return pendiente != null ? pendiente : respondida;
     }
 
     /** El propietario tiene al menos una solicitud por responder. */

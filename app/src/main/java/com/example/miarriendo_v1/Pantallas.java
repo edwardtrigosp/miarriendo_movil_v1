@@ -62,6 +62,9 @@ final class Pantallas {
                     String rol = snapshot.getValue(String.class);
                     Class<?> destino = RegisterRoleActivity.ROL_PROPIETARIO.equals(rol) ? PropietarioInicioActivity.class
                             : RegisterRoleActivity.ROL_INQUILINO.equals(rol) ? InquilinoInicioActivity.class : null;
+                    if (destino != null && BuildConfig.INICIO_UNIFICADO) {
+                        destino = InicioActivity.class;
+                    }
                     if (destino == null) {
                         sinInicio.run();
                         return;

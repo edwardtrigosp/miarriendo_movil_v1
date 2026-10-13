@@ -63,6 +63,9 @@
             android:name=".PropiedadDetalleActivity"
             android:exported="false" />
         <activity
+            android:name=".InicioActivity"
+            android:exported="false" />
+        <activity
             android:name=".InquilinoInicioActivity"
             android:exported="false" />
         <activity

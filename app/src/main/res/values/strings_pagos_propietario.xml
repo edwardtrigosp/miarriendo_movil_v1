@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Propietario · Pagos por inmueble -->
+    <string name="owner_pay_title">Pagos por inmueble</string>
+    <string name="owner_pay_context">%1$s · %2$s</string>
+    <string name="owner_pay_no_tenant">Esta propiedad todavía no tiene inquilino.</string>
+    <string name="owner_pay_label_monthly">Arriendo mensual · COP</string>
+    <string name="owner_pay_label_paid">Pagado por el inquilino · COP</string>
+    <string name="owner_pay_label_transferred">Transferido a tu cuenta · COP</string>
+    <string name="owner_pay_chip_unpaid">No ha pagado</string>
+    <string name="owner_pay_chip_transfer">Por transferir</string>
+    <string name="owner_pay_chip_transferred">Transferido</string>
+    <string name="owner_pay_chip_held">Retenido</string>
+    <string name="owner_pay_row_period">Periodo</string>
+    <string name="owner_pay_row_due">Vence</string>
+    <string name="owner_pay_row_overdue">Venció el</string>
+    <string name="owner_pay_row_pending">Saldo pendiente</string>
+    <string name="owner_pay_row_paid">Pagado</string>
+    <string name="owner_pay_row_transfer">Transferencia</string>
+    <string name="owner_pay_row_transfer_next">En el próximo lote</string>
+    <string name="owner_pay_row_transfer_missing">Falta tu cuenta</string>
+    <string name="owner_pay_row_transferred_on">Transferido el</string>
+    <string name="owner_pay_row_account">Cuenta</string>
+    <string name="owner_pay_alert_transfer">El pago lo recibe miarriendo y se transfiere a tu cuenta en el próximo lote.</string>
+    <string name="owner_pay_alert_no_account">Registra tu cuenta bancaria para recibir este pago.</string>
+    <string name="owner_pay_register_account">Registrar cuenta</string>
+    <string name="owner_pay_see_receipt">Ver comprobante</string>
+    <string name="owner_pay_see_installments">Ver abonos</string>
+    <string name="owner_pay_see_history">Ver historial de pagos</string>
+    <string name="owner_pay_detail_button">Ver pagos del inmueble</string>
+</resources>

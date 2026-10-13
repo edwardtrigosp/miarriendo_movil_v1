@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: TipCard (instancias 127:1798 y 132:1267). El texto se asigna desde el código. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_tip_card"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_sm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_tip_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tip_title"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium" />
+
+        <ImageButton
+            android:id="@+id/btn_tip_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="-6dp"
+            android:layout_marginBottom="-4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/tip_close"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_close" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tip_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+        android:textColor="@color/text_secondary"
+        tools:text="@string/tip_photos" />
+</LinearLayout>

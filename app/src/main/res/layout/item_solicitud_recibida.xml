@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solicitud de arriendo que recibe el propietario: quién la envía, su mensaje, la propiedad y las acciones. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_border"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+        tools:text="Hace 2 días" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_initials"
+                style="@style/Widget.Miarriendo.Avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:importantForAccessibility="no"
+                tools:text="ML" />
+
+            <TextView
+                android:id="@+id/tv_tenant_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                tools:text="María López" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+            android:textColor="@color/text_secondary"
+            tools:text="Hola, me interesa el apartamento. Somos 3 personas." />
+
+        <TextView
+            android:id="@+id/tv_property_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+            android:textColor="@color/text_primary"
+            tools:text="Apartamento Centro" />
+
+        <TextView
+            android:id="@+id/tv_property_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+            tools:text="Cra. 9 #16-40, Valledupar" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+            tools:text="$450.000 COP/mes" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reject"
+                style="@style/Widget.Miarriendo.Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/spacing_xs"
+                android:paddingEnd="@dimen/spacing_xs"
+                android:text="@string/received_reject" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_accept"
+                style="@style/Widget.Miarriendo.Button.Primary"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/spacing_xs"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/spacing_xs"
+                android:paddingEnd="@dimen/spacing_xs"
+                android:text="@string/received_accept" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

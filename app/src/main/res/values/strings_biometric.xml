@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Diálogo de huella del sistema -->
+    <string name="bio_prompt_title">Ingresa a Miarriendo</string>
+    <string name="bio_prompt_subtitle">Usa tu huella para continuar</string>
+    <string name="bio_prompt_enable_title">Activar ingreso con huella</string>
+    <string name="bio_prompt_enable_subtitle">Confirma tu huella para activarlo</string>
+    <string name="bio_prompt_cancel">Usar contraseña</string>
+    <string name="bio_enabled">Ingreso con huella activado</string>
+    <string name="bio_invalidated">Tus huellas cambiaron. Ingresa con tu contraseña y vuelve a activarlo en tu perfil.</string>
+    <string name="bio_error">No se pudo usar la huella: %1$s</string>
+
+    <!-- Figma: Propietario / Ingreso con huella (202:561, 202:595, 204:619) -->
+    <string name="bio_screen_title">Ingreso con huella</string>
+    <string name="bio_screen_subtitle">Entra a tu cuenta con tu huella, sin escribir la contraseña.</string>
+    <string name="bio_toggle_label">Usar mi huella</string>
+    <string name="bio_state_off">Desactivado</string>
+    <string name="bio_state_on">Activado en este teléfono</string>
+    <string name="bio_state_not_enrolled">Registra una huella en los ajustes del teléfono para usarla aquí.</string>
+    <string name="bio_state_no_hardware">Este teléfono no tiene lector de huella.</string>
+    <string name="bio_open_settings">Abrir ajustes del teléfono</string>
+    <string name="bio_tip_title">Tu huella está segura</string>
+    <string name="bio_tip_text">Tu huella nunca sale de este teléfono. Miarriendo solo guarda una llave cifrada que se desbloquea con ella. Si agregas o borras huellas en el teléfono, tendrás que activarlo de nuevo.</string>
+</resources>

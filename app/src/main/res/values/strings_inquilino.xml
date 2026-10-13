@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inquilino / Inicio · Explorar arriendos (315:6469) -->
+    <string name="tenant_greeting">Hola %1$s!</string>
+    <string name="tenant_greeting_generic">Hola!</string>
+    <string name="tenant_my_requests">Mis solicitudes</string>
+    <string name="tenant_search_label">Ciudad o barrio</string>
+    <string name="tenant_filters">Filtros de búsqueda</string>
+    <string name="tenant_for_you">Para ti</string>
+    <plurals name="tenant_available">
+        <item quantity="one">%d disponible</item>
+        <item quantity="other">%d disponibles</item>
+    </plurals>
+    <string name="tenant_empty">Por ahora no hay propiedades disponibles. Vuelve pronto.</string>
+    <string name="tenant_load_error">No se pudieron cargar las propiedades: %1$s</string>
+
+    <!-- Datos de la tarjeta de propiedad -->
+    <string name="stat_bedrooms_short">%1$d hab.</string>
+    <plurals name="stat_bathrooms">
+        <item quantity="one">%d baño</item>
+        <item quantity="other">%d baños</item>
+    </plurals>
+    <plurals name="stat_bedrooms_long">
+        <item quantity="one">%d habitación</item>
+        <item quantity="other">%d habitaciones</item>
+    </plurals>
+    <string name="stat_area">%1$s m²</string>
+
+    <!-- Inquilino / Filtros de búsqueda (315:6599) -->
+    <string name="filters_heading">Un hogar a tu medida</string>
+    <string name="filters_subtitle">Ajusta lo que necesitas para tu búsqueda.</string>
+    <string name="filters_city">Ciudad</string>
+    <string name="filters_all_cities">Todas las ciudades</string>
+    <string name="filters_type">Tipo de propiedad</string>
+    <string name="filters_type_all">Todos</string>
+    <string name="filters_budget">Precio mensual en COP</string>
+    <string name="filters_from">Desde</string>
+    <string name="filters_to">Hasta</string>
+    <string name="filters_bedrooms">Habitaciones</string>
+    <string name="filters_bedrooms_all">Todas</string>
+    <string name="filters_bedrooms_three">3+</string>
+    <string name="filters_note">Solo se muestran propiedades disponibles para solicitar arriendo.</string>
+    <plurals name="filters_see">
+        <item quantity="one">Ver %d propiedad</item>
+        <item quantity="other">Ver %d propiedades</item>
+    </plurals>
+    <string name="filters_reset">Restablecer filtros</string>
+
+    <!-- Inquilino / Resultados con filtros (315:6696) -->
+    <string name="results_title">Resultados de búsqueda</string>
+    <plurals name="results_count">
+        <item quantity="one">%d propiedad</item>
+        <item quantity="other">%d propiedades</item>
+    </plurals>
+    <string name="results_order">Más relevantes</string>
+    <string name="results_end">Estas son todas las coincidencias de tu búsqueda.</string>
+    <string name="results_empty">No encontramos propiedades con estos filtros. Prueba ampliando tu búsqueda.</string>
+    <string name="filter_chip_bedrooms">%1$s hab.</string>
+    <string name="filter_chip_price_range">$%1$s–$%2$s</string>
+    <string name="filter_chip_price_from">Desde $%1$s</string>
+    <string name="filter_chip_price_to">Hasta $%1$s</string>
+
+    <!-- Inquilino / Detalle (315:6840) -->
+    <string name="tenant_detail_title">Detalle de la propiedad</string>
+    <string name="tenant_detail_photo_counter">%1$d de %2$d</string>
+    <string name="tenant_detail_photo">Foto %1$d de la propiedad</string>
+    <string name="tenant_detail_about">Sobre este hogar</string>
+    <string name="tenant_detail_owner">%1$s · Propietario</string>
+    <string name="tenant_detail_owner_generic">Propietario</string>
+    <string name="tenant_detail_owner_help">Recibirá tu solicitud de arriendo</string>
+    <string name="tenant_detail_note">Tu solicitud será revisada por el propietario.</string>
+    <string name="tenant_detail_note_sent">Ya enviaste una solicitud para esta propiedad.</string>
+    <string name="tenant_detail_request">Solicitar arriendo</string>
+    <string name="tenant_detail_see_request">Ver mi solicitud</string>
+
+    <!-- Inquilino / Solicitar arriendo (315:6896) -->
+    <string name="request_title">Solicitar arriendo</string>
+    <string name="request_step_data">1. Tus datos</string>
+    <string name="request_step_review">2. Revisar</string>
+    <string name="request_message">Mensaje al propietario</string>
+    <string name="request_message_default">Hola, me interesa %1$s. ¿Podemos coordinar una visita?</string>
+    <string name="request_message_required">Escribe un mensaje para el propietario</string>
+    <string name="request_your_message">Tu mensaje</string>
+    <string name="request_privacy">Al enviar la solicitud, compartirás los datos de tu cuenta y tu mensaje con %1$s.</string>
+    <string name="request_privacy_generic">Al enviar la solicitud, compartirás los datos de tu cuenta y tu mensaje con el propietario.</string>
+    <string name="request_review">Revisar solicitud</string>
+    <string name="request_send">Enviar solicitud</string>
+    <string name="request_sending">Enviando…</string>
+    <string name="request_error">No se pudo enviar la solicitud: %1$s</string>
+
+    <!-- Inquilino / Solicitud enviada (315:7044) -->
+    <string name="sent_title">Solicitud enviada</string>
+    <string name="sent_message">¡Tu solicitud fue enviada!</string>
+    <string name="sent_next_title">¿Qué sigue?</string>
+    <string name="sent_next_text">El propietario revisará tu solicitud y podrá contactarte para coordinar una visita.</string>
+    <string name="sent_see_requests">Ver mis solicitudes</string>
+    <string name="sent_keep_exploring">Seguir explorando</string>
+
+    <!-- Inquilino / Mis solicitudes (315:7097) -->
+    <string name="my_requests_title">Mis solicitudes</string>
+    <string name="my_requests_heading">Tus solicitudes de arriendo</string>
+    <string name="my_requests_subtitle">Aquí puedes consultar cómo va cada solicitud.</string>
+    <plurals name="my_requests_count">
+        <item quantity="one">%d solicitud</item>
+        <item quantity="other">%d solicitudes</item>
+    </plurals>
+    <plurals name="my_requests_pending">
+        <item quantity="one">%d pendiente</item>
+        <item quantity="other">%d pendientes</item>
+    </plurals>
+    <string name="my_requests_waiting">En espera de la respuesta de %1$s.</string>
+    <string name="my_requests_waiting_generic">En espera de la respuesta del propietario.</string>
+    <string name="my_requests_accepted">%1$s aceptó tu solicitud y te contactará pronto.</string>
+    <string name="my_requests_rejected">El propietario no aceptó esta solicitud.</string>
+    <string name="my_requests_view">Ver solicitud</string>
+    <string name="my_requests_help">Cuando el propietario responda, verás la actualización aquí.</string>
+    <string name="my_requests_empty">Aún no has enviado solicitudes de arriendo.</string>
+    <string name="date_day_month_year">%1$d %2$s %3$d</string>
+</resources>

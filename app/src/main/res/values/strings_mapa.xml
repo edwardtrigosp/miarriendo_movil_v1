@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inquilino / Mapa · Explorar arriendos (342:2892) y Casa Los Mayales seleccionada (342:3011) -->
+    <string name="map_explore_title">Explorar arriendos</string>
+    <string name="map_open">Ver en el mapa</string>
+    <string name="map_center">Centrar mapa</string>
+    <string name="map_attribution">Ubicaciones orientativas</string>
+    <string name="map_help_title">Encuentra tu próximo hogar</string>
+    <string name="map_help_text">Selecciona un precio para ver la propiedad sin salir del mapa.</string>
+    <string name="map_empty_title">Sin propiedades en el mapa</string>
+    <string name="map_pin_price">$%1$s</string>
+    <string name="map_selected_label">Propiedad seleccionada</string>
+    <string name="map_close_card">Cerrar tarjeta</string>
+    <string name="map_go_to_property">Ir a propiedad</string>
+    <string name="map_unavailable_title">El mapa no está disponible</string>
+    <string name="map_unavailable_text">Falta la clave de Google Maps. Agrega MAPS_API_KEY en local.properties y vuelve a compilar la app.</string>
+</resources>

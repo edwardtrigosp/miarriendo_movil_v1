@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="splash_logo">Logo de Miarriendo</string>
+
+    <!-- Login -->
+    <string name="login_title">Ingresa a tu cuenta</string>
+    <string name="login_subtitle">Accede para gestionar tus arriendos activos</string>
+    <string name="login_button">Comenzar</string>
+    <string name="login_new_user">¿Eres nuevo en la plataforma?</string>
+    <string name="login_create_account">Crear cuenta</string>
+    <string name="login_logo">Miarriendo</string>
+    <string name="login_forgot">¿Olvidaste tu contraseña?</string>
+    <string name="login_loading">Ingresando…</string>
+    <string name="login_reset_sent">Te enviamos un correo a %1$s para restablecer tu contraseña.</string>
+    <string name="login_reset_need_email">Escribe tu correo para recuperar la contraseña</string>
+    <string name="login_biometric_changed">Tus huellas cambiaron. Ingresa con tu contraseña y vuelve a activar el ingreso con huella en tu perfil.</string>
+
+    <!-- Login - Con huella (210:741) -->
+    <string name="login_welcome_back">Hola de nuevo, %1$s</string>
+    <string name="login_welcome_back_generic">Hola de nuevo</string>
+    <string name="login_fingerprint_subtitle">Usa tu huella para entrar a tu cuenta</string>
+    <string name="login_use_fingerprint">Usar huella</string>
+    <string name="login_use_password">Usar contraseña</string>
+
+    <!-- Campos -->
+    <string name="field_email">Correo electrónico</string>
+    <string name="field_email_hint_login">tu@email.com</string>
+    <string name="field_email_hint_register">tu@correo.com</string>
+    <string name="field_password">Contraseña</string>
+    <string name="field_password_hint_login">••••••••</string>
+    <string name="field_password_hint_new">Mínimo 8 caracteres</string>
+    <string name="field_password_confirm">Confirmar contraseña</string>
+    <string name="field_name">Nombre completo</string>
+    <string name="field_name_hint">Ej. María López</string>
+    <string name="field_phone">Teléfono (opcional)</string>
+    <string name="field_phone_hint">300 000 0000</string>
+
+    <!-- Registro paso 1 -->
+    <string name="register_title">Crea tu cuenta</string>
+    <string name="register_subtitle">Solo toma un momento, completa tus datos</string>
+    <string name="register_continue">Continuar</string>
+    <string name="register_have_account">¿Ya tienes cuenta?</string>
+    <string name="register_login">Inicia sesión</string>
+
+    <!-- Registro paso 2 -->
+    <string name="role_title">¿Cómo la usarás?</string>
+    <string name="role_subtitle">Elige la opción que mejor te describa</string>
+    <string name="role_tenant">Busco un arriendo</string>
+    <string name="role_owner">Tengo una propiedad</string>
+    <string name="terms_prefix">"Acepto los "</string>
+    <string name="terms_link">términos y condiciones de uso</string>
+    <string name="role_create_account">Crear cuenta</string>
+    <string name="back">Volver</string>
+
+    <!-- Validación y resultados -->
+    <string name="error_required">Campo obligatorio</string>
+    <string name="error_email">Correo electrónico no válido</string>
+    <string name="error_password_length">Mínimo 8 caracteres</string>
+    <string name="error_password_match">Las contraseñas no coinciden</string>
+    <string name="error_terms">Debes aceptar los términos y condiciones</string>
+    <string name="register_success">Cuenta creada correctamente</string>
+    <string name="register_error">Error al guardar tu perfil: %1$s</string>
+    <string name="home_pending">Sesión iniciada. La pantalla de inicio aún no está diseñada.</string>
+</resources>

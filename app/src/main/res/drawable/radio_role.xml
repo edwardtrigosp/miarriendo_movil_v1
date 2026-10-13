@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Botón del radio con 16dp de margen interno a la izquierda (px 16 del diseño) -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="@dimen/spacing_md">
+    <selector>
+        <item android:drawable="@drawable/ic_radio_selected" android:state_checked="true" />
+        <item android:drawable="@drawable/ic_radio_unselected" />
+    </selector>
+</inset>

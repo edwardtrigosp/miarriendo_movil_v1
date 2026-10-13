@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: ListItem (43:1424). Ícono en círculo brand/container, texto y chevron. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Miarriendo.ListItem">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_circle_brand_container"
+        android:importantForAccessibility="no"
+        android:padding="9dp"
+        app:tint="@color/brand_on_container"
+        tools:src="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_md"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium"
+        android:textColor="@color/text_primary"
+        tools:text="Datos personales" />
+
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="@dimen/spacing_md"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_chevron_right" />
+</LinearLayout>

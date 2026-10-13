@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espaciados del diseño (spacing/*) -->
+    <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="spacing_xs">8dp</dimen>
+    <dimen name="spacing_sm">12dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">40dp</dimen>
+    <dimen name="spacing_2xl">76dp</dimen>
+
+    <!-- Radios del diseño (radius/*); radius/full = mitad de la altura -->
+    <dimen name="radius_xs">8dp</dimen>
+    <dimen name="radius_sm">12dp</dimen>
+    <dimen name="radius_md">16dp</dimen>
+    <dimen name="radius_lg">28dp</dimen>
+
+    <dimen name="button_height">52dp</dimen>
+    <!-- radius/full del botón de 52 -->
+    <dimen name="button_radius">26dp</dimen>
+    <dimen name="field_radius">@dimen/radius_lg</dimen>
+    <dimen name="border_width">1.34dp</dimen>
+    <dimen name="photo_slot_height">100dp</dimen>
+</resources>

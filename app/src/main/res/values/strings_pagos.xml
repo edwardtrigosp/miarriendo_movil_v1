@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Errores del servidor de pagos -->
+    <string name="api_error_session">Tu sesión venció. Vuelve a iniciar sesión.</string>
+    <string name="api_error_generic">Algo salió mal. Intenta de nuevo.</string>
+    <string name="api_error_connection">No se pudo conectar con el servidor. Revisa tu conexión.</string>
+
+    <string name="common_cancel">Cancelar</string>
+    <string name="pay_money">$%1$s</string>
+    <string name="pay_money_cop">$%1$s COP</string>
+    <string name="pay_load_error">No se pudo cargar la información: %1$s</string>
+    <string name="pay_date_time">%1$s · %2$s</string>
+
+    <!-- Propietario · Solicitudes recibidas -->
+    <string name="received_title">Solicitudes recibidas</string>
+    <string name="received_heading">Quién quiere arrendar</string>
+    <string name="received_subtitle">Acepta una solicitud para activar el arriendo y crear las cuotas del contrato.</string>
+    <string name="received_empty">No tienes solicitudes pendientes.</string>
+    <string name="received_accept">Aceptar</string>
+    <string name="received_reject">Rechazar</string>
+    <string name="received_accept_title">¿Aceptar a %1$s?</string>
+    <string name="received_accept_message">La propiedad quedará arrendada y se crearán las cuotas del contrato. Las demás solicitudes de esta propiedad se rechazarán.</string>
+    <string name="received_reject_title">¿Rechazar la solicitud?</string>
+    <string name="received_reject_message">%1$s no podrá arrendar esta propiedad con esta solicitud.</string>
+    <string name="received_accepted_done">Arriendo activado</string>
+    <string name="received_rejected_done">Solicitud rechazada</string>
+    <string name="received_load_error">No se pudieron cargar las solicitudes: %1$s</string>
+    <plurals name="received_banner_count">
+        <item quantity="one">Tienes %1$d solicitud por responder</item>
+        <item quantity="other">Tienes %1$d solicitudes por responder</item>
+    </plurals>
+
+    <!-- Estados de una cuota y de un abono -->
+    <string name="pay_status_unpaid">No has pagado</string>
+    <string name="pay_status_partial">Parcial · %1$d de %2$d</string>
+    <string name="pay_status_paid">Pagado</string>
+    <string name="pay_status_overdue">Vencido</string>
+    <string name="pay_status_approved">Aprobado</string>
+    <string name="pay_status_pending">Pendiente</string>
+    <string name="pay_status_waiting">Pendiente de aprobación</string>
+    <string name="pay_status_rejected">No aprobado</string>
+
+    <!-- Conceptos de pago -->
+    <string name="pay_concept_single">Pago único</string>
+    <string name="pay_concept_installment">Abono %1$d</string>
+    <string name="pay_concept_installment_of">Abono %1$d de %2$d</string>
+    <string name="pay_concept_balance">Saldo</string>
+    <string name="pay_label_monthly">Arriendo mensual · COP</string>
+    <string name="pay_label_balance">Saldo pendiente · COP</string>
+
+    <!-- Inquilino · Mi arriendo -->
+    <string name="my_rental_title">Mi arriendo</string>
+    <string name="my_rental_empty">Aún no tienes un arriendo activo. Cuando un propietario acepte tu solicitud, lo verás aquí.</string>
+    <string name="my_rental_no_installments">Tu arriendo todavía no tiene cuotas. Intenta de nuevo en un momento.</string>
+    <string name="my_rental_period">Periodo</string>
+    <string name="my_rental_due">Vence</string>
+    <string name="my_rental_overdue_on">Venció el</string>
+    <string name="my_rental_paid">Pagado</string>
+    <string name="my_rental_paid_on">Pagado el</string>
+    <string name="my_rental_alert_today">Tu arriendo de %1$s vence hoy. Págalo en un pago o en 3 abonos.</string>
+    <plurals name="my_rental_alert_days">
+        <item quantity="one">Tu arriendo de %2$s vence mañana. Págalo en un pago o en 3 abonos.</item>
+        <item quantity="other">Tu arriendo de %2$s vence en %1$d días. Págalo en un pago o en 3 abonos.</item>
+    </plurals>
+    <string name="my_rental_alert_overdue">Tu arriendo está vencido. Págalo hoy para ponerte al día.</string>
+    <string name="my_rental_alert_waiting">Tienes un cobro esperando tu aprobación en Nequi.</string>
+    <string name="my_rental_pay">Pagar arriendo</string>
+    <string name="my_rental_pay_now">Pagar arriendo ahora</string>
+    <string name="my_rental_pay_next">Pagar siguiente abono</string>
+    <string name="my_rental_pay_balance">Pagar saldo completo</string>
+    <string name="my_rental_see_receipt">Ver comprobante</string>
+    <string name="my_rental_see_history">Ver historial del inmueble</string>
+    <string name="my_rental_see_waiting">Ver cobro en Nequi</string>
+    <string name="my_rental_see_tracking">Ver seguimiento de abonos</string>
+    <string name="my_rental_banner">Tu arriendo: %1$s</string>
+
+    <!-- Inquilino · ¿Cómo quieres pagar? -->
+    <string name="choose_title">¿Cómo quieres pagar?</string>
+    <string name="choose_single">Un pago</string>
+    <string name="choose_installments">3 abonos</string>
+    <string name="choose_each">%1$s cada uno</string>
+    <string name="choose_same_month">Abonos del mismo mes.</string>
+    <string name="choose_last_adjusts">Abonos del mismo mes. El último ajusta el resto.</string>
+    <string name="choose_continue">Continuar</string>
+
+    <!-- Inquilino · Pagar con Nequi -->
+    <string name="nequi_title_single">Pagar completo</string>
+    <string name="nequi_title_installment">Pagar abono %1$d de %2$d</string>
+    <string name="nequi_title_balance">Pagar saldo</string>
+    <string name="nequi_label_single">Pago único · COP</string>
+    <string name="nequi_label_installment_first">Primer abono · COP</string>
+    <string name="nequi_label_installment">Abono %1$d · COP</string>
+    <string name="nequi_label_balance">Saldo · COP</string>
+    <string name="nequi_chip_installment">%1$d de %2$d</string>
+    <string name="nequi_balance_after">Saldo después</string>
+    <string name="nequi_method">Nequi</string>
+    <string name="nequi_processor">Procesado por Wompi</string>
+    <string name="nequi_phone_label">Celular Nequi</string>
+    <string name="nequi_phone_help">Aprueba el pago en tu app Nequi.</string>
+    <string name="nequi_phone_error">Escribe un celular Nequi de 10 dígitos que empiece por 3.</string>
+    <string name="nequi_consent">Acepto los %1$s y la %2$s de Wompi, y autorizo el %3$s para procesar este pago.</string>
+    <string name="nequi_consent_terms">términos de pago</string>
+    <string name="nequi_consent_privacy">política de privacidad</string>
+    <string name="nequi_consent_data">tratamiento de mis datos</string>
+    <string name="nequi_pay">Pagar con Nequi</string>
+    <string name="nequi_paying">Enviando cobro…</string>
+    <string name="nequi_loading_terms">Cargando términos…</string>
+    <string name="nequi_terms_error">No se pudieron cargar los términos de Wompi: %1$s</string>
+    <string name="nequi_retry_terms">Reintentar</string>
+
+    <!-- Inquilino · Aprueba en Nequi -->
+    <string name="waiting_title">Aprueba en Nequi</string>
+    <string name="waiting_text">Abre Nequi y aprueba el cobro enviado al celular terminado en %1$s. Esta pantalla se actualiza sola cuando Nequi confirma.</string>
+    <string name="waiting_text_no_phone">Abre Nequi y aprueba el cobro. Esta pantalla se actualiza sola cuando Nequi confirma.</string>
+    <string name="waiting_to_approve">Por aprobar</string>
+    <string name="waiting_notice">Puedes salir: el cobro sigue pendiente en Nequi y no podrás iniciar otro hasta que termine.</string>
+    <string name="waiting_check">Consultar estado</string>
+    <string name="waiting_checking">Consultando…</string>
+    <string name="waiting_still">Todavía esperando la aprobación de Nequi.</string>
+    <string name="waiting_back">Volver a Mi arriendo</string>
+
+    <!-- Inquilino · Resultado del pago -->
+    <string name="result_paid_title">Arriendo pagado</string>
+    <string name="result_paid_single">Tu pago único fue aprobado.</string>
+    <string name="result_paid_installments">Completaste los abonos de %1$s.</string>
+    <string name="result_paid_total">Total pagado</string>
+    <string name="result_balance">Saldo</string>
+    <string name="result_see_rental">Ver mi arriendo</string>
+    <string name="result_installment_title">Abono aprobado</string>
+    <string name="result_installment_text">Pagaste %1$s para %2$s.</string>
+    <string name="result_balance_left">Saldo restante</string>
+    <string name="result_failed_title">Pago no completado</string>
+    <string name="result_failed_single">El pago de %1$s no fue aprobado.</string>
+    <string name="result_failed_installment">El abono %1$d de %2$s no fue aprobado. Tu saldo sigue pendiente.</string>
+    <string name="result_failed_reason">Motivo: %1$s</string>
+    <string name="result_failed_balance">Saldo pendiente · %1$s</string>
+    <string name="result_retry">Reintentar con Nequi</string>
+
+    <!-- Pagos · Seguimiento, comprobante e historial -->
+    <string name="tracking_title">Seguimiento de abonos</string>
+    <string name="tracking_total">Total del mes</string>
+    <string name="tracking_paid">Pagado</string>
+    <string name="tracking_balance">Saldo</string>
+    <string name="tracking_deadline">Completar antes del %1$s.</string>
+    <string name="tracking_receipt">Ver comprobante</string>
+    <string name="receipt_title_installment">Comprobante de abono</string>
+    <string name="receipt_title_payment">Comprobante de pago</string>
+    <string name="receipt_amount">Importe aprobado · COP</string>
+    <string name="receipt_tenant">Inquilino</string>
+    <string name="receipt_period">Periodo</string>
+    <string name="receipt_concept">Concepto</string>
+    <string name="receipt_date">Fecha</string>
+    <string name="receipt_method">Método</string>
+    <string name="receipt_method_value">%1$s · Wompi</string>
+    <string name="receipt_reference">Referencia</string>
+    <string name="history_title">Historial del inmueble</string>
+    <string name="history_empty">Aún no hay pagos completados.</string>
+    <string name="pay_paid_on">Pagado el %1$s · %2$s</string>
+    <string name="pay_paid_on_no_method">Pagado el %1$s</string>
+</resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paso 2: Ubicación de tu propiedad (127:1728): Dirección, Ciudad, Barrio, Nombre interno -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_md">
+        <!-- Header: título H1 + subtítulo (patrón de Ingreso con huella) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_step2_title"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/publish_step2_subtitle"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_address"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_address"
+            app:endIconContentDescription="@string/use_my_location"
+            app:endIconDrawable="@drawable/ic_my_location"
+            app:endIconMode="custom"
+            app:endIconTint="@color/brand_primary"
+            app:placeholderText="@string/field_address_hint"
+            app:startIconDrawable="@drawable/ic_pin_drop">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_address"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="textPostalAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_city"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_city"
+            app:placeholderText="@string/field_city_hint"
+            app:startIconDrawable="@drawable/ic_location_city">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_city"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="textPostalAddress|textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_neighborhood"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_neighborhood"
+            app:placeholderText="@string/field_neighborhood_hint"
+            app:startIconDrawable="@drawable/ic_explore">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_neighborhood"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="textPostalAddress|textCapWords" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_internal_name"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_internal_name"
+            app:placeholderText="@string/field_internal_name_hint"
+            app:startIconDrawable="@drawable/ic_label">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_internal_name"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</ScrollView>

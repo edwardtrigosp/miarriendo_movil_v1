@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícono "bath" exportado de Figma (Inquilino / Detalle, Características) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="22dp"
+    android:height="22dp"
+    android:viewportWidth="22"
+    android:viewportHeight="22">
+    <path
+        android:pathData="M9.16652 3.66589L7.33304 5.49932M15.5837 17.4166V19.25M1.8326 10.9996H20.1674M6.4163 17.4166V19.25M8.24978 4.58242L6.9856 3.31828C6.72049 3.05194 6.38388 2.86814 6.01649 2.7891C5.64911 2.71006 5.26669 2.73917 4.9155 2.87291C4.56431 3.00665 4.2594 3.23929 4.03767 3.54268C3.81593 3.84607 3.68686 4.20722 3.66608 4.58242V15.583C3.66608 16.0692 3.85925 16.5356 4.20309 16.8794C4.54694 17.2232 5.01329 17.4164 5.49956 17.4164H16.5004C16.9867 17.4164 17.4531 17.2232 17.7969 16.8794C18.1408 16.5356 18.3339 16.0692 18.3339 15.583V10.9994"
+        android:strokeWidth="1.6"
+        android:strokeColor="#7C3AED"
+        android:strokeLineCap="round" />
+</vector>

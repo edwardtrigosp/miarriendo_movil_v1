@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: fila de PaymentList (54:1298) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_md">
+
+    <ImageView
+        style="@style/Widget.Miarriendo.IconCircle"
+        android:src="@drawable/ic_receipt_long"
+        app:tint="@color/brand_on_container" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+            android:textColor="@color/text_primary"
+            tools:text="Septiembre" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+            tools:text="Pagado el 3 sep · PSE" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+        android:textColor="@color/text_primary"
+        tools:text="$450.000" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/text_secondary" />
+</LinearLayout>

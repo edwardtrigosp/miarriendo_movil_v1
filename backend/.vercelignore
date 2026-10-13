@@ -1,0 +1,9 @@
+# Nunca se suben secretos ni datos de prueba: en Vercel todo va en variables de entorno.
+.env
+.env.*
+!.env.example
+.cuentas-prueba.json
+*-debug.log
+node_modules
+test
+scripts

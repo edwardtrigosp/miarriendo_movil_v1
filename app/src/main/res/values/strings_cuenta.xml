@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cuenta bancaria (inquilino: devoluciones · propietario: recibir arriendos) -->
+    <string name="profile_bank_account">Cuenta bancaria</string>
+    <string name="bank_title">Cuenta bancaria</string>
+
+    <string name="bank_tenant_heading">Cuenta para devoluciones</string>
+    <string name="bank_tenant_subtitle">Solo para devolverte dinero</string>
+    <string name="bank_tenant_note">Si hay un pago duplicado o un cobro en exceso, te lo devolveremos a esta cuenta. No se usa para cobrarte: tus pagos de arriendo se hacen con Nequi.</string>
+    <string name="bank_tenant_warning">Revisa el banco, el tipo y el número de cuenta antes de guardar.</string>
+    <string name="bank_tenant_note_bottom">No te pediremos claves bancarias ni PIN. Guardar la cuenta no realiza una transferencia.</string>
+    <string name="bank_tenant_saved_note">Esta cuenta no se usa para cobrarte. Solo recibirá devoluciones.</string>
+
+    <string name="bank_owner_heading">Cuenta para recibir tus arriendos</string>
+    <string name="bank_owner_subtitle">Aquí te transferiremos los pagos aprobados</string>
+    <string name="bank_owner_note">Cuando un inquilino paga con Nequi, miarriendo recibe el dinero y lo transfiere a esta cuenta. Verás el estado de cada transferencia en Pagos por inmueble.</string>
+    <string name="bank_owner_warning">El titular debe coincidir con el documento del propietario.</string>
+    <string name="bank_owner_note_bottom">Validamos la cuenta antes de transferir. Guardarla no realiza una transferencia.</string>
+    <string name="bank_owner_saved_note">Las transferencias se hacen a esta cuenta. Si la cambias, el próximo pago usará la nueva.</string>
+
+    <string name="bank_field_bank">Banco</string>
+    <string name="bank_field_type">Tipo de cuenta</string>
+    <string name="bank_field_number">Número de cuenta</string>
+    <string name="bank_field_holder">Titular de la cuenta</string>
+    <string name="bank_field_document">Documento del titular</string>
+    <string name="bank_field_document_help">Número de cédula, sin puntos ni espacios.</string>
+    <string name="bank_error_bank">Elige un banco.</string>
+    <string name="bank_error_type">Elige el tipo de cuenta.</string>
+    <string name="bank_error_number">Escribe solo los dígitos de la cuenta (entre 6 y 20).</string>
+    <string name="bank_error_holder">Escribe el nombre y el apellido del titular.</string>
+    <string name="bank_error_document">Escribe solo los dígitos del documento (entre 5 y 15).</string>
+    <string name="bank_save">Guardar cuenta</string>
+    <string name="bank_saving">Guardando…</string>
+    <string name="bank_save_error">No se pudo guardar la cuenta: %1$s</string>
+    <string name="bank_back_settings">Volver a configuración</string>
+
+    <string name="bank_saved_heading">Tu cuenta está guardada</string>
+    <string name="bank_saved_chip">Guardada</string>
+    <string name="bank_saved_card_title">Datos de tu cuenta</string>
+    <string name="bank_saved_row_bank">Banco</string>
+    <string name="bank_saved_row_type">Tipo</string>
+    <string name="bank_saved_row_number">Cuenta</string>
+    <string name="bank_saved_row_holder">Titular</string>
+    <string name="bank_saved_row_document">Documento</string>
+    <string name="bank_saved_info">Se guardaron tus datos. Esto no significa que el banco verificó la cuenta ni que se realizó una transferencia.</string>
+    <string name="bank_edit">Editar cuenta</string>
+
+    <string-array name="banks">
+        <item>Bancolombia</item>
+        <item>Davivienda</item>
+        <item>Banco de Bogotá</item>
+        <item>BBVA</item>
+        <item>Banco Popular</item>
+        <item>Banco de Occidente</item>
+        <item>Banco Caja Social</item>
+        <item>Scotiabank Colpatria</item>
+        <item>Banco AV Villas</item>
+        <item>Itaú</item>
+        <item>Nequi</item>
+        <item>Daviplata</item>
+    </string-array>
+    <string-array name="account_types">
+        <item>Ahorros</item>
+        <item>Corriente</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: TopAppBar (40:977). El título se asigna desde el código o con tools:text. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Miarriendo.TopAppBar">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        style="@style/Widget.Miarriendo.IconButton"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_arrow_back" />
+
+    <TextView
+        android:id="@+id/tv_app_bar_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        android:textAppearance="@style/TextAppearance.Miarriendo.H3"
+        tools:text="Título" />
+</LinearLayout>

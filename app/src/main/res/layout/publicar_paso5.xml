@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paso 5: Contrato de arriendo (132:1181). Gap 16 (margen 8 + 8 de la etiqueta). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_md">
+        <!-- Header: título H1 + subtítulo (patrón de Ingreso con huella) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_step5_title"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/publish_step5_subtitle"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_duration"
+            style="@style/Widget.Miarriendo.TextField.Dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_contract_duration"
+            app:startIconDrawable="@drawable/ic_calendar_today">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/et_duration"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_deposit"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/field_deposit"
+            app:placeholderText="@string/field_deposit_hint"
+            app:startIconDrawable="@drawable/ic_payments">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_deposit"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="number"
+                android:maxLength="13" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_availability"
+            style="@style/Widget.Miarriendo.TextField.Dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/field_availability"
+            app:startIconDrawable="@drawable/ic_event_available">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/et_availability"
+                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_clauses"
+            style="@style/Widget.Miarriendo.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/field_clauses"
+            app:placeholderText="@string/field_clauses_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_clauses"
+                style="@style/Widget.Miarriendo.TextArea.EditText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            android:id="@+id/tip_contract"
+            layout="@layout/view_tip_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" />
+    </LinearLayout>
+</ScrollView>

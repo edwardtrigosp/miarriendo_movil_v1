@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Filtro aplicado (Chip 40:898 con check) en Inquilino / Resultados. No se desmarca al tocarlo: abre los filtros. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Miarriendo.Chip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checkable="false"
+    app:chipIcon="@drawable/ic_check"
+    app:chipIconTint="@color/brand_on_container"
+    app:chipIconVisible="true" />

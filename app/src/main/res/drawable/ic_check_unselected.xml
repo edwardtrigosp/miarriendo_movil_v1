@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Casilla de términos (nodo 29:353): círculo 18dp, borde 1.5dp border/default -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <size
+        android:width="18dp"
+        android:height="18dp" />
+    <solid android:color="@color/surface_default" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/border_default" />
+</shape>

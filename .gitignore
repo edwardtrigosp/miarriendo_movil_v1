@@ -13,3 +13,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Backend
+backend/node_modules/
+backend/.env
+backend/*-debug.log
+
+backend/.cuentas-prueba.json
+
+# Permisos locales de Claude Code (personales)
+.claude/settings.local.json

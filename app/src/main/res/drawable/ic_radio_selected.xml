@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Asset Figma: Radio - Selected (nodo 165:1015) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+    <path
+        android:fillColor="#FAF8FF"
+        android:pathData="M1,10a9,9 0,1 0,18 0a9,9 0,1 0,-18 0z" />
+    <path
+        android:pathData="M1,10a9,9 0,1 0,18 0a9,9 0,1 0,-18 0z"
+        android:strokeWidth="2"
+        android:strokeColor="#7C3AED" />
+    <path
+        android:fillColor="#7C3AED"
+        android:pathData="M5,10a5,5 0,1 0,10 0a5,5 0,1 0,-10 0z" />
+</vector>

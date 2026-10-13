@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: PropertyCard (43:1059) en Inquilino / Explorar y Resultados. Toda la tarjeta abre el detalle. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/surface_card"
+    app:cardCornerRadius="@dimen/radius_sm"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/border_card"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+            <!-- Foto; sin foto queda el ícono home_work sobre surface/high -->
+            <ImageView
+                android:id="@+id/iv_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/surface_high"
+                android:importantForAccessibility="no"
+                android:scaleType="center"
+                android:src="@drawable/ic_home_work" />
+
+            <TextView
+                android:id="@+id/tv_price_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="@dimen/spacing_sm"
+                android:background="@drawable/bg_price_badge"
+                android:gravity="center_vertical"
+                android:letterSpacing="0.007"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                android:textColor="@color/surface_white"
+                tools:text="$1.200.000 COP/mes" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_md">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:letterSpacing="0.009"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                tools:text="Casa Los Mayales" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_place" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lineHeight="20sp"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                    tools:text="Calle 20 #12-35, Valledupar" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@color/border_card" />
+
+            <!-- IconStat: habitaciones, baños y área -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_bed"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_bedrooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                    android:textColor="@color/text_secondary"
+                    tools:text="3 hab." />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="@dimen/spacing_md"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_bathtub"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tv_bathrooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                    android:textColor="@color/text_secondary"
+                    tools:text="2 baños" />
+
+                <ImageView
+                    android:id="@+id/iv_area"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="@dimen/spacing_md"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_square_foot" />
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                    android:textColor="@color/text_secondary"
+                    tools:text="110 m²" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

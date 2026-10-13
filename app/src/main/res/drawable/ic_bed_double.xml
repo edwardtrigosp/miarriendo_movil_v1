@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícono "bed-double" exportado de Figma (Inquilino / Detalle, Características) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="22dp"
+    android:height="22dp"
+    android:viewportWidth="22"
+    android:viewportHeight="22">
+    <path
+        android:pathData="M18.3339 9.16685H3.66608C3.17981 9.16685 2.71346 9.35999 2.36961 9.70377C2.02577 10.0475 1.8326 10.5138 1.8326 11V18.3326M3.66608 9.16685V5.50055C3.66608 5.01437 3.85925 4.5481 4.20309 4.20432C4.54694 3.86053 5.01329 3.6674 5.49956 3.6674H16.5004C16.9867 3.6674 17.4531 3.86053 17.7969 4.20432C18.1408 4.5481 18.3339 5.01437 18.3339 5.50055V9.16685M18.3339 9.16685C18.8202 9.16685 19.2865 9.35999 19.6304 9.70377C19.9742 10.0475 20.1674 10.5138 20.1674 11V18.3326M11 3.6674V9.16685M1.8326 16.4994H20.1674"
+        android:strokeWidth="1.6"
+        android:strokeColor="#7C3AED"
+        android:strokeLineCap="round" />
+</vector>

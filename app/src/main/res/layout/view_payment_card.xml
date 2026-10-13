@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: PaymentCard / Resumen de pago. Etiqueta, importe y el estado a la derecha. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_border"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_md">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_pc_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+            android:textColor="@color/brand_on_container"
+            tools:text="Arriendo mensual · COP" />
+
+        <TextView
+            android:id="@+id/tv_pc_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H2"
+            android:textColor="@color/brand_on_container"
+            tools:text="$450.000" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pc_status"
+        style="@style/Widget.Miarriendo.StatusChip.Advertencia"
+        android:layout_marginStart="@dimen/spacing_sm"
+        tools:text="No has pagado" />
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Propietario / Propiedad - Detalle (Figma 217:766) -->
+    <string name="detail_not_found">No se encontró la propiedad</string>
+    <string name="detail_cover">Foto de la propiedad</string>
+    <string name="detail_change_photos">Cambiar fotos</string>
+    <string name="detail_saving_photos">Guardando fotos…</string>
+    <string name="detail_photos_saved">Fotos actualizadas</string>
+    <string name="detail_photos_error">No se pudieron guardar las fotos: %1$s</string>
+    <string name="detail_tenant">Inquilino</string>
+    <string name="detail_tenant_since">Arrienda desde %1$s</string>
+    <string name="detail_no_tenant">Aún no tienes inquilino en esta propiedad.</string>
+
+    <string name="detail_payments">Pagos</string>
+    <string name="detail_next_payment">Próximo pago</string>
+    <string name="detail_money">$%1$s</string>
+    <string name="detail_due">Vence el %1$s</string>
+    <string name="detail_due_today">Vence hoy</string>
+    <plurals name="detail_due_in_days">
+        <item quantity="one">En %d día</item>
+        <item quantity="other">En %d días</item>
+    </plurals>
+    <plurals name="detail_overdue_days">
+        <item quantity="one">Atrasado %d día</item>
+        <item quantity="other">Atrasado %d días</item>
+    </plurals>
+    <string name="detail_paid_on">Pagado el %1$s · %2$s</string>
+    <string name="detail_paid_on_no_method">Pagado el %1$s</string>
+    <string name="detail_no_payments">Aún no hay pagos registrados.</string>
+
+    <string name="detail_requests">Solicitudes</string>
+    <string name="detail_no_requests">No hay solicitudes.</string>
+    <string name="request_new">Nueva</string>
+    <string name="request_in_progress">En proceso</string>
+    <string name="request_resolved">Resuelta</string>
+
+    <!-- Fechas -->
+    <string name="date_day_month">%1$d de %2$s</string>
+    <string name="date_day_month_short">%1$d %2$s</string>
+    <string name="date_month_year">%1$s de %2$d</string>
+    <string-array name="months">
+        <item>enero</item>
+        <item>febrero</item>
+        <item>marzo</item>
+        <item>abril</item>
+        <item>mayo</item>
+        <item>junio</item>
+        <item>julio</item>
+        <item>agosto</item>
+        <item>septiembre</item>
+        <item>octubre</item>
+        <item>noviembre</item>
+        <item>diciembre</item>
+    </string-array>
+    <string-array name="months_short">
+        <item>ene</item>
+        <item>feb</item>
+        <item>mar</item>
+        <item>abr</item>
+        <item>may</item>
+        <item>jun</item>
+        <item>jul</item>
+        <item>ago</item>
+        <item>sep</item>
+        <item>oct</item>
+        <item>nov</item>
+        <item>dic</item>
+    </string-array>
+    <string name="time_now">Justo ahora</string>
+    <string name="time_yesterday">Ayer</string>
+    <plurals name="time_minutes">
+        <item quantity="one">Hace %d minuto</item>
+        <item quantity="other">Hace %d minutos</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">Hace %d hora</item>
+        <item quantity="other">Hace %d horas</item>
+    </plurals>
+    <plurals name="time_days">
+        <item quantity="one">Hace %d día</item>
+        <item quantity="other">Hace %d días</item>
+    </plurals>
+    <plurals name="time_weeks">
+        <item quantity="one">Hace %d semana</item>
+        <item quantity="other">Hace %d semanas</item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one">Hace %d mes</item>
+        <item quantity="other">Hace %d meses</item>
+    </plurals>
+</resources>

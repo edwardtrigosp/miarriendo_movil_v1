@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Punta del pin (342:2999), 12 × 7. El pin seleccionado la tiñe de brand/primary. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="12dp"
+    android:height="7dp"
+    android:viewportWidth="12"
+    android:viewportHeight="7">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M0,0L6,7L12,0H0Z" />
+</vector>

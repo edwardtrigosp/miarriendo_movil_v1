@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Casilla de foto vacía (nodo 127:1789): alto 100, radio 16, ícono "add" -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/photo_slot_height"
+    android:background="@drawable/bg_photo_slot"
+    android:contentDescription="@string/photos_add"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_add"
+        app:tint="@color/text_secondary" />
+</FrameLayout>

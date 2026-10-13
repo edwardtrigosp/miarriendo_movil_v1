@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Resumen de propiedad (342:3132). OwnerPropertyCard con la foto a ras de la tarjeta y el precio seguido
+     del estado. Usa los mismos ids que item_propiedad, así que lo llena TarjetasPropiedad.compacta. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_property_card"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <!-- Thumbnail: foto, o ícono home_work sobre brand/container si no tiene -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_thumbnail_placeholder"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Miarriendo.Rounded12" />
+
+    <!-- Info Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+            tools:text="Casa Los Mayales" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+            android:textColor="@color/text_secondary"
+            tools:text="Calle 20 #12-35, Valledupar" />
+
+        <!-- Price Row: precio seguido del StatusChip -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                tools:text="$1.200.000 COP/mes" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/Widget.Miarriendo.StatusChip.Primario"
+                android:layout_marginStart="@dimen/spacing_micro"
+                tools:text="Disponible" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

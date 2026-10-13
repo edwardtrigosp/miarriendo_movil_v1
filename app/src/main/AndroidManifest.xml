@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Ícono "my_location" del paso 2 de Publicar y "Centrar mapa" del mapa del inquilino -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,10 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Miarriendo_v1">
+
+        <!-- Maps SDK for Android: la clave sale de MAPS_API_KEY en local.properties (ver app/build.gradle.kts) -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,19 +33,95 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registro_1"
+            android:name=".LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".registro_2"
+            android:name=".RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".MenuMobilActivity"
+            android:name=".RegisterRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".PropiedadesActivity"
+            android:name=".PropietarioInicioActivity"
             android:exported="false" />
+        <activity
+            android:name=".PublicarPropiedadActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".PublicandoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HuellaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PropiedadDetalleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InquilinoInicioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InquilinoMapaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FiltrosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleArriendoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SolicitarArriendoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SolicitudEnviadaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MisSolicitudesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SolicitudesRecibidasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MiArriendoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ElegirFormaPagoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PagarNequiActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ConfirmarNequiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadoPagoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SeguimientoAbonosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ComprobanteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistorialInmuebleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PagosInmuebleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CuentaBancariaActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

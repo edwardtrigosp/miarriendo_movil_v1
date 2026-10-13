@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- El diseño solo muestra el estado sin marcar; marcado reutiliza el estilo del radio seleccionado. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <inset android:drawable="@drawable/ic_radio_selected" android:inset="-1dp" />
+    </item>
+    <item android:drawable="@drawable/ic_check_unselected" />
+</selector>

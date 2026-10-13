@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Pin de propiedad (342:2994) y Propiedad seleccionada (342:3113).
+     No se muestra en pantalla: MarcadoresMapa lo dibuja a un bitmap para el marcador de Google Maps.
+     El relleno deja sitio a la sombra del precio. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="4dp">
+
+    <!-- Precio mensual (342:2995) -->
+    <TextView
+        android:id="@+id/tv_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_map_pin_chip"
+        android:gravity="center"
+        android:letterSpacing="0.007"
+        android:paddingHorizontal="@dimen/spacing_sm"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+        android:textColor="@color/brand_on_container"
+        tools:text="$1.200.000" />
+
+    <!-- Punta del pin (342:2999) -->
+    <ImageView
+        android:id="@+id/iv_tip"
+        android:layout_width="12dp"
+        android:layout_height="7dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_pin_tip" />
+
+    <!-- Nombre de propiedad (342:3000) -->
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+        tools:text="Casa Los Mayales" />
+</LinearLayout>

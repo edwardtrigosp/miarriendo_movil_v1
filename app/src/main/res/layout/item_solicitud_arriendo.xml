@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Solicitud pendiente en Inquilino / Mis solicitudes (315:7122) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_border"
+    android:orientation="vertical">
+
+    <!-- Estado y fecha -->
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+        tools:text="5 oct 2026" />
+
+    <!-- Resumen de solicitud (SolicitudCard 43:1308) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_initials"
+                style="@style/Widget.Miarriendo.Avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:importantForAccessibility="no"
+                android:letterSpacing="0.009"
+                tools:text="ML" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_tenant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:letterSpacing="0.007"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                    android:textColor="@color/text_primary"
+                    tools:text="María López" />
+
+                <TextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:letterSpacing="0.033"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                    tools:text="3 personas · sin mascotas" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_property"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@color/surface_high"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Miarriendo.Rounded8" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_property_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:letterSpacing="0.007"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                    android:textColor="@color/text_primary"
+                    tools:text="Casa Los Mayales" />
+
+                <TextView
+                    android:id="@+id/tv_property_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:letterSpacing="0.033"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                    tools:text="Calle 20 #12-35, Valledupar" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Seguimiento -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_md">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+            android:textColor="@color/brand_primary"
+            tools:text="$1.200.000 COP/mes" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+            android:textColor="@color/text_secondary"
+            tools:text="En espera de la respuesta de Edward." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view"
+            style="@style/Widget.Miarriendo.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/my_requests_view" />
+    </LinearLayout>
+</LinearLayout>

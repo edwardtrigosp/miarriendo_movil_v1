@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Propietario / Publicar pasos 1-5 (127:1709, 127:1728, 127:1748, 127:1775, 132:1181) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".PublicarPropiedadActivity">
+
+    <!-- NavBar -->
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginBottom="-6dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_arrow_back" />
+
+    <ViewFlipper
+        android:id="@+id/flipper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
+
+        <include layout="@layout/publicar_paso1" />
+
+        <include layout="@layout/publicar_paso2" />
+
+        <include layout="@layout/publicar_paso3" />
+
+        <include layout="@layout/publicar_paso4" />
+
+        <include layout="@layout/publicar_paso5" />
+    </ViewFlipper>
+
+    <!-- Bottom Bar: el botón queda en el mismo lugar en los cinco pasos -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next"
+        style="@style/Widget.Miarriendo.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/spacing_lg"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginEnd="@dimen/spacing_lg"
+        android:layout_marginBottom="@dimen/spacing_xl"
+        android:text="@string/publish_continue" />
+</LinearLayout>

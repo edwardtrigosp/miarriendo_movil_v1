@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Radio - Unselected (nodo 165:1019): 20dp, borde 2dp border/subtle -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <size
+        android:width="20dp"
+        android:height="20dp" />
+    <solid android:color="@color/surface_default" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/border_subtle" />
+</shape>

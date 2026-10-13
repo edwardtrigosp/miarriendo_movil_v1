@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Alert (208:658). Ícono + mensaje; el Tipo se aplica desde AlertView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Miarriendo.Alert">
+
+    <ImageView
+        android:id="@+id/iv_alert_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:importantForAccessibility="no"
+        tools:src="@drawable/ic_warning" />
+
+    <TextView
+        android:id="@+id/tv_alert_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+        tools:text="Mensaje del aviso" />
+</LinearLayout>

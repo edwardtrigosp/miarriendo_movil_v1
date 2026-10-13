@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inicio del propietario (Figma 144:1080 y 216:740) -->
+    <string name="owner_greeting">Hola, %1$s</string>
+    <string name="owner_greeting_generic">Hola</string>
+    <string name="owner_empty_title">Aún no tienes propiedades</string>
+    <string name="owner_empty_subtitle">Agrega tu primera propiedad para comenzar a gestionar tus arriendos</string>
+    <string name="owner_add_property">Agregar propiedad</string>
+    <string name="owner_status_today">Así van tus arriendos hoy</string>
+    <string name="owner_open_profile">Abrir perfil</string>
+    <string name="owner_my_properties">Mis propiedades</string>
+    <string name="owner_price_month">$%1$s COP/mes</string>
+    <string name="owner_status_up_to_date">Al día</string>
+    <string name="owner_status_pending">Pendiente</string>
+    <string name="owner_status_late">Atrasado</string>
+    <string name="owner_status_available">Disponible</string>
+    <string name="owner_load_error">No se pudieron cargar tus propiedades: %1$s</string>
+    <string name="soon">Próximamente</string>
+
+    <!-- Publicar propiedad -->
+    <string name="publish_step1_title">Describe tu propiedad</string>
+    <string name="publish_step2_title">Ubicación de tu propiedad</string>
+    <string name="publish_step3_title">Detalles y precio</string>
+    <string name="publish_step4_title">Fotos de tu propiedad</string>
+    <string name="publish_step5_title">Contrato de arriendo</string>
+    <string name="publish_step1_subtitle">Cuéntales a los inquilinos cómo es tu propiedad.</string>
+    <string name="publish_step2_subtitle">Indica dónde está para que la encuentren fácil.</string>
+    <string name="publish_step3_subtitle">Habitaciones, área, precio y comodidades.</string>
+    <string name="publish_step4_subtitle">Muestra los espacios con buenas fotos.</string>
+    <string name="publish_step5_subtitle">Define las condiciones del arriendo.</string>
+    <string name="publish_continue">Continuar</string>
+    <string name="publish_submit">Publicar propiedad</string>
+
+    <string name="field_ad_title">Título del anuncio</string>
+    <string name="field_ad_title_hint">Ej. Casa amplia con patio</string>
+    <string name="field_description">Cuéntanos más</string>
+    <string name="field_description_hint">Espacios, iluminación, vecindario y lo que la hace especial.</string>
+    <string name="publish_type_question">¿Qué tipo de propiedad es?</string>
+    <string name="type_apartment">Apartamento</string>
+    <string name="type_house">Casa</string>
+    <string name="type_studio">Estudio</string>
+    <string name="type_room">Habitación</string>
+
+    <string name="field_city">Ciudad</string>
+    <string name="field_city_hint">Ej. Valledupar, Cesar</string>
+    <string name="field_neighborhood">Barrio o zona</string>
+    <string name="field_neighborhood_hint">Ej. Los Mayales</string>
+    <string name="field_internal_name">Nombre interno</string>
+    <string name="field_internal_name_hint">Ej. Apto del centro</string>
+    <string name="field_address">Dirección</string>
+    <string name="field_address_hint">Ej. Cra. 9 #16-40</string>
+    <string name="use_my_location">Usar mi ubicación</string>
+    <string name="location_permission_denied">Activa el permiso de ubicación para usar tu ubicación actual</string>
+    <string name="location_unavailable">No se pudo obtener tu ubicación</string>
+
+    <string name="field_bedrooms">Habitaciones</string>
+    <string name="field_bedrooms_hint">Ej. 2</string>
+    <string name="field_bathrooms">Baños</string>
+    <string name="field_bathrooms_hint">Ej. 1</string>
+    <string name="field_area">Área (m²)</string>
+    <string name="field_area_hint">Ej. 65</string>
+    <string name="field_price">Precio mensual (COP)</string>
+    <string name="field_price_hint">Ej. 1.350.000</string>
+    <string name="publish_amenities">Comodidades</string>
+    <string name="amenity_parking">Parqueadero</string>
+    <string name="amenity_gym">Gimnasio</string>
+    <string name="amenity_pool">Piscina</string>
+    <string name="amenity_doorman">Portería 24h</string>
+    <string name="amenity_pets">Mascotas</string>
+    <string name="amenity_furnished">Amoblado</string>
+    <string name="amenity_terrace">Terraza</string>
+    <string name="amenity_balcony">Balcón</string>
+
+    <string name="photos_add">Agregar fotos</string>
+    <string name="photos_formats">JPG o PNG · hasta 10 imágenes</string>
+    <string name="photos_limit">Puedes agregar hasta %1$d fotos</string>
+    <string name="photos_remove_title">¿Quitar esta foto?</string>
+    <string name="photos_remove">Quitar</string>
+    <string name="photo_slot_description">Foto %1$d de la propiedad</string>
+    <string name="cancel">Cancelar</string>
+    <string name="tip_title">Consejo</string>
+    <string name="tip_close">Cerrar consejo</string>
+    <string name="tip_photos">La primera foto será la portada. Usa buena iluminación y muestra los espacios principales.</string>
+    <string name="tip_contract">Un contrato claro protege a ambas partes. Revisa con cuidado todas las condiciones declaradas antes de publicar.</string>
+
+    <string name="field_contract_duration">Duración del contrato</string>
+    <string name="field_deposit">Depósito de garantía (COP)</string>
+    <string name="field_deposit_hint">Ej. 1.200.000</string>
+    <string name="field_availability">Fecha de disponibilidad</string>
+    <string name="field_clauses">Cláusulas adicionales</string>
+    <string name="field_clauses_hint">Ej. Mascotas, horario de visitas o uso de zonas comunes.</string>
+    <string name="duration_months">%1$d meses</string>
+    <string name="availability_now">Inmediata</string>
+    <string name="availability_pick">Elegir fecha…</string>
+
+    <string name="error_select_type">Elige el tipo de propiedad</string>
+    <string name="error_number">Escribe un número válido</string>
+
+    <!-- Publicando -->
+    <string name="publishing_verifying">Verificando tus datos...</string>
+    <string name="publishing_location">Creando ubicación...</string>
+    <string name="publishing_saving">Publicando tu propiedad...</string>
+    <string name="publishing_done">¡Registrado!</string>
+    <string name="publishing_wait">Esto solo toma unos segundos.</string>
+    <string name="publishing_done_subtitle">Tu propiedad ya está publicada.</string>
+    <string name="publishing_error">No se pudo publicar: %1$s</string>
+    <string name="publishing_retry">Reintentar</string>
+    <string name="publishing_session">Tu sesión expiró. Ingresa de nuevo.</string>
+</resources>

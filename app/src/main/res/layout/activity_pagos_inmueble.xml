@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Propietario / Pagos por inmueble — Resumen, Por transferir, Transferido y Sin cuenta registrada -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".PagosInmuebleActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/view_top_app_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_lg"
+                android:paddingTop="@dimen/spacing_xs"
+                android:paddingEnd="@dimen/spacing_lg"
+                android:paddingBottom="@dimen/spacing_lg"
+                android:visibility="invisible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_context"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                    android:textColor="@color/text_primary"
+                    tools:text="Apartamento Centro · Juan Pérez" />
+
+                <include
+                    android:id="@+id/card_payment"
+                    layout="@layout/view_payment_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md" />
+
+                <include
+                    android:id="@+id/card_detail"
+                    layout="@layout/view_card_detalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md" />
+
+                <include
+                    android:id="@+id/alert"
+                    layout="@layout/view_alert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register_account"
+                    style="@style/Widget.Miarriendo.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:text="@string/owner_pay_register_account"
+                    android:visibility="gone" />
+
+                <!-- Accesos relacionados -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:background="@drawable/bg_card_list"
+                    android:clipToOutline="true"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/item_receipt"
+                        layout="@layout/view_list_item" />
+
+                    <View
+                        android:id="@+id/divider_receipt"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/border_card" />
+
+                    <include
+                        android:id="@+id/item_installments"
+                        layout="@layout/view_list_item" />
+
+                    <View
+                        android:id="@+id/divider_installments"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/border_card" />
+
+                    <include
+                        android:id="@+id/item_history"
+                        layout="@layout/view_list_item" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_lg"
+            android:text="@string/owner_pay_no_tenant"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/brand_primary" />
+    </FrameLayout>
+</LinearLayout>

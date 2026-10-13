@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Inquilino / Perfil y configuración (319:5709) y confirmación de cierre (328:1566) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".PerfilActivity">
+
+    <!-- TopAppBar: atrás + "Configuración" -->
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/view_top_app_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Content Area: px 24, pt 16, pb 40, gap 24 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_xl">
+
+            <!-- Profile Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_initials"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle_brand_container"
+                    android:gravity="center"
+                    android:importantForAccessibility="no"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.H2"
+                    android:textColor="@color/brand_on_container"
+                    tools:text="ET" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_md"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.H3"
+                        tools:text="Edward Trigos" />
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                        android:textColor="@color/text_secondary"
+                        tools:text="edward@correo.com" />
+
+                    <TextView
+                        android:id="@+id/tv_role"
+                        style="@style/Widget.Miarriendo.StatusChip.Primario"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        tools:text="@string/profile_role_owner" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Section · Cuenta -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/profile_section_account"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                android:textColor="@color/text_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/bg_card_list"
+                android:clipToOutline="true"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/item_personal_data"
+                    layout="@layout/view_list_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_card" />
+
+                <include
+                    android:id="@+id/item_security"
+                    layout="@layout/view_list_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_card" />
+
+                <include
+                    android:id="@+id/item_biometric"
+                    layout="@layout/view_list_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_card" />
+
+                <include
+                    android:id="@+id/item_bank_account"
+                    layout="@layout/view_list_item" />
+            </LinearLayout>
+
+            <!-- Grupo de ajustes · Preferencias y soporte -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/profile_section_preferences"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                android:textColor="@color/text_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/bg_card_list"
+                android:clipToOutline="true"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/item_notifications"
+                    layout="@layout/view_list_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_card" />
+
+                <include
+                    android:id="@+id/item_help"
+                    layout="@layout/view_list_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_card" />
+
+                <include
+                    android:id="@+id/item_terms"
+                    layout="@layout/view_list_item" />
+            </LinearLayout>
+
+            <!-- SecondaryButton · Destructivo -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
+                style="@style/Widget.Miarriendo.Button.Secondary.Destructivo"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/profile_logout"
+                app:icon="@drawable/ic_logout" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

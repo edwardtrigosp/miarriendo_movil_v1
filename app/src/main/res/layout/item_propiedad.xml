@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: OwnerPropertyCard (223:902). Toda la tarjeta abre el detalle. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_property_card"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_md">
+
+    <!-- Thumbnail: foto, o ícono home_work sobre brand/container si no tiene -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_thumbnail_placeholder"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Miarriendo.Rounded12" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+            tools:text="Apartamento Centro" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+            tools:text="Cra. 9 #16-40, Valledupar" />
+
+        <!-- Price Row: precio + StatusChip -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                tools:text="$450.000 COP/mes" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/Widget.Miarriendo.StatusChip.Primario"
+                android:layout_marginStart="@dimen/spacing_xs"
+                tools:text="Al día" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Propietario / Propiedad - Detalle (217:766) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".PropiedadDetalleActivity">
+
+    <!-- NavBar -->
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginBottom="-6dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_arrow_back" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingTop="@dimen/spacing_xs"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_xl">
+
+            <!-- Cover Photo + "Cambiar fotos" (mismo estilo que el contador de fotos del inquilino) -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_cover_placeholder"
+                    android:contentDescription="@string/detail_cover"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_home_work"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Miarriendo.Rounded16" />
+
+                <TextView
+                    android:id="@+id/btn_change_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/spacing_sm"
+                    android:background="@drawable/bg_photo_counter"
+                    android:drawableStart="@drawable/ic_photo_camera"
+                    android:drawablePadding="@dimen/spacing_micro"
+                    android:drawableTint="@color/text_primary"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/detail_change_photos"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                    android:textColor="@color/text_primary" />
+            </FrameLayout>
+
+            <!-- Property Info -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:textAppearance="@style/TextAppearance.Miarriendo.H2"
+                tools:text="Apartamento Centro" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                android:textColor="@color/text_secondary"
+                tools:text="Cra. 9 #16-40, Valledupar" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                android:textColor="@color/brand_primary"
+                tools:text="$450.000 COP/mes" />
+
+            <!-- Tenant Section -->
+            <TextView
+                style="@style/Widget.Miarriendo.SectionTitle"
+                android:text="@string/detail_tenant" />
+
+            <LinearLayout
+                android:id="@+id/card_tenant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_property_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_md"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_tenant_initials"
+                    style="@style/Widget.Miarriendo.Avatar"
+                    android:importantForAccessibility="no"
+                    tools:text="JP" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_tenant_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                        tools:text="Juan Pérez" />
+
+                    <TextView
+                        android:id="@+id/tv_tenant_since"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                        android:visibility="gone"
+                        tools:text="Arrienda desde marzo de 2026"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_no_tenant"
+                style="@style/Widget.Miarriendo.SectionEmpty"
+                android:text="@string/detail_no_tenant" />
+
+            <!-- Payments Section -->
+            <TextView
+                style="@style/Widget.Miarriendo.SectionTitle"
+                android:text="@string/detail_payments" />
+
+            <LinearLayout
+                android:id="@+id/card_next_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_property_card"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_md"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_next_payment"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+
+                    <TextView
+                        android:id="@+id/tv_next_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.H2"
+                        tools:text="$450.000" />
+
+                    <TextView
+                        android:id="@+id/tv_next_due"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                        android:textColor="@color/text_secondary"
+                        tools:text="Vence el 5 de octubre" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_next_status"
+                    style="@style/Widget.Miarriendo.StatusChip.Info"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    tools:text="En 6 días" />
+            </LinearLayout>
+
+            <!-- Payment History (PaymentList): filas separadas por una línea border/card -->
+            <LinearLayout
+                android:id="@+id/list_payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_card_list"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_no_payments"
+                style="@style/Widget.Miarriendo.SectionEmpty"
+                android:text="@string/detail_no_payments" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_payments_detail"
+                style="@style/Widget.Miarriendo.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="@string/owner_pay_detail_button"
+                android:visibility="gone" />
+
+            <!-- Requests Section -->
+            <TextView
+                style="@style/Widget.Miarriendo.SectionTitle"
+                android:text="@string/detail_requests" />
+
+            <LinearLayout
+                android:id="@+id/list_requests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_no_requests"
+                style="@style/Widget.Miarriendo.SectionEmpty"
+                android:text="@string/detail_no_requests" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

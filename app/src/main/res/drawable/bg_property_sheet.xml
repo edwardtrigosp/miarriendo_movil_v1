@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tarjeta de propiedad seleccionada (342:3126): blanco con las esquinas de arriba en radius/md -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface_default" />
+    <corners
+        android:topLeftRadius="@dimen/radius_md"
+        android:topRightRadius="@dimen/radius_md" />
+</shape>

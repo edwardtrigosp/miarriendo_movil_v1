@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_role_owner">Propietario</string>
+    <string name="profile_role_tenant">Inquilino</string>
+    <string name="profile_stat_properties">Propiedades</string>
+    <string name="profile_stat_tenants">Inquilinos</string>
+    <string name="profile_stat_requests">Solicitudes</string>
+    <string name="profile_section_account">Cuenta</string>
+    <string name="profile_section_support">Soporte</string>
+    <string name="profile_personal_data">Datos personales</string>
+    <string name="profile_security">Seguridad y contraseña</string>
+    <string name="profile_biometric">Ingreso con huella</string>
+    <string name="profile_notifications">Notificaciones</string>
+    <string name="profile_help">Ayuda y soporte</string>
+    <string name="profile_terms">Términos y condiciones</string>
+    <string name="profile_logout">Cerrar sesión</string>
+
+    <!-- Dialog de confirmación -->
+    <string name="profile_settings_title">Configuración</string>
+    <string name="profile_section_preferences">Preferencias y soporte</string>
+    <string name="logout_message_tenant">Podrás volver a ingresar con los métodos disponibles en tu cuenta.</string>
+    <string name="logout_title">¿Cerrar sesión?</string>
+    <string name="logout_message">Tendrás que ingresar tu correo y contraseña para volver a entrar.</string>
+    <string name="logout_message_biometric">Podrás volver a entrar con tu huella o con tu contraseña.</string>
+    <string name="logout_confirm">Salir</string>
+</resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paso 4: Fotos de tu propiedad (127:1775). Gap 24. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_md">
+        <!-- Header: título H1 + subtítulo (patrón de Ingreso con huella) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_step4_title"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/publish_step4_subtitle"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium" />
+
+
+        <!-- Upload Area: tarjeta blanca con borde punteado -->
+        <LinearLayout
+            android:id="@+id/btn_add_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:background="@drawable/bg_upload_dashed"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg">
+
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_circle_brand_container"
+                android:importantForAccessibility="no"
+                android:padding="13dp"
+                android:src="@drawable/ic_photo_camera"
+                app:tint="@color/brand_on_container" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/photos_add"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/photos_formats"
+                android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+        </LinearLayout>
+
+        <!-- Casillas de fotos: filas de 3 generadas desde el código -->
+        <LinearLayout
+            android:id="@+id/photo_rows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:orientation="vertical" />
+
+        <include
+            android:id="@+id/tip_photos"
+            layout="@layout/view_tip_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" />
+    </LinearLayout>
+</ScrollView>

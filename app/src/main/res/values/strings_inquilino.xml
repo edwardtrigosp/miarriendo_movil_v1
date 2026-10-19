@@ -6,7 +6,6 @@
     <string name="tenant_my_requests">Mis solicitudes</string>
     <string name="tenant_search_label">Ciudad o barrio</string>
     <string name="tenant_filters">Filtros de búsqueda</string>
-    <string name="tenant_for_you">Para ti</string>
     <plurals name="tenant_available">
         <item quantity="one">%d disponible</item>
         <item quantity="other">%d disponibles</item>

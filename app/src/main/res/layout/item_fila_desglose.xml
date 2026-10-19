@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FilaDesglose (438:2711): punto de estado, etiqueta y valor; alto 24 y separación 12 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="24dp"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/punto"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/bg_punto_desglose"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+        android:textColor="@color/text_secondary"
+        tools:text="Transferido a tu cuenta" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+        tools:text="$450.000" />
+</LinearLayout>

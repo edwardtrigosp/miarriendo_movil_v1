@@ -60,16 +60,12 @@ final class Pantallas {
                 .get()
                 .addOnSuccessListener(snapshot -> {
                     String rol = snapshot.getValue(String.class);
-                    Class<?> destino = RegisterRoleActivity.ROL_PROPIETARIO.equals(rol) ? PropietarioInicioActivity.class
-                            : RegisterRoleActivity.ROL_INQUILINO.equals(rol) ? InquilinoInicioActivity.class : null;
-                    if (destino != null && BuildConfig.INICIO_UNIFICADO) {
-                        destino = InicioActivity.class;
-                    }
-                    if (destino == null) {
+                    // Un solo inicio por módulos para los dos roles; sin rol conocido no hay inicio que abrir.
+                    if (!RegisterRoleActivity.ROL_PROPIETARIO.equals(rol) && !RegisterRoleActivity.ROL_INQUILINO.equals(rol)) {
                         sinInicio.run();
                         return;
                     }
-                    Intent inicio = new Intent(activity, destino);
+                    Intent inicio = new Intent(activity, InicioActivity.class);
                     inicio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     activity.startActivity(inicio);
                 })

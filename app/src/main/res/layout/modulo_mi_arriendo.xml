@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Módulo / Mi arriendo (446:3500): Por pagar · Abono en curso · Vencido · Esperando Nequi · Al día.
+     Columna con separación de 16 (spacing/md); el AnilloAbonos solo aparece si la cuota va por abonos. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_lg"
+    android:paddingTop="@dimen/spacing_lg"
+    android:paddingEnd="@dimen/spacing_lg"
+    android:paddingBottom="@dimen/spacing_md">
+
+    <!-- Título (446:3437): abre Mi arriendo -->
+    <LinearLayout
+        android:id="@+id/titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/home_rental_open"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H3"
+            tools:text="Mi arriendo · Noviembre" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <!-- Monto y progreso (446:3440) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                android:textColor="@color/text_secondary"
+                tools:text="Te falta pagar" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:textAppearance="@style/TextAppearance.Miarriendo.H1"
+                tools:text="$300.000" />
+
+            <TextView
+                android:id="@+id/tv_amount_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                android:textColor="@color/text_secondary"
+                tools:text="de $450.000 COP" />
+        </LinearLayout>
+
+        <!-- AnilloAbonos (430:2355): 68 de diámetro, verde con el mes completo -->
+        <FrameLayout
+            android:id="@+id/anillo"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/anillo_progreso"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:importantForAccessibility="no"
+                android:max="3"
+                app:indicatorColor="@color/brand_primary"
+                app:indicatorInset="0dp"
+                app:indicatorSize="68dp"
+                app:indicatorTrackGapSize="0dp"
+                app:trackColor="@color/brand_container"
+                app:trackCornerRadius="3dp"
+                app:trackThickness="6dp"
+                tools:progress="1" />
+
+            <TextView
+                android:id="@+id/tv_anillo"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                tools:text="1/3" />
+
+            <TextView
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:text="@string/home_rental_ring_label"
+                android:textAppearance="@style/TextAppearance.Miarriendo.LabelSmall.Medium"
+                android:textColor="@color/text_secondary" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Estado (446:3446): StatusChip y fecha -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/Widget.Miarriendo.StatusChip"
+            tools:text="Vence en 3 días" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+            android:textColor="@color/text_secondary"
+            tools:text="Fecha límite: 5 de noviembre" />
+    </LinearLayout>
+
+    <!-- Por pagar: cómo se puede pagar -->
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+        android:textColor="@color/text_secondary"
+        android:visibility="gone"
+        tools:text="Puedes pagarlo en un solo pago o en 3 abonos de $150.000." />
+
+    <!-- Vencido: la consecuencia junto a la acción (Alert · Error) -->
+    <include
+        android:id="@+id/alert"
+        layout="@layout/view_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_primary"
+        style="@style/Widget.Miarriendo.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/spacing_md"
+        tools:text="Pagar abono 2 de 3 · $150.000" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_secondary"
+        style="@style/Widget.Miarriendo.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:visibility="gone"
+        tools:text="@string/my_rental_pay_balance"
+        tools:visibility="visible" />
+</LinearLayout>

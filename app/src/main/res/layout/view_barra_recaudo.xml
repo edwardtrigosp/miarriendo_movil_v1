@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- BarraRecaudo (438:2690): pista brand/container de 8 y relleno brand/primary; verde al 100 % (desde el código).
+     Sin hueco ni punto final: así es en Figma. -->
+<com.google.android.material.progressindicator.LinearProgressIndicator xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:importantForAccessibility="no"
+    android:max="100"
+    app:indicatorColor="@color/brand_primary"
+    app:indicatorTrackGapSize="0dp"
+    app:trackColor="@color/brand_container"
+    app:trackCornerRadius="4dp"
+    app:trackStopIndicatorSize="0dp"
+    app:trackThickness="8dp"
+    tools:progress="50" />

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Módulo / Mis propiedades (446:3608): OwnerPropertyCard por propiedad y "Agregar propiedad".
+     Lleva encima el separador de 8 (como Para ti) porque marca el paso de "lo de hoy" al inventario. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Separador: surface/high -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/surface_high" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/home_properties_title"
+                android:textAppearance="@style/TextAppearance.Miarriendo.H3" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                android:textColor="@color/text_secondary"
+                tools:text="3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/list_properties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="vertical" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_property"
+            style="@style/Widget.Miarriendo.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/home_properties_add"
+            app:icon="@drawable/ic_add" />
+    </LinearLayout>
+</LinearLayout>

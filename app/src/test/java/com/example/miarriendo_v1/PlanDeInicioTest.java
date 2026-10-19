@@ -9,9 +9,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/** Las 4 columnas del mapa de módulos de Figma (448:4299). */
+/** Las 4 columnas del mapa de módulos de Figma (448:4300, revisión por módulos del 13/10). */
 public class PlanDeInicioTest {
 
     private static final String INQ = RegisterRoleActivity.ROL_INQUILINO;
@@ -56,7 +58,7 @@ public class PlanDeInicioTest {
     @Test
     public void unaRespondidaViejaNoSeMuestra() {
         assertEquals(null, paraMostrar(solicitud("r", SolicitudArriendo.ESTADO_RECHAZADA, AHORA - 31 * DIA)));
-        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, PARA_TI),
+        assertEquals(Arrays.asList(ENCABEZADO, EXPLORAR_MAPA, PARA_TI),
                 plan(INQ, 0, solicitud("r", SolicitudArriendo.ESTADO_RECHAZADA, 0)));
     }
 
@@ -70,36 +72,51 @@ public class PlanDeInicioTest {
 
     @Test
     public void inquilinoSinArriendoNiSolicitud() {
-        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, PARA_TI), plan(INQ, 0));
+        assertEquals(Arrays.asList(ENCABEZADO, EXPLORAR_MAPA, PARA_TI), plan(INQ, 0));
     }
 
     @Test
     public void inquilinoSinArriendoConSolicitudVeTuSolicitudEnSegundoLugar() {
-        assertEquals(Arrays.asList(ENCABEZADO, TU_SOLICITUD, ATAJOS, PARA_TI),
+        assertEquals(Arrays.asList(ENCABEZADO, TU_SOLICITUD, EXPLORAR_MAPA, PARA_TI),
                 plan(INQ, 0, solicitud(SolicitudArriendo.ESTADO_RECHAZADA)));
     }
 
     @Test
     public void inquilinoConArriendo() {
-        assertEquals(Arrays.asList(ENCABEZADO, MI_ARRIENDO, ATAJOS, RECORDATORIOS, BUSCAR_HOGAR),
+        assertEquals(Arrays.asList(ENCABEZADO, MI_ARRIENDO, BUSCAR_HOGAR),
                 plan(INQ, 1, solicitud(SolicitudArriendo.ESTADO_ACEPTADA)));
     }
 
     @Test
-    public void propietarioSinSolicitudesPendientes() {
-        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, ATAJOS, ATENCION, MIS_PROPIEDADES),
+    public void propietarioSinPendientes() {
+        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, MIS_PROPIEDADES),
                 plan(PROP, 2, solicitud(SolicitudArriendo.ESTADO_ACEPTADA)));
     }
 
     @Test
-    public void propietarioConSolicitudPendienteVeSolicitudesRecibidasEnTercerLugar() {
-        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, SOLICITUDES_RECIBIDAS, ATAJOS, ATENCION, MIS_PROPIEDADES),
+    public void propietarioConSolicitudPendienteVePendientesEnTercerLugar() {
+        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, PENDIENTES, MIS_PROPIEDADES),
                 plan(PROP, 1, solicitud(SolicitudArriendo.ESTADO_PENDIENTE)));
     }
 
     @Test
     public void unaSolicitudSinEstadoCuentaComoPendiente() {
-        assertTrue(plan(PROP, 1, solicitud(null)).contains(SOLICITUDES_RECIBIDAS));
+        assertTrue(plan(PROP, 1, solicitud(null)).contains(PENDIENTES));
+    }
+
+    @Test
+    public void unPagoVencidoTambienEsPendiente() {
+        Propiedad p = new Propiedad();
+        p.id = "casa";
+        Cuota vencida = new Cuota();
+        vencida.id = "c1";
+        vencida.monto = 450_000;
+        vencida.estado = Cuota.PENDIENTE;
+        vencida.vence = System.currentTimeMillis() - 2 * DIA;
+        Map<String, List<Cuota>> cuotas = new HashMap<>();
+        cuotas.put("casa", Collections.singletonList(vencida));
+        DatosInicio datos = new DatosInicio(PROP, Collections.singletonList(p), null, cuotas, true);
+        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, PENDIENTES, MIS_PROPIEDADES), PlanDeInicio.modulos(datos));
     }
 
     @Test
@@ -117,7 +134,7 @@ public class PlanDeInicioTest {
     public void listasNulasSeTratanComoVacias() {
         DatosInicio datos = new DatosInicio(INQ, null, null);
         assertEquals(PlanDeInicio.Perfil.INQUILINO_SIN_ARRIENDO, datos.perfil());
-        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, PARA_TI), PlanDeInicio.modulos(datos));
+        assertEquals(Arrays.asList(ENCABEZADO, EXPLORAR_MAPA, PARA_TI), PlanDeInicio.modulos(datos));
     }
 
     @Test

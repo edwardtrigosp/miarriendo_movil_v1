@@ -461,20 +461,20 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
     }
 
     /**
-     * Con una propiedad seleccionada se ve su tarjeta y "Centrar mapa" pasa junto al buscador; sin selección se ve
-     * la ayuda de exploración (o el aviso de que no hay propiedades) y "Centrar mapa" flota sobre el mapa.
+     * Con una propiedad seleccionada se ve su tarjeta y "Centrar mapa" pasa junto al buscador; sin selección
+     * "Centrar mapa" flota sobre el mapa y, si hay precios que tocar, se ve la ayuda de exploración (342:2892).
+     * Sin propiedades no hay tarjeta: "0 disponibles" de la barra ya lo dice.
      */
     private void actualizarAyuda() {
         boolean haySeleccion = seleccionadaId != null;
         boolean vacio = visibles.isEmpty();
         cardSelected.setVisibility(haySeleccion ? View.VISIBLE : View.GONE);
         btnLocateInline.setVisibility(haySeleccion ? View.VISIBLE : View.GONE);
-        cardHelp.setVisibility(haySeleccion ? View.GONE : View.VISIBLE);
+        cardHelp.setVisibility(haySeleccion || vacio ? View.GONE : View.VISIBLE);
         btnLocate.setVisibility(haySeleccion ? View.GONE : View.VISIBLE);
-        if (!haySeleccion) {
-            tvHelpTitle.setText(vacio ? R.string.map_empty_title : R.string.map_help_title);
-            tvHelpText.setText(!vacio ? R.string.map_help_text
-                    : catalogo.isEmpty() ? R.string.tenant_empty : R.string.results_empty);
+        if (!haySeleccion && !vacio) {
+            tvHelpTitle.setText(R.string.map_help_title);
+            tvHelpText.setText(R.string.map_help_text);
         }
         cerrarTarjeta.setEnabled(haySeleccion);
     }

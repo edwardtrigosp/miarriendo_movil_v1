@@ -1,7 +1,10 @@
 package com.example.miarriendo_v1;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Datos base del inicio unificado, leídos una vez y compartidos por los módulos para que no repitan
@@ -14,11 +17,33 @@ final class DatosInicio {
     final List<Propiedad> propiedades;
     /** Inquilino: solicitudes que envió. Propietario: solicitudes que recibió. */
     final List<SolicitudArriendo> solicitudes;
+    /** Cuotas por id de propiedad: las del inquilino actual (inquilino: las suyas). */
+    final Map<String, List<Cuota>> cuotas;
+    /** El propietario registró una cuenta bancaria completa para recibir las transferencias. */
+    final boolean tieneCuenta;
 
     DatosInicio(String rol, List<Propiedad> propiedades, List<SolicitudArriendo> solicitudes) {
+        this(rol, propiedades, solicitudes, null, false);
+    }
+
+    DatosInicio(String rol, List<Propiedad> propiedades, List<SolicitudArriendo> solicitudes,
+                Map<String, List<Cuota>> cuotas, boolean tieneCuenta) {
         this.rol = rol;
         this.propiedades = propiedades == null ? new ArrayList<>() : propiedades;
         this.solicitudes = solicitudes == null ? new ArrayList<>() : solicitudes;
+        this.cuotas = cuotas == null ? new HashMap<>() : cuotas;
+        this.tieneCuenta = tieneCuenta;
+    }
+
+    /** Las cuotas de una propiedad; vacía si no tiene. */
+    List<Cuota> cuotasDe(Propiedad p) {
+        List<Cuota> lista = p == null ? null : cuotas.get(p.id);
+        return lista == null ? Collections.emptyList() : lista;
+    }
+
+    /** Inquilino con arriendo: la propiedad que arrienda. Null si no tiene. */
+    Propiedad propiedadArrendada() {
+        return esInquilino() && !propiedades.isEmpty() ? propiedades.get(0) : null;
     }
 
     boolean esInquilino() {
@@ -71,18 +96,16 @@ final class DatosInicio {
         return pendiente != null ? pendiente : respondida;
     }
 
-    /** El propietario tiene al menos una solicitud por responder. */
-    boolean tieneSolicitudesPendientes() {
-        return esPropietario() && solicitudesPendientes() > 0;
+    /** El propietario tiene algo que atender: un pago vencido o una solicitud por responder. */
+    boolean tienePendientes(long ahora) {
+        return esPropietario() && !pendientes(ahora).isEmpty();
     }
 
-    int solicitudesPendientes() {
-        int n = 0;
-        for (SolicitudArriendo s : solicitudes) {
-            if (s.pendiente()) {
-                n++;
-            }
-        }
-        return n;
+    List<PendientesPropietario.Pendiente> pendientes(long ahora) {
+        return PendientesPropietario.todos(propiedades, cuotas, solicitudes, ahora);
+    }
+
+    RecaudoDelMes recaudo(long ahora) {
+        return RecaudoDelMes.calcular(cuotas.values(), tieneCuenta, ahora);
     }
 }

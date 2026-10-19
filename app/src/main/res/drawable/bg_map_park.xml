@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parque del mapa en miniatura (481:2345): map/park con radio de 10 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/map_park" />
+    <corners android:radius="10dp" />
+</shape>

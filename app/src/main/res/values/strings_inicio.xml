@@ -3,18 +3,26 @@
     <!-- Inicio unificado · Módulo / Encabezado (446:3435) -->
     <string name="home_greeting">Hola, %1$s</string>
     <string name="home_greeting_generic">Hola</string>
-    <string name="home_subtitle_search">Encuentra tu próximo hogar</string>
+    <string name="home_subtitle_search">Encuentra tu hogar en Valledupar</string>
     <string name="home_tip_how_it_works">Así funciona: solicitas, el propietario acepta y pagas con Nequi</string>
-    <plurals name="home_tip_new_this_week">
-        <item quantity="one">%d arriendo nuevo esta semana</item>
-        <item quantity="other">%d arriendos nuevos esta semana</item>
-    </plurals>
+    <string name="home_tip_close">Cerrar sugerencia</string>
+    <!-- Reglas de sugerencias (475:4586) -->
+    <string name="home_tip_welcome">Tu arriendo empezó. ¡Bienvenido!</string>
+    <string name="home_tip_nequi">Guarda tu celular Nequi y paga en 2 toques</string>
+    <string name="home_tip_receipt">Tu comprobante de %1$s está listo</string>
+    <string name="home_tip_transfer">Tu transferencia de %1$s ya llegó</string>
+    <string name="home_nequi_dialog_title">Tu celular Nequi</string>
+    <string name="home_nequi_dialog_text">Lo usaremos para enviarte el cobro del arriendo a Nequi.</string>
+    <string name="home_nequi_dialog_save">Guardar</string>
+    <string name="home_nequi_saved">Guardamos tu celular Nequi</string>
 
-    <!-- Módulo / Atajos (446:3523) -->
-    <string name="shortcut_map">Mapa</string>
-    <string name="shortcut_filters">Filtros</string>
-    <string name="shortcut_requests">Solicitudes</string>
-    <string name="shortcut_profile">Mi perfil</string>
+    <!-- Módulo / Explorar en mapa (compacto) (481:2342) -->
+    <string name="explore_map_title">Explorar en mapa</string>
+    <string name="explore_map_text">Busca por zona y filtra a tu medida.</string>
+    <string name="explore_map_button">Buscar en el mapa</string>
+    <!-- Precios de ejemplo de la ilustración del mapa (decorativos) -->
+    <string name="explore_map_pin_a">$1,1M</string>
+    <string name="explore_map_pin_b">$850 mil</string>
 
     <!-- Módulo / Tu solicitud (446:3671) y PasosSolicitud (441:3080) -->
     <string name="your_request_title">Tu solicitud</string>
@@ -38,6 +46,94 @@
     <string name="step_answer">Respuesta</string>
 
     <!-- Módulo / Para ti (446:3634) -->
+    <string name="for_you_recent">Recién publicados</string>
     <string name="for_you_keep_looking">Sigue buscando</string>
     <string name="for_you_similar">Hogares parecidos</string>
+
+    <!-- Módulo / Mi arriendo (446:3500) -->
+    <string name="home_rental_title">Mi arriendo · %1$s</string>
+    <string name="home_rental_open">Abrir Mi arriendo</string>
+    <string name="home_rental_label_to_pay">Por pagar</string>
+    <string name="home_rental_label_left">Te falta pagar</string>
+    <string name="home_rental_label_overdue">Para ponerte al día</string>
+    <string name="home_rental_label_waiting">Cobro enviado a Nequi</string>
+    <string name="home_rental_label_up_to_date">Estás al día</string>
+    <string name="home_rental_detail_month">Arriendo de %1$s · COP</string>
+    <string name="home_rental_detail_of">de %1$s COP</string>
+    <string name="home_rental_detail_waiting">%1$s · ••• %2$s</string>
+    <string name="home_rental_detail_paid_single">Pagaste %1$s en un solo pago</string>
+    <string name="home_rental_detail_paid_installments">Pagaste %1$s en %2$d abonos</string>
+    <string name="home_rental_chip_unpaid">No has pagado</string>
+    <string name="home_rental_chip_today">Vence hoy</string>
+    <plurals name="home_rental_chip_days">
+        <item quantity="one">Vence en %d día</item>
+        <item quantity="other">Vence en %d días</item>
+    </plurals>
+    <plurals name="home_rental_chip_overdue">
+        <item quantity="one">Vencido hace %d día</item>
+        <item quantity="other">Vencido hace %d días</item>
+    </plurals>
+    <string name="home_rental_chip_waiting">Esperando tu aprobación en Nequi</string>
+    <string name="home_rental_chip_paid">%1$s pagado</string>
+    <string name="home_rental_due">Vence el %1$s</string>
+    <string name="home_rental_deadline">Fecha límite: %1$s</string>
+    <string name="home_rental_overdue_on">Venció el %1$s</string>
+    <string name="home_rental_next_payment">Próximo pago: %1$s</string>
+    <string name="home_rental_how_to_pay">Puedes pagarlo en un solo pago o en 3 abonos de %1$s.</string>
+    <string name="home_rental_alert_overdue">Tu propietario ya ve este pago como atrasado. Págalo hoy para ponerte al día.</string>
+    <string name="home_rental_pay">Pagar arriendo</string>
+    <string name="home_rental_pay_installment">Pagar abono %1$d de %2$d · %3$s</string>
+    <string name="home_rental_pay_now">Pagar ahora · %1$s</string>
+    <string name="home_rental_open_nequi">Abrir Nequi para aprobar</string>
+    <string name="home_rental_see_receipt">Ver comprobante de %1$s</string>
+    <string name="home_rental_ring">%1$d/%2$d</string>
+    <string name="home_rental_ring_label">abonos</string>
+    <string name="home_rental_ring_description">%1$d de %2$d abonos pagados</string>
+
+    <!-- Módulo / Buscar hogar (fila) (482:2350) -->
+    <string name="home_search_row">Buscar otro hogar en el mapa</string>
+
+    <!-- Módulo / Recaudo (446:3584) -->
+    <string name="home_collection_title">Recaudo de %1$s</string>
+    <string name="home_collection_open">Ver pagos por inmueble</string>
+    <string name="home_collection_label_received">Recibido</string>
+    <string name="home_collection_label_paid">Pagado por tus inquilinos</string>
+    <plurals name="home_collection_detail">
+        <item quantity="one">de %1$s esperados · %2$d de %3$d inquilino</item>
+        <item quantity="other">de %1$s esperados · %2$d de %3$d inquilinos</item>
+    </plurals>
+    <string name="home_collection_transferred">Transferido a tu cuenta</string>
+    <string name="home_collection_to_transfer">Por transferir · próximo lote</string>
+    <string name="home_collection_held">Retenido · falta tu cuenta</string>
+    <string name="home_collection_pending">Pendiente de inquilinos</string>
+    <string name="home_collection_alert_held">Tienes %1$s retenidos. Registra tu cuenta bancaria para recibirlos.</string>
+    <string name="home_collection_register_account">Registrar cuenta bancaria</string>
+    <string name="home_collection_choose">¿De qué inmueble?</string>
+
+    <!-- Módulo / Pendientes (482:2565) -->
+    <string name="home_pending_title">Pendientes</string>
+    <string name="home_pending_see_all">Ver todo</string>
+    <string name="home_pending_overdue_chip">Vencido</string>
+    <string name="home_pending_overdue_title">%1$s no ha pagado</string>
+    <string name="home_pending_overdue_title_generic">Tu inquilino no ha pagado</string>
+    <string name="home_pending_request_chip">Nueva</string>
+    <string name="home_pending_request_title">%1$s quiere arrendar</string>
+    <string name="home_pending_request_title_generic">Alguien quiere arrendar</string>
+    <string name="home_pending_detail">%1$s · %2$s</string>
+
+    <!-- Módulo / Mis propiedades (446:3608) -->
+    <string name="home_properties_title">Mis propiedades</string>
+    <string name="home_properties_add">Agregar propiedad</string>
+    <string name="home_properties_partial">Parcial</string>
+
+    <!-- Módulo / Primeros pasos (446:3618) -->
+    <string name="home_first_steps_title">Empieza a recibir tus arriendos</string>
+    <string name="home_first_steps_progress">%1$d de 3 pasos</string>
+    <string name="home_first_steps_publish">1. Publica tu propiedad</string>
+    <string name="home_first_steps_accept">2. Acepta a tu inquilino</string>
+    <string name="home_first_steps_account">3. Registra tu cuenta bancaria</string>
+    <string name="home_first_steps_button">Publicar mi primera propiedad</string>
+    <string name="home_first_steps_tip_title">Así recibes tu dinero</string>
+    <string name="home_first_steps_tip_text">Tu inquilino paga con Nequi, miarriendo recibe el pago y lo transfiere a tu cuenta bancaria.</string>
+    <string name="home_first_steps_done">Hecho</string>
 </resources>

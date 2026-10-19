@@ -195,7 +195,7 @@ public class PublicandoActivity extends AppCompatActivity {
         progressTrack.setVisibility(View.GONE);
 
         handler.postDelayed(() -> {
-            Intent inicio = new Intent(this, PropietarioInicioActivity.class);
+            Intent inicio = new Intent(this, InicioActivity.class);
             inicio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(inicio);
         }, ESPERA_REGISTRADO_MS);

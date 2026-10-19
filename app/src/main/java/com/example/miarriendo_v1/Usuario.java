@@ -1,5 +1,9 @@
 package com.example.miarriendo_v1;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+/** Perfil en usuarios/{uid}. Ignora campos extra como sugerencias_ocultas, que solo lee el inicio. */
+@IgnoreExtraProperties
 public class Usuario {
     private String id;
     private String nombre;

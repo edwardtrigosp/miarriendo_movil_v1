@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Módulo / Para ti (446:3634), con el catálogo que antes cargaba InquilinoInicioActivity.
- * Sin solicitud: "Para ti" con la primera en PropertyCard (Default). Solicitud en revisión: "Sigue buscando".
- * Solicitud no aceptada: "Hogares parecidos", sin destacada. Solicitud aceptada: no se dibuja (05C · 3).
+ * Módulo / Para ti (compacta) (481:2361), con el catálogo de propiedades disponibles.
+ * Hasta {@link #MAXIMO} tarjetas compactas, sin la tarjeta grande con foto. El título según el estado:
+ * sin solicitud "Recién publicados"; en revisión "Sigue buscando"; no aceptada "Hogares parecidos".
+ * Solicitud aceptada: no se dibuja (05C · 3).
  */
 final class ModuloParaTi implements ModuloInicio {
+
+    /** Máximo de tarjetas del módulo; el resto se explora desde el mapa. */
+    private static final int MAXIMO = 3;
 
     private View vista;
     private boolean activo;
@@ -36,7 +40,7 @@ final class ModuloParaTi implements ModuloInicio {
             return;
         }
         TextView titulo = vista.findViewById(R.id.tv_heading);
-        titulo.setText(estado == null ? R.string.tenant_for_you
+        titulo.setText(estado == null ? R.string.for_you_recent
                 : estado == PasosSolicitudView.Estado.NO_ACEPTADA ? R.string.for_you_similar : R.string.for_you_keep_looking);
         ctx.catalogo(new Catalogo.Resultado() {
             @Override
@@ -44,11 +48,8 @@ final class ModuloParaTi implements ModuloInicio {
                 if (!activo) {
                     return;
                 }
-                if (estado == PasosSolicitudView.Estado.NO_ACEPTADA) {
-                    mostrar(ctx, parecidos(disponibles, solicitud), false);
-                } else {
-                    mostrar(ctx, disponibles, true);
-                }
+                mostrar(ctx, estado == PasosSolicitudView.Estado.NO_ACEPTADA
+                        ? parecidos(disponibles, solicitud) : disponibles);
             }
 
             @Override
@@ -75,25 +76,20 @@ final class ModuloParaTi implements ModuloInicio {
         return parecidas.isEmpty() ? otras : parecidas;
     }
 
-    /** Con destacada, la primera va en PropertyCard y las demás en tarjeta compacta (como el inicio anterior). */
-    private void mostrar(ContextoInicio ctx, List<Propiedad> propiedades, boolean conDestacada) {
+    /** "N disponibles" cuenta todas; en pantalla van las {@link #MAXIMO} primeras, ya ordenadas por recientes. */
+    private void mostrar(ContextoInicio ctx, List<Propiedad> propiedades) {
         vista.findViewById(R.id.loading).setVisibility(View.GONE);
         ((TextView) vista.findViewById(R.id.tv_available)).setText(vista.getResources()
                 .getQuantityString(R.plurals.tenant_available, propiedades.size(), propiedades.size()));
         vista.findViewById(R.id.tv_empty).setVisibility(propiedades.isEmpty() ? View.VISIBLE : View.GONE);
         LinearLayout lista = vista.findViewById(R.id.list_properties);
         lista.removeAllViews();
-        int entreGrupos = Math.round(20 * vista.getResources().getDisplayMetrics().density);
         int entreTarjetas = vista.getResources().getDimensionPixelSize(R.dimen.spacing_sm);
-        for (int i = 0; i < propiedades.size(); i++) {
+        for (int i = 0; i < Math.min(propiedades.size(), MAXIMO); i++) {
             Propiedad p = propiedades.get(i);
-            View.OnClickListener abrir = v -> ctx.abrirDetalle(p);
-            boolean destacada = conDestacada && i == 0;
-            View tarjeta = destacada
-                    ? TarjetasPropiedad.grande(ctx.activity, lista, p, abrir)
-                    : TarjetasPropiedad.compacta(ctx.activity, lista, p, abrir);
+            View tarjeta = TarjetasPropiedad.compacta(ctx.activity, lista, p, v -> ctx.abrirDetalle(p));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tarjeta.getLayoutParams();
-            lp.topMargin = i == 0 ? 0 : (conDestacada && i == 1 ? entreGrupos : entreTarjetas);
+            lp.topMargin = i == 0 ? 0 : entreTarjetas;
             lista.addView(tarjeta, lp);
         }
     }

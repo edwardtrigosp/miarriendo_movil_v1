@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Módulo / Pendientes (482:2565): máximo 3 filas en una lista con borde; "Ver todo" solo si hay más. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_lg"
+    android:paddingTop="@dimen/spacing_md"
+    android:paddingEnd="@dimen/spacing_lg"
+    android:paddingBottom="@dimen/spacing_sm">
+
+    <!-- Encabezado (482:2566) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/home_pending_title"
+            android:textAppearance="@style/TextAppearance.Miarriendo.H3" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+            android:textColor="@color/text_secondary"
+            tools:text="3" />
+    </LinearLayout>
+
+    <!-- Lista (482:2569): surface/card, borde border/card y radio lg; divisores entre filas -->
+    <LinearLayout
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:background="@drawable/bg_lista_pendientes"
+        android:clipToOutline="true"
+        android:divider="@drawable/divider_card"
+        android:orientation="vertical"
+        android:showDividers="middle" />
+
+    <!-- Ver todo (482:2599) -->
+    <LinearLayout
+        android:id="@+id/btn_see_all"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_pending_see_all"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+            android:textColor="@color/brand_primary" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/brand_primary" />
+    </LinearLayout>
+</LinearLayout>

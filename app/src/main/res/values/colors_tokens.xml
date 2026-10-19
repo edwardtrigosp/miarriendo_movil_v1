@@ -52,4 +52,9 @@
     <color name="text_placeholder">#79747E</color>
     <!-- brand/accent-soft: borde punteado de "Agregar fotos" -->
     <color name="brand_accent_soft">@color/purple_200</color>
+
+    <!-- Ilustración del mapa en miniatura (Figma: map/block, map/park, map/road) -->
+    <color name="map_block">#EFECF3</color>
+    <color name="map_park">#E5EBE3</color>
+    <color name="map_road">#E3DFE9</color>
 </resources>

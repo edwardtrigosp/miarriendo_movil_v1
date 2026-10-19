@@ -26,6 +26,18 @@ final class ReglasPago {
         VENCIDO
     }
 
+    /** Variante de Módulo / Mi arriendo (446:3500) en el inicio. */
+    enum EstadoInicio {
+        POR_PAGAR,
+        ABONO_EN_CURSO,
+        VENCIDO,
+        ESPERANDO_NEQUI,
+        AL_DIA
+    }
+
+    /** Abonos en que se reparte una cuota cuando el inquilino elige pagar por partes. */
+    static final int ABONOS_POR_CUOTA = 3;
+
     /** Qué pasó con el dinero que el inquilino ya pagó, visto desde el propietario. */
     enum EstadoTransferencia {
         /** Todavía no hay nada pagado. */
@@ -158,6 +170,64 @@ final class ReglasPago {
             return EstadoVisible.VENCIDO;
         }
         return cuota.pagado > 0 ? EstadoVisible.PARCIAL : EstadoVisible.PENDIENTE;
+    }
+
+    /** Un cobro esperando Nequi manda sobre todo lo demás: mientras exista no se puede iniciar otro. */
+    static EstadoInicio estadoInicio(Cuota cuota, long ahora) {
+        if (enProceso(cuota) != null) {
+            return EstadoInicio.ESPERANDO_NEQUI;
+        }
+        switch (estadoVisible(cuota, ahora)) {
+            case PAGADO:
+                return EstadoInicio.AL_DIA;
+            case VENCIDO:
+                return EstadoInicio.VENCIDO;
+            case PARCIAL:
+                return EstadoInicio.ABONO_EN_CURSO;
+            default:
+                return EstadoInicio.POR_PAGAR;
+        }
+    }
+
+    /** La cuota se paga por abonos: es cuando el inicio muestra el AnilloAbonos. */
+    static boolean porAbonos(Cuota cuota) {
+        return Cuota.MODALIDAD_ABONOS.equals(cuota.modalidad);
+    }
+
+    /**
+     * Pagados y total del AnilloAbonos (430:2355). El saldo cuenta como lo que faltaba: una cuota pagada siempre
+     * se ve completa.
+     */
+    static int[] progresoAbonos(Cuota cuota) {
+        int total = 0;
+        for (Abono abono : abonos(cuota)) {
+            if (Abono.TIPO_ABONO.equals(abono.tipo)) {
+                total++;
+            }
+        }
+        total = Math.max(total, ABONOS_POR_CUOTA);
+        int pagados = cuota.pagada() ? total : Math.min(abonosAprobados(cuota), total);
+        return new int[]{pagados, total};
+    }
+
+    /** Lo que cobra el siguiente botón de pago: el abono que sigue si va por abonos; si no, todo el saldo. */
+    static long montoSiguientePago(Cuota cuota) {
+        Abono siguiente = siguientePorPagar(cuota);
+        if (porAbonos(cuota) && siguiente != null) {
+            return siguiente.monto;
+        }
+        return saldo(cuota);
+    }
+
+    /** La cuota que sigue a la activa (para "Próximo pago: 5 de diciembre"); null si no hay. */
+    static Cuota siguienteCuota(List<Cuota> cuotas, Cuota activa) {
+        Cuota siguiente = null;
+        for (Cuota cuota : cuotas) {
+            if (cuota.vence > activa.vence && (siguiente == null || cuota.vence < siguiente.vence)) {
+                siguiente = cuota;
+            }
+        }
+        return siguiente;
     }
 
     /**

@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Inicio del propietario (Figma 144:1080 y 216:740) -->
-    <string name="owner_greeting">Hola, %1$s</string>
-    <string name="owner_greeting_generic">Hola</string>
-    <string name="owner_empty_title">Aún no tienes propiedades</string>
-    <string name="owner_empty_subtitle">Agrega tu primera propiedad para comenzar a gestionar tus arriendos</string>
-    <string name="owner_add_property">Agregar propiedad</string>
-    <string name="owner_status_today">Así van tus arriendos hoy</string>
+    <!-- Textos del propietario compartidos por varias pantallas -->
     <string name="owner_open_profile">Abrir perfil</string>
-    <string name="owner_my_properties">Mis propiedades</string>
     <string name="owner_price_month">$%1$s COP/mes</string>
     <string name="owner_status_up_to_date">Al día</string>
     <string name="owner_status_pending">Pendiente</string>
-    <string name="owner_status_late">Atrasado</string>
     <string name="owner_status_available">Disponible</string>
-    <string name="owner_load_error">No se pudieron cargar tus propiedades: %1$s</string>
     <string name="soon">Próximamente</string>
 
     <!-- Publicar propiedad -->

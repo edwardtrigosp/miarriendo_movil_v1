@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- "Abrir Nequi para aprobar" del inicio: desde Android 11 hay que declarar la app que se abre -->
+    <queries>
+        <package android:name="com.nequi.MobileApp" />
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -44,9 +49,6 @@
             android:name=".RegisterRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".PropietarioInicioActivity"
-            android:exported="false" />
-        <activity
             android:name=".PublicarPropiedadActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -64,9 +66,6 @@
             android:exported="false" />
         <activity
             android:name=".InicioActivity"
-            android:exported="false" />
-        <activity
-            android:name=".InquilinoInicioActivity"
             android:exported="false" />
         <activity
             android:name=".InquilinoMapaActivity"

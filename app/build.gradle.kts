@@ -29,10 +29,6 @@ val hostEmuladores: String = (project.findProperty("emuladoresHost") ?: "10.0.2.
 val usarEmuladores: String = (project.findProperty("emuladoresFirebase")
     ?: propiedadesLocales.getProperty("USE_FIREBASE_EMULATORS", "false")).toString()
 
-// Interruptor del inicio unificado: -PinicioUnificado=true o INICIO_UNIFICADO=true en local.properties.
-val inicioUnificado: String = (project.findProperty("inicioUnificado")
-    ?: propiedadesLocales.getProperty("INICIO_UNIFICADO", "false")).toString()
-
 android {
     namespace = "com.example.miarriendo_v1"
     compileSdk {
@@ -49,8 +45,6 @@ android {
         buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
         buildConfigField("boolean", "USE_FIREBASE_EMULATORS", usarEmuladores)
         buildConfigField("String", "EMULATORS_HOST", "\"$hostEmuladores\"")
-        // Inicio unificado por módulos (InicioActivity). Apagado hasta la fase 4.
-        buildConfigField("boolean", "INICIO_UNIFICADO", inicioUnificado)
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

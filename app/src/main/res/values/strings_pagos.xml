@@ -25,10 +25,6 @@
     <string name="received_accepted_done">Arriendo activado</string>
     <string name="received_rejected_done">Solicitud rechazada</string>
     <string name="received_load_error">No se pudieron cargar las solicitudes: %1$s</string>
-    <plurals name="received_banner_count">
-        <item quantity="one">Tienes %1$d solicitud por responder</item>
-        <item quantity="other">Tienes %1$d solicitudes por responder</item>
-    </plurals>
 
     <!-- Estados de una cuota y de un abono -->
     <string name="pay_status_unpaid">No has pagado</string>
@@ -72,7 +68,6 @@
     <string name="my_rental_see_history">Ver historial del inmueble</string>
     <string name="my_rental_see_waiting">Ver cobro en Nequi</string>
     <string name="my_rental_see_tracking">Ver seguimiento de abonos</string>
-    <string name="my_rental_banner">Tu arriendo: %1$s</string>
 
     <!-- Inquilino · ¿Cómo quieres pagar? -->
     <string name="choose_title">¿Cómo quieres pagar?</string>

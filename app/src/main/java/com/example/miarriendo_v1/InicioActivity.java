@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Inicio unificado por módulos: reemplazará a InquilinoInicioActivity y PropietarioInicioActivity.
- * Figma: 00 · Inicio unificado · Mapa de módulos (448:4299); ejemplos en 05B, 05C y 02B.
- * Solo se abre con el interruptor BuildConfig.INICIO_UNIFICADO; los módulos llegan en las fases 1 a 3.
+ * Inicio único por módulos para inquilinos y propietarios (reemplazó a los inicios por rol).
+ * Figma: 00 · Inicio unificado · Mapa de módulos (448:4299); inquilino sin arriendo: 01 (497:4729);
+ * inquilino con arriendo: 02 (432:2312); propietario: 03 (439:2674), con los módulos simplificados del mapa.
  */
 public class InicioActivity extends AppCompatActivity {
 
@@ -122,17 +122,29 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
-    /** Fábrica de módulos. Los que aún no existen devuelven null y no se dibujan. */
+    /** Fábrica de módulos. Un módulo sin implementación devuelve null y no se dibuja. */
     private ModuloInicio crearModulo(PlanDeInicio.Modulo tipo) {
         switch (tipo) {
             case ENCABEZADO:
                 return new ModuloEncabezado();
             case TU_SOLICITUD:
                 return new ModuloTuSolicitud();
-            case ATAJOS:
-                return new ModuloAtajos();
+            case EXPLORAR_MAPA:
+                return new ModuloExplorarMapa();
             case PARA_TI:
                 return new ModuloParaTi();
+            case MI_ARRIENDO:
+                return new ModuloMiArriendo();
+            case BUSCAR_HOGAR:
+                return new ModuloBuscarHogar();
+            case RECAUDO:
+                return new ModuloRecaudo();
+            case PENDIENTES:
+                return new ModuloPendientes();
+            case MIS_PROPIEDADES:
+                return new ModuloMisPropiedades();
+            case PRIMEROS_PASOS:
+                return new ModuloPrimerosPasos();
             default:
                 return null;
         }

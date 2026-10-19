@@ -25,7 +25,7 @@ public class SolicitudEnviadaActivity extends AppCompatActivity {
             finish();
         });
         findViewById(R.id.btn_keep_exploring).setOnClickListener(v -> {
-            Intent inicio = new Intent(this, InquilinoInicioActivity.class);
+            Intent inicio = new Intent(this, InicioActivity.class);
             inicio.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(inicio);
             finish();

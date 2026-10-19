@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Punto de 8 de FilaDesglose (438:2711); el color del tono se aplica con backgroundTint -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/text_secondary" />
+    <size
+        android:width="8dp"
+        android:height="8dp" />
+</shape>

@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +33,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,9 +45,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Figma: Inquilino / Mapa · Explorar arriendos (342:2892) y Casa Los Mayales seleccionada (342:3011).
- * Mapa de Google Maps con un pin de precio por cada propiedad disponible; al tocar uno aparece su tarjeta
- * con el botón "Ir a propiedad". Usa los mismos filtros de búsqueda que Inicio y Resultados.
+ * Figma: Actual · App › 06 · Inquilino · Explorar en mapa (rediseño). Se entra desde "Buscar en el mapa" del
+ * inicio: ← Volver, buscador y Filtros (con contador) arriba; un pin con el precio por cada propiedad disponible;
+ * abajo, la cantidad de arriendos de la zona visible con "Ver lista", o la tarjeta de la propiedad tocada con
+ * "Ver propiedad". Los filtros activos se ven como chips y se quitan al tocarlos.
  */
 public class InquilinoMapaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -67,11 +72,13 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
     private boolean ajustarAlTerminar;
     private int paddingInferior = -1;
 
-    private TextInputEditText etSearch;
-    private TextView tvAvailable, tvHelpTitle, tvHelpText;
-    private TextView tvFeatureBedrooms, tvFeatureBathrooms, tvFeatureArea;
-    private View loading, mapArea, mapContainer, cardHelp, cardSelected, resumen;
-    private View btnLocate, btnLocateInline, featureArea, spaceArea;
+    private EditText etSearch;
+    private TextView tvFiltersCount, tvCount, tvEmptyTitle, tvEmptyText;
+    private TextView tvSelectedName, tvSelectedPrice, tvSelectedZone, tvSelectedFeatures;
+    private ImageView ivSelectedPhoto;
+    private ChipGroup cgFilters;
+    private View loading, mapContainer, filtersScroll, sheet, sheetSummary, sheetEmpty, cardSelected;
+    private View btnLocate, btnClearFilters;
 
     /** Filtros → se aplican aquí mismo sobre el mapa. */
     private final ActivityResultLauncher<Intent> elegirFiltros =
@@ -83,7 +90,7 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
                 if (elegidos != null) {
                     filtros = elegidos;
                     etSearch.setText(filtros.ciudad);
-                    mostrarPropiedades(true);
+                    alCambiarFiltros();
                 }
             });
 
@@ -111,62 +118,72 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         setContentView(R.layout.activity_inquilino_mapa);
         Pantallas.aplicarInsets(findViewById(R.id.main));
 
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuario == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
-        EncabezadoInquilino.configurar(this, usuario);
         getOnBackPressedDispatcher().addCallback(this, cerrarTarjeta);
 
         etSearch = findViewById(R.id.et_search);
-        tvAvailable = findViewById(R.id.tv_available);
-        tvHelpTitle = findViewById(R.id.tv_help_title);
-        tvHelpText = findViewById(R.id.tv_help_text);
-        tvFeatureBedrooms = findViewById(R.id.tv_feature_bedrooms);
-        tvFeatureBathrooms = findViewById(R.id.tv_feature_bathrooms);
-        tvFeatureArea = findViewById(R.id.tv_feature_area);
+        tvFiltersCount = findViewById(R.id.tv_filters_count);
+        cgFilters = findViewById(R.id.cg_filters);
+        filtersScroll = findViewById(R.id.filters_scroll);
         loading = findViewById(R.id.loading);
-        mapArea = findViewById(R.id.map_area);
         mapContainer = findViewById(R.id.map);
-        cardHelp = findViewById(R.id.card_help);
+        sheet = findViewById(R.id.sheet);
+        sheetSummary = findViewById(R.id.sheet_summary);
+        sheetEmpty = findViewById(R.id.sheet_empty);
+        tvCount = findViewById(R.id.tv_count);
+        tvEmptyTitle = findViewById(R.id.tv_empty_title);
+        tvEmptyText = findViewById(R.id.tv_empty_text);
+        btnClearFilters = findViewById(R.id.btn_clear_filters);
         cardSelected = findViewById(R.id.card_selected);
-        resumen = findViewById(R.id.resumen);
+        ivSelectedPhoto = findViewById(R.id.iv_selected_photo);
+        tvSelectedName = findViewById(R.id.tv_selected_name);
+        tvSelectedPrice = findViewById(R.id.tv_selected_price);
+        tvSelectedZone = findViewById(R.id.tv_selected_zone);
+        tvSelectedFeatures = findViewById(R.id.tv_selected_features);
         btnLocate = findViewById(R.id.btn_locate);
-        btnLocateInline = findViewById(R.id.btn_locate_inline);
-        featureArea = findViewById(R.id.feature_area);
-        spaceArea = findViewById(R.id.space_area);
 
         FiltrosBusqueda recibidos = getIntent().getSerializableExtra(FiltrosActivity.EXTRA_FILTROS, FiltrosBusqueda.class);
         if (recibidos != null) {
             filtros = recibidos;
         }
         etSearch.setText(filtros.ciudad);
+        mostrarFiltrosActivos();
 
+        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         etSearch.setOnEditorActionListener((v, accion, evento) -> {
             if (accion != EditorInfo.IME_ACTION_SEARCH) {
                 return false;
             }
             filtros.ciudad = texto(etSearch);
             ocultarTeclado();
-            mostrarPropiedades(true);
+            alCambiarFiltros();
             return true;
         });
         findViewById(R.id.btn_filters).setOnClickListener(v -> {
             filtros.ciudad = texto(etSearch);
             elegirFiltros.launch(new Intent(this, FiltrosActivity.class).putExtra(FiltrosActivity.EXTRA_FILTROS, filtros));
         });
-        View.OnClickListener centrar = v -> {
+        btnLocate.setOnClickListener(v -> {
             if (UbicacionActual.tienePermiso(this)) {
                 centrarEnMiUbicacion();
             } else {
                 pedirUbicacion.launch(new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
             }
-        };
-        btnLocate.setOnClickListener(centrar);
-        btnLocateInline.setOnClickListener(centrar);
+        });
+        findViewById(R.id.btn_see_list).setOnClickListener(v -> {
+            filtros.ciudad = texto(etSearch);
+            startActivity(new Intent(this, ResultadosActivity.class).putExtra(FiltrosActivity.EXTRA_FILTROS, filtros));
+        });
+        btnClearFilters.setOnClickListener(v -> {
+            filtros.quitarTodos();
+            etSearch.setText("");
+            alCambiarFiltros();
+        });
         findViewById(R.id.btn_close_card).setOnClickListener(v -> deseleccionar());
         View.OnClickListener irAPropiedad = v -> {
             Propiedad p = visibles.get(seleccionadaId);
@@ -175,11 +192,11 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
             }
         };
         findViewById(R.id.btn_go).setOnClickListener(irAPropiedad);
-        resumen.setOnClickListener(irAPropiedad);
-        // El logo de Google queda siempre por encima de las tarjetas que flotan sobre el mapa.
-        View.OnLayoutChangeListener alCambiarTarjeta = (v, l, t, r, b, ol, ot, or, ob) -> actualizarPaddingDelMapa();
-        cardHelp.addOnLayoutChangeListener(alCambiarTarjeta);
-        cardSelected.addOnLayoutChangeListener(alCambiarTarjeta);
+        findViewById(R.id.selected_summary).setOnClickListener(irAPropiedad);
+        // El logo de Google queda siempre por encima de la hoja o de la tarjeta.
+        View.OnLayoutChangeListener alCambiarAbajo = (v, l, t, r, b, ol, ot, or, ob) -> actualizarPaddingDelMapa();
+        sheet.addOnLayoutChangeListener(alCambiarAbajo);
+        cardSelected.addOnLayoutChangeListener(alCambiarAbajo);
 
         if (!hayClaveDeMapas()) {
             mostrarSinMapa();
@@ -215,7 +232,8 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
     private void mostrarSinMapa() {
         loading.setVisibility(View.GONE);
         findViewById(R.id.map_unavailable).setVisibility(View.VISIBLE);
-        findViewById(R.id.tv_map_caption).setVisibility(View.GONE);
+        btnLocate.setVisibility(View.GONE);
+        sheet.setVisibility(View.GONE);
     }
 
     private void iniciarMapa() {
@@ -257,6 +275,8 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
             return true;
         });
         mapa.setOnMapClickListener(posicion -> deseleccionar());
+        // La cantidad de la hoja es la de la parte visible: se recalcula cada vez que el mapa se detiene.
+        mapa.setOnCameraIdleListener(this::actualizarCantidad);
         mostrarPropiedades(true);
     }
 
@@ -289,7 +309,12 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         });
     }
 
-    /** Aplica los filtros, actualiza el contador y deja un pin por cada propiedad que cumple. */
+    private void alCambiarFiltros() {
+        mostrarFiltrosActivos();
+        mostrarPropiedades(true);
+    }
+
+    /** Aplica los filtros y deja un pin por cada propiedad que cumple. */
     private void mostrarPropiedades(boolean ajustarCamara) {
         if (mapa == null || !catalogoCargado) {
             return;
@@ -301,7 +326,6 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         for (Propiedad p : lista) {
             visibles.put(p.id, p);
         }
-        tvAvailable.setText(getResources().getQuantityString(R.plurals.tenant_available, lista.size(), lista.size()));
 
         // Fuera los pines de las propiedades que ya no cumplen los filtros.
         Iterator<Map.Entry<String, Marker>> it = marcadores.entrySet().iterator();
@@ -317,7 +341,7 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         } else if (seleccionadaId != null) {
             mostrarTarjeta(visibles.get(seleccionadaId));
         }
-        actualizarAyuda();
+        actualizarAbajo();
 
         List<Propiedad> porUbicar = new ArrayList<>();
         for (Propiedad p : lista) {
@@ -365,6 +389,7 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
             ajustarAlTerminar = false;
             ajustarCamara();
         }
+        actualizarCantidad();
     }
 
     private void limpiarMarcadores() {
@@ -394,13 +419,75 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         for (Marker marcador : marcadores.values()) {
             limites.include(marcador.getPosition());
         }
-        // El encuadre se calcula sobre la parte que no tapa la tarjeta de ayuda o la de la propiedad.
+        // El encuadre se calcula sobre la parte que no tapa la hoja o la tarjeta.
         int altoVisible = Math.max(alto / 2, alto - Math.max(0, paddingInferior));
         int margen = Math.min(dp(72), Math.min(ancho, altoVisible) / 4);
         mapa.animateCamera(CameraUpdateFactory.newLatLngBounds(limites.build(), ancho, altoVisible, margen));
     }
 
-    // ---------- Selección ----------
+    // ---------- Filtros activos ----------
+
+    /** Contador en Filtros y un chip por filtro aplicado; tocar el chip quita ese filtro. */
+    private void mostrarFiltrosActivos() {
+        List<FiltrosBusqueda.Activo> activos = filtros.activos(this);
+        int n = activos.size();
+        tvFiltersCount.setVisibility(n == 0 ? View.GONE : View.VISIBLE);
+        tvFiltersCount.setText(String.valueOf(n));
+        findViewById(R.id.btn_filters).setContentDescription(n == 0 ? getString(R.string.tenant_filters)
+                : getResources().getQuantityString(R.plurals.map_filters_active, n, n));
+
+        cgFilters.removeAllViews();
+        filtersScroll.setVisibility(n == 0 ? View.GONE : View.VISIBLE);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (FiltrosBusqueda.Activo activo : activos) {
+            Chip chip = (Chip) inflater.inflate(R.layout.item_filtro_quitable, cgFilters, false);
+            chip.setText(activo.etiqueta);
+            chip.setContentDescription(getString(R.string.map_remove_filter, activo.etiqueta));
+            View.OnClickListener quitar = v -> {
+                activo.quitar.run();
+                alCambiarFiltros();
+            };
+            chip.setOnClickListener(quitar);
+            chip.setOnCloseIconClickListener(quitar);
+            cgFilters.addView(chip);
+        }
+    }
+
+    // ---------- Hoja inferior y selección ----------
+
+    /** Abajo se ve la tarjeta si hay una propiedad seleccionada; si no, la hoja (cantidad o sin resultados). */
+    private void actualizarAbajo() {
+        boolean haySeleccion = seleccionadaId != null;
+        boolean vacio = visibles.isEmpty();
+        cardSelected.setVisibility(haySeleccion ? View.VISIBLE : View.GONE);
+        sheet.setVisibility(haySeleccion ? View.GONE : View.VISIBLE);
+        sheetSummary.setVisibility(vacio ? View.GONE : View.VISIBLE);
+        sheetEmpty.setVisibility(vacio ? View.VISIBLE : View.GONE);
+        if (vacio) {
+            boolean sinCatalogo = catalogo.isEmpty();
+            tvEmptyTitle.setText(sinCatalogo ? R.string.map_empty_title : R.string.map_empty_filters_title);
+            tvEmptyText.setText(sinCatalogo ? R.string.tenant_empty : R.string.map_empty_filters_text);
+            btnClearFilters.setVisibility(sinCatalogo ? View.GONE : View.VISIBLE);
+        }
+        cerrarTarjeta.setEnabled(haySeleccion);
+        actualizarCantidad();
+    }
+
+    /** "N arriendos en esta zona" (o "con tus filtros"): los pines que caen en la parte visible del mapa. */
+    private void actualizarCantidad() {
+        if (mapa == null || visibles.isEmpty()) {
+            return;
+        }
+        LatLngBounds zona = mapa.getProjection().getVisibleRegion().latLngBounds;
+        int enZona = 0;
+        for (Marker marcador : marcadores.values()) {
+            if (zona.contains(marcador.getPosition())) {
+                enZona++;
+            }
+        }
+        int plural = filtros.activos(this).isEmpty() ? R.plurals.map_count_zone : R.plurals.map_count_filtered;
+        tvCount.setText(getResources().getQuantityString(plural, enZona, enZona));
+    }
 
     private void seleccionar(String id) {
         Propiedad p = visibles.get(id);
@@ -414,7 +501,7 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         }
         marcarMarcador(id, true);
         mostrarTarjeta(p);
-        actualizarAyuda();
+        actualizarAbajo();
         Marker marcador = marcadores.get(id);
         if (marcador != null) {
             LatLng destino = marcador.getPosition();
@@ -433,7 +520,7 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         }
         seleccionadaId = null;
         marcarMarcador(anterior, false);
-        actualizarAyuda();
+        actualizarAbajo();
     }
 
     private void marcarMarcador(String id, boolean seleccionada) {
@@ -448,38 +535,43 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         marcador.setZIndex(seleccionada ? 1f : 0f);
     }
 
-    /** Tarjeta de propiedad seleccionada: Resumen de propiedad (342:3132) y Características (342:3146). */
+    /** Mapa / Tarjeta seleccionada: foto, nombre, precio, zona aproximada y características. */
     private void mostrarTarjeta(Propiedad p) {
-        TarjetasPropiedad.compacta(this, resumen, p);
-        tvFeatureBedrooms.setText(getResources().getQuantityString(R.plurals.stat_bedrooms_long, p.habitaciones, p.habitaciones));
-        tvFeatureBathrooms.setText(getResources().getQuantityString(R.plurals.stat_bathrooms, p.banos, p.banos));
-        String area = TarjetasPropiedad.area(this, p);
-        int visibilidadArea = area == null ? View.GONE : View.VISIBLE;
-        featureArea.setVisibility(visibilidadArea);
-        spaceArea.setVisibility(visibilidadArea);
-        tvFeatureArea.setText(area);
-    }
-
-    /**
-     * Con una propiedad seleccionada se ve su tarjeta y "Centrar mapa" pasa junto al buscador; sin selección
-     * "Centrar mapa" flota sobre el mapa y, si hay precios que tocar, se ve la ayuda de exploración (342:2892).
-     * Sin propiedades no hay tarjeta: "0 disponibles" de la barra ya lo dice.
-     */
-    private void actualizarAyuda() {
-        boolean haySeleccion = seleccionadaId != null;
-        boolean vacio = visibles.isEmpty();
-        cardSelected.setVisibility(haySeleccion ? View.VISIBLE : View.GONE);
-        btnLocateInline.setVisibility(haySeleccion ? View.VISIBLE : View.GONE);
-        cardHelp.setVisibility(haySeleccion || vacio ? View.GONE : View.VISIBLE);
-        btnLocate.setVisibility(haySeleccion ? View.GONE : View.VISIBLE);
-        if (!haySeleccion && !vacio) {
-            tvHelpTitle.setText(R.string.map_help_title);
-            tvHelpText.setText(R.string.map_help_text);
+        Bitmap portada = FotosCodec.desdeBase64(p.portada);
+        if (portada != null) {
+            ivSelectedPhoto.setImageTintList(null);
+            ivSelectedPhoto.setPadding(0, 0, 0, 0);
+            ivSelectedPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ivSelectedPhoto.setImageBitmap(portada);
+        } else {
+            int margen = dp(28);
+            ivSelectedPhoto.setImageTintList(getColorStateList(R.color.brand_primary));
+            ivSelectedPhoto.setPadding(margen, margen, margen, margen);
+            ivSelectedPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            ivSelectedPhoto.setImageResource(R.drawable.ic_home_work);
         }
-        cerrarTarjeta.setEnabled(haySeleccion);
+        tvSelectedName.setText(p.tituloPublico());
+        tvSelectedPrice.setText(getString(R.string.map_price_month, Propiedad.formatearMiles(p.precio)));
+        String zona = noVacio(p.barrio) ? p.barrio : p.ciudad;
+        tvSelectedZone.setText(getString(R.string.map_zone_approx, zona == null ? "" : zona));
+        tvSelectedZone.setVisibility(noVacio(zona) ? View.VISIBLE : View.GONE);
+
+        List<String> datos = new ArrayList<>();
+        if (p.habitaciones > 0) {
+            datos.add(getString(R.string.filter_chip_bedrooms, String.valueOf(p.habitaciones)));
+        }
+        if (p.banos > 0) {
+            datos.add(getResources().getQuantityString(R.plurals.stat_bathrooms, p.banos, p.banos));
+        }
+        String area = TarjetasPropiedad.area(this, p);
+        if (area != null) {
+            datos.add(area);
+        }
+        tvSelectedFeatures.setText(String.join(" · ", datos));
+        tvSelectedFeatures.setVisibility(datos.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
-    /** El mapa deja libre el espacio que tapa la tarjeta (o la ayuda): ahí quedan el logo de Google y el centrado. */
+    /** El mapa deja libre el espacio que tapa la hoja o la tarjeta: ahí quedan el logo de Google y Mi ubicación. */
     private void actualizarPaddingDelMapa() {
         if (mapa == null) {
             return;
@@ -487,8 +579,8 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         int inferior = 0;
         if (cardSelected.getVisibility() == View.VISIBLE) {
             inferior = cardSelected.getHeight();
-        } else if (cardHelp.getVisibility() == View.VISIBLE) {
-            inferior = Math.max(0, mapArea.getHeight() - cardHelp.getTop());
+        } else if (sheet.getVisibility() == View.VISIBLE) {
+            inferior = sheet.getHeight();
         }
         if (inferior != paddingInferior) {
             paddingInferior = inferior;
@@ -528,7 +620,11 @@ public class InquilinoMapaActivity extends AppCompatActivity implements OnMapRea
         return Math.round(valor * getResources().getDisplayMetrics().density);
     }
 
-    private static String texto(TextInputEditText editText) {
+    private static boolean noVacio(String texto) {
+        return texto != null && !texto.trim().isEmpty();
+    }
+
+    private static String texto(EditText editText) {
         return editText.getText() == null ? "" : editText.getText().toString().trim();
     }
 }

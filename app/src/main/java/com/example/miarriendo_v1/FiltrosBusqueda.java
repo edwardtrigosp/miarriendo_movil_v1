@@ -66,25 +66,58 @@ public class FiltrosBusqueda implements Serializable {
         return resultado;
     }
 
-    /** Textos de los chips de "Filtros aplicados" (la ciudad ya se ve en el buscador). */
-    List<String> etiquetas(Context context) {
-        List<String> etiquetas = new ArrayList<>();
+    /** Un filtro aplicado: su texto de chip y cómo quitarlo de estos criterios. */
+    static final class Activo {
+        final String etiqueta;
+        final Runnable quitar;
+
+        Activo(String etiqueta, Runnable quitar) {
+            this.etiqueta = etiqueta;
+            this.quitar = quitar;
+        }
+    }
+
+    /** Filtros aplicados, sin la ciudad (ya se ve en el buscador). El rango de precio cuenta como uno. */
+    List<Activo> activos(Context context) {
+        List<Activo> activos = new ArrayList<>();
         if (!tipo.isEmpty()) {
-            etiquetas.add(tipo);
+            activos.add(new Activo(tipo, () -> tipo = ""));
         }
         if (habitaciones > 0) {
             String n = habitaciones >= 3 ? context.getString(R.string.filters_bedrooms_three) : String.valueOf(habitaciones);
-            etiquetas.add(context.getString(R.string.filter_chip_bedrooms, n));
+            activos.add(new Activo(context.getString(R.string.filter_chip_bedrooms, n), () -> habitaciones = 0));
         }
+        Runnable quitarPrecio = () -> {
+            precioMin = 0;
+            precioMax = 0;
+        };
         if (precioMin > 0 && precioMax > 0) {
-            etiquetas.add(context.getString(R.string.filter_chip_price_range,
-                    Propiedad.formatearMiles(precioMin), Propiedad.formatearMiles(precioMax)));
+            activos.add(new Activo(context.getString(R.string.filter_chip_price_range,
+                    Propiedad.formatearMiles(precioMin), Propiedad.formatearMiles(precioMax)), quitarPrecio));
         } else if (precioMin > 0) {
-            etiquetas.add(context.getString(R.string.filter_chip_price_from, Propiedad.formatearMiles(precioMin)));
+            activos.add(new Activo(context.getString(R.string.filter_chip_price_from, Propiedad.formatearMiles(precioMin)), quitarPrecio));
         } else if (precioMax > 0) {
-            etiquetas.add(context.getString(R.string.filter_chip_price_to, Propiedad.formatearMiles(precioMax)));
+            activos.add(new Activo(context.getString(R.string.filter_chip_price_to, Propiedad.formatearMiles(precioMax)), quitarPrecio));
+        }
+        return activos;
+    }
+
+    /** Textos de los chips de "Filtros aplicados" (la ciudad ya se ve en el buscador). */
+    List<String> etiquetas(Context context) {
+        List<String> etiquetas = new ArrayList<>();
+        for (Activo a : activos(context)) {
+            etiquetas.add(a.etiqueta);
         }
         return etiquetas;
+    }
+
+    /** Quita todos los filtros, incluida la ciudad o barrio. */
+    void quitarTodos() {
+        ciudad = "";
+        tipo = "";
+        precioMin = 0;
+        precioMax = 0;
+        habitaciones = 0;
     }
 
     /** "Valledupar, Cesar" → "valledupar, cesar"; "Habitación" → "habitacion". */

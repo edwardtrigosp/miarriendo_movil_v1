@@ -19,8 +19,8 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 /**
- * Dibuja el pin de cada propiedad en el mapa: precio mensual, punta y nombre
- * (Figma: Pin de propiedad 342:2994 y Propiedad seleccionada 342:3113).
+ * Dibuja el pin de cada propiedad en el mapa: precio mensual y punta (Figma: Mapa / Pin de precio, Normal y
+ * Seleccionado). El nombre no va en el pin: se ve en la tarjeta al seleccionarlo.
  */
 final class MarcadoresMapa {
 
@@ -45,16 +45,13 @@ final class MarcadoresMapa {
         View vista = LayoutInflater.from(context).inflate(R.layout.view_map_pin, null, false);
         TextView precio = vista.findViewById(R.id.tv_chip);
         ImageView punta = vista.findViewById(R.id.iv_tip);
-        TextView nombre = vista.findViewById(R.id.tv_name);
 
         precio.setText(context.getString(R.string.map_pin_price, Propiedad.formatearMiles(p.precio)));
-        nombre.setText(p.tituloPublico());
         int colorPrecio = ContextCompat.getColor(context, seleccionada ? R.color.brand_primary : R.color.surface_default);
         if (seleccionada) {
             precio.setBackgroundResource(R.drawable.bg_map_pin_chip_selected);
             precio.setTextColor(ContextCompat.getColor(context, R.color.surface_white));
             punta.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.brand_primary)));
-            nombre.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
         }
 
         vista.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),

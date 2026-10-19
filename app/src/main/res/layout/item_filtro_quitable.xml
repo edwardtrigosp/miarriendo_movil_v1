@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mapa: filtro activo. Tocar el chip (o su ✕) quita ese filtro sin volver a la pantalla de filtros. -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Miarriendo.Chip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checkable="false"
+    app:closeIcon="@drawable/ic_close"
+    app:closeIconEndPadding="0dp"
+    app:closeIconSize="16dp"
+    app:closeIconStartPadding="6dp"
+    app:closeIconTint="@color/brand_on_container"
+    app:closeIconVisible="true" />

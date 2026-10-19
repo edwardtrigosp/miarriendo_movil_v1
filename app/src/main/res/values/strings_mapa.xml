@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Inquilino / Mapa · Explorar arriendos (342:2892) y Casa Los Mayales seleccionada (342:3011) -->
-    <string name="map_explore_title">Explorar arriendos</string>
+    <!-- Inquilino / Mapa · Explorar en mapa, rediseño (Figma: Actual · App › 06 · Inquilino · Explorar en mapa) -->
     <string name="map_open">Ver en el mapa</string>
-    <string name="map_center">Centrar mapa</string>
-    <string name="map_attribution">Ubicaciones orientativas</string>
-    <string name="map_help_title">Encuentra tu próximo hogar</string>
-    <string name="map_help_text">Selecciona un precio para ver la propiedad sin salir del mapa.</string>
+    <string name="map_back">Volver</string>
+    <string name="map_center">Mi ubicación</string>
     <string name="map_empty_title">Sin propiedades en el mapa</string>
     <string name="map_pin_price">$%1$s</string>
-    <string name="map_selected_label">Propiedad seleccionada</string>
     <string name="map_close_card">Cerrar tarjeta</string>
-    <string name="map_go_to_property">Ir a propiedad</string>
+    <string name="map_go_to_property">Ver propiedad</string>
     <string name="map_unavailable_title">El mapa no está disponible</string>
     <string name="map_unavailable_text">Falta la clave de Google Maps. Agrega MAPS_API_KEY en local.properties y vuelve a compilar la app.</string>
+
+    <!-- Hoja inferior: cuánta oferta hay en la parte visible del mapa y acceso a la lista -->
+    <plurals name="map_count_zone">
+        <item quantity="one">%d arriendo en esta zona</item>
+        <item quantity="other">%d arriendos en esta zona</item>
+    </plurals>
+    <plurals name="map_count_filtered">
+        <item quantity="one">%d arriendo con tus filtros</item>
+        <item quantity="other">%d arriendos con tus filtros</item>
+    </plurals>
+    <string name="map_see_list">Ver lista</string>
+    <string name="map_empty_filters_title">No hay arriendos con estos filtros</string>
+    <string name="map_empty_filters_text">Prueba con otra zona o quita algún filtro.</string>
+    <string name="map_clear_filters">Quitar filtros</string>
+
+    <!-- Filtros activos: contador en el botón y chips que se quitan al tocarlos -->
+    <plurals name="map_filters_active">
+        <item quantity="one">Filtros, %d activo</item>
+        <item quantity="other">Filtros, %d activos</item>
+    </plurals>
+    <string name="map_remove_filter">Quitar filtro %1$s</string>
+
+    <!-- Tarjeta de la propiedad seleccionada -->
+    <string name="map_price_month">$%1$s / mes</string>
+    <string name="map_zone_approx">%1$s · ubicación aproximada</string>
 </resources>

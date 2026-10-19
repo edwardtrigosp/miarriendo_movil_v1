@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Figma: Inquilino / Mapa · Explorar arriendos (342:2892) y Casa Los Mayales seleccionada (342:3011).
-     El mapa conceptual del diseño es el mapa real de Google Maps; los pines se dibujan sobre él. -->
+<!-- Figma: Actual · App › 06 · Inquilino · Explorar en mapa (rediseño 17/10/2026).
+     Pantalla secundaria (se entra desde "Buscar en el mapa"): ← Volver, buscador y Filtros arriba; pines solo con
+     precio; abajo la hoja con la cantidad de arriendos de la zona visible o la tarjeta de la propiedad tocada.
+     El mapa conceptual del diseño es el mapa real de Google Maps. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,113 +13,117 @@
     android:orientation="vertical"
     tools:context=".InquilinoMapaActivity">
 
-    <!-- Perfil y notificaciones (342:2904): saludo + Avatar que abre el perfil y Mis solicitudes -->
-    <LinearLayout style="@style/Widget.Miarriendo.TopAppBar">
-
-        <TextView
-            android:id="@+id/tv_greeting"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingHorizontal="@dimen/spacing_xs"
-            android:textAppearance="@style/TextAppearance.Miarriendo.H3"
-            tools:text="Hola Edward!" />
-
-        <TextView
-            android:id="@+id/tv_avatar"
-            style="@style/Widget.Miarriendo.Avatar"
-            android:layout_marginStart="@dimen/spacing_micro"
-            android:layout_marginEnd="@dimen/spacing_xs"
-            android:contentDescription="@string/owner_open_profile"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            tools:text="ET" />
-
-        <ImageButton
-            android:id="@+id/btn_my_requests"
-            style="@style/Widget.Miarriendo.IconButton"
-            android:contentDescription="@string/tenant_my_requests"
-            android:src="@drawable/ic_notifications" />
-    </LinearLayout>
-
-    <!-- Búsqueda (342:2911): Ciudad o barrio + Filtros; con una propiedad seleccionada aparece "Centrar mapa" (342:3122) -->
+    <!-- Mapa / Barra de búsqueda: ← Volver · Ciudad o barrio · Filtros con contador -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/spacing_lg"
-        android:paddingTop="@dimen/spacing_micro"
-        android:paddingEnd="@dimen/spacing_lg"
-        android:paddingBottom="@dimen/spacing_sm">
+        android:paddingStart="4dp"
+        android:paddingEnd="@dimen/spacing_xs">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_search"
-            style="@style/Widget.Miarriendo.TextField"
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Miarriendo.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:contentDescription="@string/map_back"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary" />
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="@string/tenant_search_label"
-            app:placeholderText="@string/field_city_hint"
-            app:startIconDrawable="@drawable/ic_search">
+            android:background="@drawable/bg_map_search"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_search"
+                app:tint="@color/text_secondary" />
+
+            <EditText
                 android:id="@+id/et_search"
-                style="@style/Widget.Miarriendo.TextField.EditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/tenant_search_label"
                 android:imeOptions="actionSearch"
-                android:inputType="textCapWords" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:importantForAutofill="no"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_locate_inline"
-            style="@style/Widget.Miarriendo.IconButton"
-            android:layout_marginStart="@dimen/spacing_xs"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:background="@drawable/bg_map_control"
-            android:contentDescription="@string/map_center"
-            android:elevation="3dp"
-            android:outlineAmbientShadowColor="@color/brand_on_container"
-            android:outlineSpotShadowColor="@color/brand_on_container"
-            android:src="@drawable/ic_my_location"
-            android:visibility="gone"
-            tools:visibility="visible" />
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_micro">
 
-        <ImageButton
-            android:id="@+id/btn_filters"
-            style="@style/Widget.Miarriendo.IconButton"
-            android:layout_marginStart="@dimen/spacing_xs"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:contentDescription="@string/tenant_filters"
-            android:src="@drawable/ic_tune" />
+            <ImageButton
+                android:id="@+id/btn_filters"
+                style="@style/Widget.Miarriendo.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:contentDescription="@string/tenant_filters"
+                android:src="@drawable/ic_tune"
+                android:tint="@color/text_primary" />
+
+            <!-- Cuántos filtros están activos; oculto si ninguno -->
+            <TextView
+                android:id="@+id/tv_filters_count"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_map_filter_badge"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:minWidth="16dp"
+                android:paddingHorizontal="4dp"
+                android:textAppearance="@style/TextAppearance.Miarriendo.LabelSmall.Medium"
+                android:textColor="@color/surface_white"
+                android:visibility="gone"
+                tools:text="2"
+                tools:visibility="visible" />
+        </FrameLayout>
     </LinearLayout>
 
-    <!-- Resumen del mapa (342:2925) -->
-    <LinearLayout
+    <!-- Filtros activos: cada chip quita su filtro al tocarlo -->
+    <HorizontalScrollView
+        android:id="@+id/filters_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/spacing_lg"
-        android:paddingEnd="@dimen/spacing_lg"
-        android:paddingBottom="14dp">
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm"
+        android:scrollbars="none"
+        android:visibility="gone"
+        tools:visibility="visible">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/map_explore_title"
-            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium" />
-
-        <TextView
-            android:id="@+id/tv_available"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_filters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
-            tools:text="3 disponibles" />
-    </LinearLayout>
+            app:chipSpacingHorizontal="@dimen/spacing_xs"
+            app:singleLine="true" />
+    </HorizontalScrollView>
 
-    <!-- Mapa (342:2928) y todo lo que flota sobre él -->
+    <!-- Mapa y lo que flota sobre él -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/map_area"
         android:layout_width="match_parent"
@@ -167,80 +173,124 @@
                 android:textColor="@color/text_secondary" />
         </LinearLayout>
 
-        <!-- Referencia cartográfica (342:3001). Queda 36 dp sobre el borde para no tapar el logo de Google. -->
-        <TextView
-            android:id="@+id/tv_map_caption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_md"
-            android:layout_marginBottom="36dp"
-            android:background="@drawable/bg_map_caption"
-            android:paddingHorizontal="@dimen/spacing_xs"
-            android:paddingVertical="@dimen/spacing_micro"
-            android:text="@string/map_attribution"
-            android:textAppearance="@style/TextAppearance.Miarriendo.LabelSmall.Medium"
-            android:textColor="@color/text_secondary"
-            app:layout_constraintBottom_toTopOf="@id/card_selected"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_goneMarginBottom="36dp" />
-
-        <!-- Ayuda de exploración (342:3007) -->
-        <LinearLayout
-            android:id="@+id/card_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_md"
-            android:layout_marginEnd="@dimen/spacing_md"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/bg_map_card"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:outlineAmbientShadowColor="@color/brand_on_container"
-            android:outlineSpotShadowColor="@color/brand_on_container"
-            android:padding="@dimen/spacing_md"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/tv_map_caption"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible">
-
-            <TextView
-                android:id="@+id/tv_help_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/map_help_title"
-                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium" />
-
-            <TextView
-                android:id="@+id/tv_help_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_micro"
-                android:text="@string/map_help_text"
-                android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
-                android:textColor="@color/text_secondary" />
-        </LinearLayout>
-
-        <!-- Control de ubicación (342:3003) -->
+        <!-- Mi ubicación: flota sobre el mapa, encima de la hoja o de la tarjeta -->
         <ImageButton
             android:id="@+id/btn_locate"
             style="@style/Widget.Miarriendo.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="@dimen/spacing_md"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="@dimen/spacing_md"
             android:background="@drawable/bg_map_control"
             android:contentDescription="@string/map_center"
             android:elevation="3dp"
             android:outlineAmbientShadowColor="@color/brand_on_container"
             android:outlineSpotShadowColor="@color/brand_on_container"
+            android:padding="12dp"
             android:src="@drawable/ic_my_location"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/card_help"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible" />
+            android:tint="@color/text_primary"
+            app:layout_constraintBottom_toTopOf="@id/bottom_barrier"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Tarjeta de propiedad seleccionada (342:3126) -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="sheet,card_selected" />
+
+        <!-- Mapa / Hoja inferior: cantidad de la zona visible + Ver lista, o el aviso sin resultados -->
+        <LinearLayout
+            android:id="@+id/sheet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_property_sheet"
+            android:clickable="true"
+            android:elevation="8dp"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:outlineAmbientShadowColor="@color/brand_on_container"
+            android:outlineSpotShadowColor="@color/brand_on_container"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingTop="@dimen/spacing_xs"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_lg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:layout_width="36dp"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_sheet_grip" />
+
+            <LinearLayout
+                android:id="@+id/sheet_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                    tools:text="5 arriendos en esta zona" />
+
+                <TextView
+                    android:id="@+id/btn_see_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="@dimen/spacing_micro"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/spacing_xs"
+                    android:text="@string/map_see_list"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+                    android:textColor="@color/brand_primary"
+                    app:drawableEndCompat="@drawable/ic_list"
+                    app:drawableTint="@color/brand_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sheet_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_empty_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/map_empty_filters_title"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium" />
+
+                <TextView
+                    android:id="@+id/tv_empty_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_micro"
+                    android:text="@string/map_empty_filters_text"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                    android:textColor="@color/text_secondary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_clear_filters"
+                    style="@style/Widget.Miarriendo.Button.Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:text="@string/map_clear_filters" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Mapa / Tarjeta seleccionada: lo necesario para decidir si abrir la propiedad -->
         <LinearLayout
             android:id="@+id/card_selected"
             android:layout_width="0dp"
@@ -253,27 +303,74 @@
             android:outlineAmbientShadowColor="@color/brand_on_container"
             android:outlineSpotShadowColor="@color/brand_on_container"
             android:paddingStart="@dimen/spacing_lg"
-            android:paddingTop="@dimen/spacing_xs"
+            android:paddingTop="@dimen/spacing_md"
             android:paddingEnd="@dimen/spacing_lg"
-            android:paddingBottom="20dp"
+            android:paddingBottom="@dimen/spacing_lg"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
 
-            <!-- Encabezado de tarjeta (342:3127) -->
             <LinearLayout
+                android:id="@+id/selected_summary"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/iv_selected_photo"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:background="@drawable/bg_map_photo"
+                    android:clipToOutline="true"
+                    android:importantForAccessibility="no"
+                    android:padding="28dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_home_work"
+                    app:tint="@color/brand_primary" />
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_md"
                     android:layout_weight="1"
-                    android:text="@string/map_selected_label"
-                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_selected_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                        tools:text="Casa Los Mayales" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                        android:textColor="@color/brand_primary"
+                        tools:text="$1.200.000 / mes" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_zone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                        android:textColor="@color/text_secondary"
+                        tools:text="Los Mayales · ubicación aproximada" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_features"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
+                        android:textColor="@color/text_secondary"
+                        tools:text="3 hab. · 2 baños · 110 m²" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/btn_close_card"
@@ -281,119 +378,15 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:contentDescription="@string/map_close_card"
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:src="@drawable/ic_close" />
             </LinearLayout>
 
-            <!-- Resumen de propiedad (342:3132) -->
-            <include
-                android:id="@+id/resumen"
-                layout="@layout/view_resumen_propiedad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm" />
-
-            <!-- Características (342:3146): entre dos líneas border/card -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:background="@color/border_card" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingVertical="11dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_feature_bed" />
-
-                    <TextView
-                        android:id="@+id/tv_feature_bedrooms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_micro"
-                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
-                        tools:text="3 habitaciones" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_feature_bath" />
-
-                    <TextView
-                        android:id="@+id/tv_feature_bathrooms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_micro"
-                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
-                        tools:text="2 baños" />
-                </LinearLayout>
-
-                <Space
-                    android:id="@+id/space_area"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <LinearLayout
-                    android:id="@+id/feature_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_feature_ruler" />
-
-                    <TextView
-                        android:id="@+id/tv_feature_area"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_micro"
-                        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
-                        tools:text="110 m²" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/border_card" />
-
-            <!-- Ir a propiedad: PrimaryButton -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_go"
                 style="@style/Widget.Miarriendo.Button.Primary"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/spacing_sm"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:text="@string/map_go_to_property" />
         </LinearLayout>
 

@@ -23,3 +23,9 @@ backend/.cuentas-prueba.json
 
 # Permisos locales de Claude Code (personales)
 .claude/settings.local.json
+
+# Registros de los emuladores de Firebase
+*-debug.log
+
+# Semillas solo para emuladores (tienen claves de prueba)
+backend/scripts/sembrar-auditoria.js

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- StatusChip suelto, para filas Dato con chip (Tipo=Chip). StatusChipView.aplicar le pone el tono. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Miarriendo.StatusChip"
+    tools:text="Vigente" />

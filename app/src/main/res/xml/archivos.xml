@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Archivos que la app comparte con FileProvider: el PDF de resumen del contrato (cache/pdf). -->
+<paths>
+    <cache-path
+        name="pdf"
+        path="pdf/" />
+</paths>

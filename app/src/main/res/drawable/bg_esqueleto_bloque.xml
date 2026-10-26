@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Esqueleto (624:2594) para montos y chips: radio xs -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/status_neutral" />
+    <corners android:radius="@dimen/radius_xs" />
+</shape>

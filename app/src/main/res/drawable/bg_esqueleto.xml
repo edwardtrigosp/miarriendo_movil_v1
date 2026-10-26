@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Esqueleto (624:2594): bloque de carga para líneas de texto, status/neutral con radio 6 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/status_neutral" />
+    <corners android:radius="6dp" />
+</shape>

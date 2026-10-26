@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Esqueleto (624:2594) con forma de botón principal: 52 de alto, radio 26 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/status_neutral" />
+    <corners android:radius="26dp" />
+</shape>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Inquilino / Inicio · Cargando (624:8011). Imita la forma del inicio (encabezado, atajos, Mi arriendo y
+     filas) con bloques Esqueleto mientras llegan los datos, para que nada salte al aparecer. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:contentDescription="@string/inicio_cargando"
+    android:focusable="true"
+    android:importantForAccessibility="yes"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_default"
+        android:importantForAccessibility="noHideDescendants"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_esqueleto_circulo" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/bg_esqueleto_circulo" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="@dimen/spacing_md"
+                android:background="@drawable/bg_esqueleto_circulo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <include layout="@layout/item_sugerencia_cargando" />
+
+            <include
+                layout="@layout/item_sugerencia_cargando"
+                android:layout_width="148dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="@dimen/spacing_sm" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="noHideDescendants"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_sm">
+
+            <include layout="@layout/item_atajo_cargando" />
+
+            <include layout="@layout/item_atajo_cargando" />
+
+            <include layout="@layout/item_atajo_cargando" />
+
+            <include layout="@layout/item_atajo_cargando" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingTop="20dp"
+            android:paddingBottom="@dimen/spacing_sm">
+
+            <View
+                android:layout_width="180dp"
+                android:layout_height="22dp"
+                android:background="@drawable/bg_esqueleto" />
+
+            <View
+                android:layout_width="90dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_esqueleto" />
+
+            <View
+                android:layout_width="170dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_esqueleto_bloque" />
+
+            <View
+                android:layout_width="130dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_esqueleto" />
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_esqueleto_bloque" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_esqueleto_pildora" />
+        </LinearLayout>
+
+        <include layout="@layout/item_fila_cargando" />
+
+        <include layout="@layout/item_fila_cargando" />
+    </LinearLayout>
+</LinearLayout>

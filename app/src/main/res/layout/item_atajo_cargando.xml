@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Atajo en carga (624:8028): círculo de 64 y etiqueta; los cuatro se reparten el ancho como los atajos reales -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="92dp"
+    android:layout_weight="1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_esqueleto_circulo" />
+
+    <View
+        android:layout_width="48dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:background="@drawable/bg_esqueleto" />
+</LinearLayout>

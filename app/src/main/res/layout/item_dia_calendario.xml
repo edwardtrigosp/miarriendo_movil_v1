@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un día del Calendario de visita: círculo de 34 con el número en Body / Small -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/calendario_dia"
+    android:layout_height="@dimen/calendario_dia"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:gravity="center"
+    android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+    android:textColor="@color/text_primary"
+    tools:text="22" />

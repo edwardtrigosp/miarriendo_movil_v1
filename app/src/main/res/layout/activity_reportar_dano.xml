@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Inquilino / Reportar un daño (587:2131): qué se dañó, qué tan urgente es, qué pasó, foto opcional
+     y un solo botón. El propietario lo ve en su inicio, en Pendientes. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".ReportarDanoActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/view_top_app_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_lg">
+
+            <!-- ¿Qué se dañó? -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/report_what"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                android:textColor="@color/text_primary" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_categoria"
+                style="@style/Widget.Miarriendo.ChipGroup"
+                android:layout_marginTop="@dimen/spacing_xs"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_agua"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_water" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_electricidad"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_electricity" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_puertas"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_doors" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_electrodomesticos"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_appliances" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_otro"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_other" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- ¿Qué tan urgente es? -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/report_urgency"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                android:textColor="@color/text_primary" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_urgencia"
+                style="@style/Widget.Miarriendo.ChipGroup"
+                android:layout_marginTop="@dimen/spacing_xs"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_urgente"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_urgent" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_puede_esperar"
+                    style="@style/Widget.Miarriendo.Chip.Filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/report_can_wait" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/report_urgent_help"
+                android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+
+            <!-- Qué pasó -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_descripcion"
+                style="@style/Widget.Miarriendo.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:hint="@string/report_description_generic"
+                app:placeholderText="@string/report_description_example">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_descripcion"
+                    style="@style/Widget.Miarriendo.TextArea.EditText"
+                    android:lineHeight="20sp"
+                    android:maxLength="500"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Foto (opcional) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/report_photo"
+                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                android:textColor="@color/text_primary" />
+
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="@dimen/spacing_xs">
+
+                <ImageView
+                    android:id="@+id/iv_foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_foto_opcional"
+                    android:contentDescription="@string/report_photo_add"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="36dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_a_photo"
+                    app:tint="@color/brand_primary" />
+
+                <!-- Quitar la foto elegida -->
+                <ImageButton
+                    android:id="@+id/btn_quitar_foto"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="@dimen/spacing_micro"
+                    android:background="@drawable/bg_circle_brand_primary"
+                    android:contentDescription="@string/report_photo_remove"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_close"
+                    android:visibility="gone"
+                    app:tint="@color/surface_white" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/report_privacy_generic"
+                android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Acciones: un solo botón, activo cuando hay categoría y descripción -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_default"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_send"
+            style="@style/Widget.Miarriendo.Button.Primary"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:text="@string/report_send" />
+    </LinearLayout>
+</LinearLayout>

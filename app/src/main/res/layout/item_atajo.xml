@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Atajo (430:2323): círculo de 64 en surface/high con ícono de 26 y etiqueta Caption / Medium -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/spacing_xs">
+
+    <!-- Toda la columna recibe el toque, pero el velo solo se dibuja dentro del círculo -->
+    <FrameLayout
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:duplicateParentState="true"
+        android:foreground="@drawable/ripple_atajo">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle_surface_high"
+            android:importantForAccessibility="no"
+            android:padding="19dp"
+            android:scaleType="fitCenter"
+            app:tint="@color/text_primary"
+            tools:src="@drawable/ic_send" />
+
+        <!-- Badge: solicitudes por responder -->
+        <TextView
+            android:id="@+id/tv_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="top|end"
+            android:background="@drawable/bg_circle_brand_primary"
+            android:gravity="center"
+            android:minWidth="20dp"
+            android:paddingHorizontal="6dp"
+            android:textAppearance="@style/TextAppearance.Miarriendo.LabelSmall.Medium"
+            android:textColor="@color/surface_white"
+            android:visibility="gone"
+            tools:text="2"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Miarriendo.Caption.Medium"
+        android:textColor="@color/text_primary"
+        tools:text="Pagar" />
+</LinearLayout>

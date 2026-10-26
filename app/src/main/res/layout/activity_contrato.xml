@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Inquilino / Mi contrato (586:3132): inmueble, condiciones del contrato, lo que acordaron y
+     "Descargar en PDF" (un resumen de lo registrado en miarriendo, no el contrato firmado). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_default"
+    android:orientation="vertical"
+    tools:context=".ContratoActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/view_top_app_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/brand_primary" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_lg"
+                android:paddingTop="@dimen/spacing_md"
+                android:paddingEnd="@dimen/spacing_lg"
+                android:paddingBottom="@dimen/spacing_lg"
+                android:visibility="invisible"
+                tools:visibility="visible">
+
+                <!-- Inmueble -->
+                <include
+                    android:id="@+id/card_property"
+                    layout="@layout/view_resumen_propiedad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Condiciones del contrato -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:text="@string/contract_conditions"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                    android:textColor="@color/text_primary" />
+
+                <include
+                    android:id="@+id/card_detail"
+                    layout="@layout/view_card_detalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs" />
+
+                <!-- Lo que acordaron: las cláusulas del propietario -->
+                <LinearLayout
+                    android:id="@+id/bloque_clausulas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contract_agreed"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/tv_clauses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:background="@drawable/bg_card_border"
+                        android:padding="@dimen/spacing_md"
+                        android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
+                        android:textColor="@color/text_secondary"
+                        tools:text="Los servicios públicos los paga el inquilino." />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/contract_note_generic"
+                    android:textAppearance="@style/TextAppearance.Miarriendo.Caption" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+
+    <!-- Acciones: Descargar en PDF (SecondaryButton con ícono) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_default"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pdf"
+            style="@style/Widget.Miarriendo.Button.Secondary"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:text="@string/contract_download_pdf"
+            app:icon="@drawable/ic_download"
+            app:iconGravity="textStart"
+            app:iconTint="@color/brand_primary" />
+    </LinearLayout>
+</LinearLayout>

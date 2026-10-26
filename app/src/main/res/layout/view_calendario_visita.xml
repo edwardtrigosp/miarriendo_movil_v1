@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Calendario de visita (535:2619). Lo llena CalendarioVisita: mes, semana L–D y los días. -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout"
+    tools:orientation="vertical">
+
+    <!-- Mes: flechas de 22 con área táctil de 40 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_mes_anterior"
+            style="@style/Widget.Miarriendo.IconButton"
+            android:contentDescription="@string/calendar_previous"
+            android:src="@drawable/ic_chevron_left" />
+
+        <TextView
+            android:id="@+id/tv_mes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
+            android:textColor="@color/text_primary"
+            tools:text="Octubre 2026" />
+
+        <ImageButton
+            android:id="@+id/btn_mes_siguiente"
+            style="@style/Widget.Miarriendo.IconButton"
+            android:contentDescription="@string/calendar_next"
+            android:src="@drawable/ic_chevron_right" />
+    </LinearLayout>
+
+    <!-- Semana de lunes a domingo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/calendario_fila"
+        android:importantForAccessibility="noHideDescendants"
+        android:orientation="horizontal">
+
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_mon" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_tue" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_wed" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_thu" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_fri" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_sat" />
+        <TextView style="@style/Widget.Miarriendo.CalendarioSemana" android:text="@string/calendar_sun" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/semanas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+</merge>

@@ -36,7 +36,6 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -387,14 +386,15 @@ public class PublicarPropiedadActivity extends AppCompatActivity {
                     .inflate(R.layout.item_photo_slot_filled, photoRows, false);
             cargarMiniatura(foto, fotos.get(indice));
             foto.setContentDescription(getString(R.string.photo_slot_description, indice + 1));
-            foto.setOnClickListener(v -> new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.photos_remove_title)
-                    .setPositiveButton(R.string.photos_remove, (d, w) -> {
+            foto.setOnClickListener(v -> Dialogo.nuevo(this)
+                    .titulo(R.string.photos_remove_title)
+                    .mensaje(R.string.photos_remove_message)
+                    .cancelar(R.string.cancel)
+                    .confirmar(R.string.photos_remove, Dialogo.Tono.DESTRUCTIVO, () -> {
                         fotos.remove(indice);
                         dibujarCasillasFotos();
                     })
-                    .setNegativeButton(R.string.cancel, null)
-                    .show());
+                    .mostrar());
             return foto;
         }
         FrameLayout vacia = (FrameLayout) LayoutInflater.from(this)

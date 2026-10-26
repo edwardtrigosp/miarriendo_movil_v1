@@ -177,6 +177,16 @@
     </style>
 
     <!-- IconButton (43:1524): círculo de 40 con ícono de 24 en text/secondary -->
+    <!-- Letra de la semana del Calendario de visita: Caption / Medium en text/secondary -->
+    <style name="Widget.Miarriendo.CalendarioSemana" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.Miarriendo.Caption.Medium</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
     <style name="Widget.Miarriendo.IconButton" parent="">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>

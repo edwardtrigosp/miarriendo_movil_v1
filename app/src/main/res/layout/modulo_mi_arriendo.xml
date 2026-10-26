@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Módulo / Mi arriendo (446:3500): Por pagar · Abono en curso · Vencido · Esperando Nequi · Al día.
-     Columna con separación de 16 (spacing/md); el AnilloAbonos solo aparece si la cuota va por abonos. -->
+<!-- Módulo / Mi arriendo (446:3500): Por pagar · Vencido · Esperando Nequi · Al día (y Parcial para un mes viejo
+     que quedó a medias en abonos). Columna con separación de 16 (spacing/md). -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -40,7 +40,7 @@
             app:tint="@color/text_secondary" />
     </LinearLayout>
 
-    <!-- Monto y progreso (446:3440) -->
+    <!-- Monto (446:3440) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,49 +80,6 @@
                 tools:text="de $450.000 COP" />
         </LinearLayout>
 
-        <!-- AnilloAbonos (430:2355): 68 de diámetro, verde con el mes completo -->
-        <FrameLayout
-            android:id="@+id/anillo"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:layout_marginStart="@dimen/spacing_sm"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/anillo_progreso"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:importantForAccessibility="no"
-                android:max="3"
-                app:indicatorColor="@color/brand_primary"
-                app:indicatorInset="0dp"
-                app:indicatorSize="68dp"
-                app:indicatorTrackGapSize="0dp"
-                app:trackColor="@color/brand_container"
-                app:trackCornerRadius="3dp"
-                app:trackThickness="6dp"
-                tools:progress="1" />
-
-            <TextView
-                android:id="@+id/tv_anillo"
-                android:layout_width="68dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.Miarriendo.BodyMedium.Medium"
-                tools:text="1/3" />
-
-            <TextView
-                android:layout_width="68dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="37dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="@string/home_rental_ring_label"
-                android:textAppearance="@style/TextAppearance.Miarriendo.LabelSmall.Medium"
-                android:textColor="@color/text_secondary" />
-        </FrameLayout>
     </LinearLayout>
 
     <!-- Estado (446:3446): StatusChip y fecha -->
@@ -151,16 +108,6 @@
             tools:text="Fecha límite: 5 de noviembre" />
     </LinearLayout>
 
-    <!-- Por pagar: cómo se puede pagar -->
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_md"
-        android:textAppearance="@style/TextAppearance.Miarriendo.Caption"
-        android:textColor="@color/text_secondary"
-        android:visibility="gone"
-        tools:text="Puedes pagarlo en un solo pago o en 3 abonos de $150.000." />
 
     <!-- Vencido: la consecuencia junto a la acción (Alert · Error) -->
     <include
@@ -176,7 +123,7 @@
         style="@style/Widget.Miarriendo.Button.Primary"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/spacing_md"
-        tools:text="Pagar abono 2 de 3 · $150.000" />
+        tools:text="Pagar arriendo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_secondary"

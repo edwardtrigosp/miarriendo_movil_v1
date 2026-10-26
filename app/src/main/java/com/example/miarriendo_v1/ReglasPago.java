@@ -7,8 +7,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Lo que se sabe de una cuota a partir de sus datos: qué se muestra, qué abono toca pagar y cuál es la
- * cuota del momento. No toca Android ni Firebase, así que se prueba con JUnit. El servidor es quien
+ * Lo que se sabe de una cuota a partir de sus datos: qué se muestra, si hay un cobro en curso y cuál es la
+ * cuota del momento. Cada cobro de la cuota es un {@link Abono}: desde el 20/10/2026 hay uno solo por mes
+ * (pago único); los meses viejos pueden tener varios abonos y un saldo. No toca Android ni Firebase, así que se prueba con JUnit. El servidor es quien
  * manda: estas reglas solo deciden qué enseñar y qué botón ofrecer.
  */
 final class ReglasPago {
@@ -19,7 +20,7 @@ final class ReglasPago {
     enum EstadoVisible {
         /** "No has pagado" */
         PENDIENTE,
-        /** "Parcial · 1 de 3" */
+        /** Un mes viejo que quedó a medias en abonos. */
         PARCIAL,
         PAGADO,
         /** Pasó la fecha límite sin pagar del todo. */
@@ -29,14 +30,12 @@ final class ReglasPago {
     /** Variante de Módulo / Mi arriendo (446:3500) en el inicio. */
     enum EstadoInicio {
         POR_PAGAR,
-        ABONO_EN_CURSO,
+        /** Un mes viejo que quedó a medias en abonos: se paga lo que falta. */
+        PARCIAL,
         VENCIDO,
         ESPERANDO_NEQUI,
         AL_DIA
     }
-
-    /** Abonos en que se reparte una cuota cuando el inquilino elige pagar por partes. */
-    static final int ABONOS_POR_CUOTA = 3;
 
     /** Qué pasó con el dinero que el inquilino ya pagó, visto desde el propietario. */
     enum EstadoTransferencia {
@@ -154,14 +153,6 @@ final class ReglasPago {
         return n;
     }
 
-    /** Se puede pagar el saldo de una vez: ya hubo un abono, faltan otros y no hay un cobro en curso. */
-    static boolean puedePagarSaldo(Cuota cuota) {
-        return Cuota.MODALIDAD_ABONOS.equals(cuota.modalidad)
-                && cuota.pagado > 0
-                && saldo(cuota) > 0
-                && enProceso(cuota) == null;
-    }
-
     static EstadoVisible estadoVisible(Cuota cuota, long ahora) {
         if (cuota.pagada()) {
             return EstadoVisible.PAGADO;
@@ -183,40 +174,10 @@ final class ReglasPago {
             case VENCIDO:
                 return EstadoInicio.VENCIDO;
             case PARCIAL:
-                return EstadoInicio.ABONO_EN_CURSO;
+                return EstadoInicio.PARCIAL;
             default:
                 return EstadoInicio.POR_PAGAR;
         }
-    }
-
-    /** La cuota se paga por abonos: es cuando el inicio muestra el AnilloAbonos. */
-    static boolean porAbonos(Cuota cuota) {
-        return Cuota.MODALIDAD_ABONOS.equals(cuota.modalidad);
-    }
-
-    /**
-     * Pagados y total del AnilloAbonos (430:2355). El saldo cuenta como lo que faltaba: una cuota pagada siempre
-     * se ve completa.
-     */
-    static int[] progresoAbonos(Cuota cuota) {
-        int total = 0;
-        for (Abono abono : abonos(cuota)) {
-            if (Abono.TIPO_ABONO.equals(abono.tipo)) {
-                total++;
-            }
-        }
-        total = Math.max(total, ABONOS_POR_CUOTA);
-        int pagados = cuota.pagada() ? total : Math.min(abonosAprobados(cuota), total);
-        return new int[]{pagados, total};
-    }
-
-    /** Lo que cobra el siguiente botón de pago: el abono que sigue si va por abonos; si no, todo el saldo. */
-    static long montoSiguientePago(Cuota cuota) {
-        Abono siguiente = siguientePorPagar(cuota);
-        if (porAbonos(cuota) && siguiente != null) {
-            return siguiente.monto;
-        }
-        return saldo(cuota);
     }
 
     /** La cuota que sigue a la activa (para "Próximo pago: 5 de diciembre"); null si no hay. */
@@ -254,16 +215,5 @@ final class ReglasPago {
             return ultimaPagada;
         }
         return primeraSinPagar;
-    }
-
-    /** Reparte {@code monto} en {@code cantidad} abonos; el último absorbe lo que sobre (igual que el servidor). */
-    static long[] montosDeAbonos(long monto, int cantidad) {
-        long base = monto / cantidad;
-        long[] montos = new long[cantidad];
-        for (int i = 0; i < cantidad - 1; i++) {
-            montos[i] = base;
-        }
-        montos[cantidad - 1] = monto - base * (cantidad - 1);
-        return montos;
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Módulo / Pendientes (482:2565): pagos vencidos primero y luego solicitudes nuevas. */
+/** Módulo / Pendientes (482:2565): pagos vencidos, daños urgentes, solicitudes nuevas y daños que pueden esperar. */
 public class PendientesPropietarioTest {
 
     private static final long DIA = 24L * 60 * 60 * 1000;
@@ -73,5 +73,29 @@ public class PendientesPropietarioTest {
         libre.id = "libre";
         propiedades.add(libre);
         assertTrue(todos().isEmpty());
+    }
+
+    private static ReporteDano reporte(String id, boolean urgente, String estado, long creadoEn) {
+        ReporteDano r = new ReporteDano();
+        r.id = id;
+        r.urgente = urgente;
+        r.estado = estado;
+        r.creadoEn = creadoEn;
+        return r;
+    }
+
+    @Test
+    public void losDanosUrgentesVanAntesDeLasSolicitudesYLosDemasAlFinal() {
+        propiedadConCuota("vencida", AHORA - DIA, Cuota.PENDIENTE);
+        List<PendientesPropietario.Pendiente> p = PendientesPropietario.todos(propiedades, cuotas,
+                Collections.singletonList(solicitud("s", SolicitudArriendo.ESTADO_PENDIENTE, AHORA - DIA)),
+                Arrays.asList(reporte("espera", false, ReporteDano.ESTADO_ABIERTO, AHORA - DIA),
+                        reporte("urgente", true, ReporteDano.ESTADO_ABIERTO, AHORA - 2 * DIA),
+                        reporte("resuelto", true, ReporteDano.ESTADO_RESUELTO, AHORA)), AHORA);
+        assertEquals(4, p.size());
+        assertEquals(PendientesPropietario.Pendiente.Tipo.PAGO_VENCIDO, p.get(0).tipo);
+        assertEquals("urgente", p.get(1).reporte.id);
+        assertEquals("s", p.get(2).solicitud.id);
+        assertEquals("espera", p.get(3).reporte.id);
     }
 }

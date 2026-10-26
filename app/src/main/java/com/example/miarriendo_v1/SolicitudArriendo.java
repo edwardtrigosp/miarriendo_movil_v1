@@ -17,7 +17,13 @@ public class SolicitudArriendo {
     public String propietarioNombre;
     public String inquilinoId;
     public String inquilinoNombre;
+    /** Opcional desde la pantalla única de solicitud. */
     public String mensaje;
+    /** Día de la visita que eligió el inquilino (inicio del día, hora del teléfono); 0 en solicitudes viejas. */
+    public long visitaEn;
+    /** Cuántas personas vivirían; 0 en solicitudes viejas. */
+    public int personas;
+    public boolean mascotas;
     public String estado;
     public String propiedadTitulo;
     public String propiedadDireccion;

@@ -1,14 +1,8 @@
 package com.example.miarriendo_v1;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class PerfilActivity extends AppCompatActivity {
 
     static final String EXTRA_INQUILINO = "inquilino";
-
-    /** Opacidad del fondo detrás del diálogo (Figma: surface/scrim al 32%). */
-    private static final float OPACIDAD_SCRIM = 0.32f;
 
     private TextView tvInitials, tvName, tvEmail, tvRole;
     private TextView tvCountProperties, tvCountTenants, tvCountRequests;
@@ -133,28 +124,18 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     private void confirmarCierreSesion() {
-        Dialog dialogo = new Dialog(this);
-        dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogo.setContentView(R.layout.dialog_confirmar_salida);
-        Window ventana = dialogo.getWindow();
-        if (ventana != null) {
-            int margen = getResources().getDimensionPixelSize(R.dimen.spacing_lg);
-            ventana.setBackgroundDrawable(new InsetDrawable(new ColorDrawable(Color.TRANSPARENT), margen));
-            ventana.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            ventana.setDimAmount(OPACIDAD_SCRIM);
-        }
-        TextView mensaje = dialogo.findViewById(R.id.tv_dialog_message);
+        int mensaje = R.string.logout_message;
         if (inquilino) {
-            mensaje.setText(R.string.logout_message_tenant);
+            mensaje = R.string.logout_message_tenant;
         } else if (new BiometricSession(this).isEnabled()) {
-            mensaje.setText(R.string.logout_message_biometric);
+            mensaje = R.string.logout_message_biometric;
         }
-        dialogo.findViewById(R.id.btn_dialog_cancel).setOnClickListener(v -> dialogo.dismiss());
-        dialogo.findViewById(R.id.btn_dialog_confirm).setOnClickListener(v -> {
-            dialogo.dismiss();
-            cerrarSesion();
-        });
-        dialogo.show();
+        Dialogo.nuevo(this)
+                .titulo(R.string.logout_title)
+                .mensaje(mensaje)
+                .cancelar(R.string.cancel)
+                .confirmar(R.string.logout_confirm, Dialogo.Tono.DESTRUCTIVO, this::cerrarSesion)
+                .mostrar();
     }
 
     /**

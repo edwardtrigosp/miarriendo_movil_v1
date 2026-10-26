@@ -57,7 +57,7 @@ test('una cuota lejana no cambia el estado al día', () => {
   assert.equal(estadoPagoDe([{ estado: 'pendiente', vence: ahora + 6 * DIA }], ahora), 'al_dia');
 });
 
-const { periodoDe, codigoDePeriodo, montosDeAbonos, comprobanteDe } = require('../cuotas');
+const { periodoDe, codigoDePeriodo, comprobanteDe } = require('../cuotas');
 
 test('con día de pago fijo, la primera cuota es la primera fecha que llega', () => {
   // Empieza el 11 de octubre y se paga el día 5: la primera es el 5 de noviembre.
@@ -80,15 +80,6 @@ test('el periodo y su código salen de la fecha de vencimiento en Bogotá', () =
   assert.equal(periodoDe(bogota(2027, 1, 31, 23, 59, 59)), '2027-01');
   assert.equal(codigoDePeriodo('2026-11'), 'NOV26');
   assert.equal(codigoDePeriodo('2027-01'), 'ENE27');
-});
-
-test('los abonos suman siempre el monto; el último absorbe el resto', () => {
-  assert.deepEqual(montosDeAbonos(450000, 3), [150000, 150000, 150000]);
-  assert.deepEqual(montosDeAbonos(1000000, 3), [333333, 333333, 333334]);
-  assert.deepEqual(montosDeAbonos(100, 3), [33, 33, 34]);
-  for (const monto of [1, 2, 7, 999999, 1350000]) {
-    assert.equal(montosDeAbonos(monto, 3).reduce((a, b) => a + b, 0), monto);
-  }
 });
 
 test('el comprobante identifica mes, tipo de pago y transacción', () => {

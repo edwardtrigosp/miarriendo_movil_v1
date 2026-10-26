@@ -16,7 +16,8 @@ import java.util.Map;
 
 /**
  * Escucha en Firebase las propiedades, solicitudes y cuotas del usuario y entrega un {@link DatosInicio}
- * cada vez que cambian. Inquilino: por inquilinoId; propietario: por propietarioId, más su cuenta bancaria.
+ * cada vez que cambian. Inquilino: por inquilinoId; propietario: por propietarioId, más su cuenta bancaria y los
+ * daños que le reportaron.
  * Las consultas ya están permitidas e indexadas en database.rules.json.
  */
 final class CargaDatosInicio {
@@ -33,6 +34,8 @@ final class CargaDatosInicio {
     private final Query consultaPropiedades;
     private final Query consultaSolicitudes;
     private final DatabaseReference refCuenta;
+    private final Query consultaReportes;
+    private ValueEventListener escuchaReportes;
     private ValueEventListener escuchaPropiedades;
     private ValueEventListener escuchaSolicitudes;
     private ValueEventListener escuchaCuenta;
@@ -44,6 +47,7 @@ final class CargaDatosInicio {
     private Map<String, List<Cuota>> cuotas = new HashMap<>();
     private int cuotasPorLlegar;
     private Boolean tieneCuenta;
+    private List<ReporteDano> reportes;
 
     CargaDatosInicio(String uid, String rol) {
         this.uid = uid;
@@ -54,6 +58,7 @@ final class CargaDatosInicio {
         consultaPropiedades = db.getReference("propiedades").orderByChild(campo).equalTo(uid);
         consultaSolicitudes = db.getReference("solicitudes_arriendo").orderByChild(campo).equalTo(uid);
         refCuenta = db.getReference("usuarios").child(uid).child("cuenta");
+        consultaReportes = db.getReference("reportes").orderByChild("propietarioId").equalTo(uid);
     }
 
     void iniciar(Listo listo) {
@@ -121,8 +126,32 @@ final class CargaDatosInicio {
                 }
             };
             refCuenta.addValueEventListener(escuchaCuenta);
+            escuchaReportes = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<ReporteDano> lista = new ArrayList<>();
+                    for (DataSnapshot hijo : snapshot.getChildren()) {
+                        ReporteDano r = hijo.getValue(ReporteDano.class);
+                        if (r != null) {
+                            r.id = hijo.getKey();
+                            lista.add(r);
+                        }
+                    }
+                    reportes = lista;
+                    entregar(listo);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Sin la regla de "reportes" publicada (o sin red): el inicio sigue sin reportes.
+                    reportes = new ArrayList<>();
+                    entregar(listo);
+                }
+            };
+            consultaReportes.addValueEventListener(escuchaReportes);
         } else {
             tieneCuenta = false;
+            reportes = new ArrayList<>();
         }
     }
 
@@ -173,8 +202,8 @@ final class CargaDatosInicio {
 
     /** Solo entrega cuando ya llegó todo, para no armar el inicio con datos a medias. */
     private void entregar(Listo listo) {
-        if (propiedades != null && solicitudes != null && tieneCuenta != null && cuotasPorLlegar == 0) {
-            listo.datos(new DatosInicio(rol, propiedades, solicitudes, new HashMap<>(cuotas), tieneCuenta));
+        if (propiedades != null && solicitudes != null && tieneCuenta != null && reportes != null && cuotasPorLlegar == 0) {
+            listo.datos(new DatosInicio(rol, propiedades, solicitudes, new HashMap<>(cuotas), tieneCuenta, reportes));
         }
     }
 
@@ -199,7 +228,12 @@ final class CargaDatosInicio {
             refCuenta.removeEventListener(escuchaCuenta);
             escuchaCuenta = null;
         }
+        if (escuchaReportes != null) {
+            consultaReportes.removeEventListener(escuchaReportes);
+            escuchaReportes = null;
+        }
         quitarEscuchasCuotas();
+        reportes = null;
         propiedades = null;
         solicitudes = null;
         tieneCuenta = null;

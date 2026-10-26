@@ -68,6 +68,12 @@
             android:name=".InicioActivity"
             android:exported="false" />
         <activity
+            android:name=".ContratoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportarDanoActivity"
+            android:exported="false" />
+        <activity
             android:name=".InquilinoMapaActivity"
             android:exported="false" />
         <activity
@@ -83,9 +89,6 @@
             android:name=".SolicitarArriendoActivity"
             android:exported="false" />
         <activity
-            android:name=".SolicitudEnviadaActivity"
-            android:exported="false" />
-        <activity
             android:name=".MisSolicitudesActivity"
             android:exported="false" />
         <activity
@@ -93,9 +96,6 @@
             android:exported="false" />
         <activity
             android:name=".MiArriendoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ElegirFormaPagoActivity"
             android:exported="false" />
         <activity
             android:name=".PagarNequiActivity"
@@ -106,9 +106,6 @@
             android:exported="false" />
         <activity
             android:name=".ResultadoPagoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SeguimientoAbonosActivity"
             android:exported="false" />
         <activity
             android:name=".ComprobanteActivity"
@@ -124,6 +121,17 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+
+        <!-- Comparte el PDF de resumen del contrato (Mi contrato → Descargar en PDF) -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.archivos"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/archivos" />
+        </provider>
     </application>
 
 </manifest>

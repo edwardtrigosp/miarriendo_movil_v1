@@ -24,7 +24,7 @@ const CONFIG = {
 };
 const AHORA = Date.UTC(2026, 9, 11, 15, 0, 0);
 
-test('flujo completo: aceptar → abonos con Nequi → webhook → saldo', { skip: !EMULADORES && 'sin emuladores de Firebase' }, async (t) => {
+test('flujo completo: aceptar → pago del mes con Nequi → webhook', { skip: !EMULADORES && 'sin emuladores de Firebase' }, async (t) => {
   const app = initializeApp({ projectId: 'demo-miarriendo', databaseURL: 'https://demo-miarriendo-default-rtdb.firebaseio.com' });
   const db = getDatabase(app);
   const auth = getAuth(app);
@@ -150,44 +150,46 @@ test('flujo completo: aceptar → abonos con Nequi → webhook → saldo', { ski
     assert.equal(r.cuerpo.datosUrl, 'https://wompi.test/datos.pdf');
   });
 
-  await t.test('un cobro con datos incompletos o de otra persona se rechaza antes de llamar a Wompi', async () => {
+  await t.test('un cobro con datos incompletos, en abonos o de otra persona se rechaza antes de llamar a Wompi', async () => {
     const intentar = (cuerpo, token = tokenInquilino) => pedir('/api/pagos/nequi', token, cuerpo);
-    assert.equal((await intentar(cobro(c1, { modalidad: 'abonos', celular: '123' }))).estado, 400);
-    assert.equal((await intentar(cobro(c1, { modalidad: 'abonos', acceptanceToken: '' }))).estado, 400);
-    assert.equal((await intentar(cobro(c1, { modalidad: 'abonos', personalAuthToken: undefined }))).estado, 400);
+    assert.equal((await intentar(cobro(c1, { celular: '123' }))).estado, 400);
+    assert.equal((await intentar(cobro(c1, { acceptanceToken: '' }))).estado, 400);
+    assert.equal((await intentar(cobro(c1, { personalAuthToken: undefined }))).estado, 400);
     assert.equal((await intentar(cobro(c1, { modalidad: 'quincenal' }))).estado, 400);
-    assert.equal((await intentar(cobro(c1))).estado, 400, 'sin elegir un pago o 3 abonos');
-    assert.equal((await intentar(cobro('x/y', { modalidad: 'abonos' }))).estado, 400);
-    assert.equal((await intentar(cobro(c1, { modalidad: 'abonos' }), tokenOtro)).estado, 403);
-    assert.equal((await intentar(cobro(c1, { modalidad: 'abonos' }), null)).estado, 401);
-    assert.equal((await intentar(cobro('inexistente', { modalidad: 'abonos' }))).estado, 404);
+    const abonos = await intentar(cobro(c1, { modalidad: 'abonos' }));
+    assert.equal(abonos.estado, 400, 'ya no se paga en abonos');
+    assert.match(abonos.cuerpo.error, /abonos/);
+    assert.equal((await intentar(cobro('x/y'))).estado, 400);
+    assert.equal((await intentar(cobro(c1), tokenOtro)).estado, 403);
+    assert.equal((await intentar(cobro(c1), null)).estado, 401);
+    assert.equal((await intentar(cobro('inexistente'))).estado, 404);
     assert.equal(llamadas.length, 0, 'ninguna de esas peticiones llegó a Wompi');
     assert.equal((await leerCuota(c1)).abonos, undefined, 'y la cuota sigue intacta');
   });
 
-  // ---------- Cuota 1: tres abonos ----------
+  // ---------- Cuota 1: el mes completo, con un rechazo de Nequi ----------
 
-  let a1;
-  await t.test('el primer abono se cobra por Nequi con monto, correo y firma correctos', async () => {
-    a1 = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1, { modalidad: 'abonos' }));
-    assert.equal(a1.estado, 201);
-    assert.equal(a1.cuerpo.abono, 1);
-    assert.equal(a1.cuerpo.monto, 400000);
-    assert.equal(a1.cuerpo.celularFin, '4567');
+  let rechazado;
+  await t.test('el mes se cobra completo por Nequi con monto, correo y firma correctos', async () => {
+    rechazado = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1));
+    assert.equal(rechazado.estado, 201);
+    assert.equal(rechazado.cuerpo.abono, 1);
+    assert.equal(rechazado.cuerpo.monto, 1200000);
+    assert.equal(rechazado.cuerpo.celularFin, '4567');
 
     const p = llamadas[0];
-    assert.equal(p.montoCentavos, 40000000);
+    assert.equal(p.montoCentavos, 120000000);
     assert.equal(p.correo, 'inquilino@ejemplo.test');
     assert.equal(p.celular, '3001234567');
     assert.equal(p.acceptanceToken, 'tok-terminos');
     assert.equal(p.personalAuthToken, 'tok-datos');
-    assert.equal(p.firma, firmaIntegridad({ referencia: p.referencia, montoCentavos: 40000000, secreto: CONFIG.secretoIntegridad }));
+    assert.equal(p.firma, firmaIntegridad({ referencia: p.referencia, montoCentavos: 120000000, secreto: CONFIG.secretoIntegridad }));
 
     const cuota = await leerCuota(c1);
-    assert.equal(cuota.modalidad, 'abonos');
-    assert.deepEqual(Object.values(cuota.abonos).map((a) => [a.numero, a.monto, a.estado]), [[1, 400000, 'en_proceso'], [2, 400000, 'pendiente'], [3, 400000, 'pendiente']]);
+    assert.equal(cuota.modalidad, 'unico');
+    assert.deepEqual(Object.values(cuota.abonos).map((a) => [a.numero, a.tipo, a.monto, a.estado]), [[1, 'unico', 1200000, 'en_proceso']]);
     assert.equal(cuota.abonos.a1.intento.celularFin, '4567');
-    assert.equal(cuota.abonos.a1.intento.transaccionId, a1.cuerpo.transaccionId);
+    assert.equal(cuota.abonos.a1.intento.transaccionId, rechazado.cuerpo.transaccionId);
   });
 
   await t.test('con un cobro en proceso no se puede iniciar otro (evita el doble cobro)', async () => {
@@ -196,78 +198,64 @@ test('flujo completo: aceptar → abonos con Nequi → webhook → saldo', { ski
     assert.equal(llamadas.length, 1);
   });
 
+  await t.test('un cobro rechazado por Nequi queda disponible para reintentar', async () => {
+    await resolver(rechazado, 'DECLINED', { status_message: 'Cobro rechazado' });
+    const a1 = (await leerCuota(c1)).abonos.a1;
+    assert.equal(a1.estado, 'rechazado');
+    assert.equal(a1.motivo, 'Cobro rechazado');
+  });
+
+  let pago;
+  await t.test('el reintento usa otra referencia y un evento viejo no lo pisa', async () => {
+    pago = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1));
+    assert.equal(pago.estado, 201);
+    assert.notEqual(pago.cuerpo.referencia, rechazado.cuerpo.referencia);
+    await pedir('/webhooks/wompi', null, evento({ ...transacciones[rechazado.cuerpo.transaccionId], status: 'DECLINED' }));
+    assert.equal((await leerCuota(c1)).abonos.a1.estado, 'en_proceso');
+  });
+
   await t.test('un evento con firma falsa, otro monto o una referencia ajena no marca nada', async () => {
-    const tx = { ...transacciones[a1.cuerpo.transaccionId], status: 'APPROVED' };
+    const tx = { ...transacciones[pago.cuerpo.transaccionId], status: 'APPROVED' };
     assert.equal((await pedir('/webhooks/wompi', null, evento(tx, 'secreto-falso'))).estado, 400);
     assert.equal((await pedir('/webhooks/wompi', null, evento({ ...tx, amount_in_cents: 100 }))).estado, 200);
     assert.equal((await pedir('/webhooks/wompi', null, evento({ ...tx, reference: 'pago-ajeno' }))).estado, 200);
     assert.equal((await leerCuota(c1)).abonos.a1.estado, 'en_proceso');
   });
 
-  await t.test('el abono aprobado queda pagado, con medio y comprobante, y la cuota pasa a parcial', async () => {
-    assert.equal((await resolver(a1, 'APPROVED')).estado, 200);
+  await t.test('el pago aprobado deja la cuota pagada, con medio y comprobante', async () => {
+    assert.equal((await resolver(pago, 'APPROVED')).estado, 200);
     const cuota = await leerCuota(c1);
     assert.equal(cuota.abonos.a1.estado, 'aprobado');
     assert.equal(cuota.abonos.a1.medio, 'Nequi');
     assert.equal(cuota.abonos.a1.pagadoEn, AHORA);
-    assert.match(cuota.abonos.a1.comprobante, /^MA-NOV26-A1-[A-Z0-9]{3}$/);
+    assert.match(cuota.abonos.a1.comprobante, /^MA-NOV26-PU-[A-Z0-9]{3}$/);
     assert.equal(cuota.abonos.a1.intento, undefined);
-    assert.equal(cuota.pagado, 400000);
-    assert.equal(cuota.estado, 'parcial');
+    assert.equal(cuota.pagado, 1200000);
+    assert.equal(cuota.estado, 'pagado');
+    assert.equal((await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1))).estado, 409);
   });
 
   await t.test('reenviar el evento no vuelve a registrar el pago', async () => {
     await db.ref(`pagos/casa1/${c1}/abonos/a1/pagadoEn`).set(1);
-    assert.equal((await resolver(a1, 'APPROVED')).estado, 200);
+    assert.equal((await resolver(pago, 'APPROVED')).estado, 200);
     assert.equal((await leerCuota(c1)).abonos.a1.pagadoEn, 1);
-    assert.equal((await leerCuota(c1)).pagado, 400000);
+    assert.equal((await leerCuota(c1)).pagado, 1200000);
   });
 
-  await t.test('los abonos se pagan en orden', async () => {
-    const r = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1, { abono: 3 }));
-    assert.equal(r.estado, 409);
-    assert.match(r.cuerpo.error, /abono 2/);
-  });
+  // ---------- Cuota 2: un mes viejo que quedó a medias en abonos ----------
 
-  let a2Rechazado;
-  await t.test('un abono rechazado por Nequi queda disponible para reintentar', async () => {
-    a2Rechazado = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1));
-    assert.equal(a2Rechazado.estado, 201);
-    assert.equal(a2Rechazado.cuerpo.abono, 2);
-    await resolver(a2Rechazado, 'DECLINED', { status_message: 'Cobro rechazado' });
-    const a2 = (await leerCuota(c1)).abonos.a2;
-    assert.equal(a2.estado, 'rechazado');
-    assert.equal(a2.motivo, 'Cobro rechazado');
-  });
-
-  let a2;
-  await t.test('el reintento usa otra referencia y un evento viejo no lo pisa', async () => {
-    a2 = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1));
-    assert.equal(a2.estado, 201);
-    assert.notEqual(a2.cuerpo.referencia, a2Rechazado.cuerpo.referencia);
-    await pedir('/webhooks/wompi', null, evento({ ...transacciones[a2Rechazado.cuerpo.transaccionId], status: 'DECLINED' }));
-    assert.equal((await leerCuota(c1)).abonos.a2.estado, 'en_proceso');
-  });
-
-  await t.test('al aprobarse los tres abonos la cuota queda pagada y la propiedad al día', async () => {
-    await resolver(a2, 'APPROVED');
-    assert.equal((await leerCuota(c1)).estado, 'parcial');
-    const a3 = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1));
-    assert.equal(a3.cuerpo.abono, 3);
-    await resolver(a3, 'APPROVED');
-    const cuota = await leerCuota(c1);
-    assert.equal(cuota.estado, 'pagado');
-    assert.equal(cuota.pagado, 1200000);
-    assert.equal((await pedir('/api/pagos/nequi', tokenInquilino, cobro(c1))).estado, 409);
-  });
-
-  // ---------- Cuota 2: abono y luego el saldo completo ----------
-
-  await t.test('después de un abono se puede pagar el saldo de una vez', async () => {
-    const primero = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c2, { modalidad: 'abonos' }));
-    await resolver(primero, 'APPROVED');
-
-    const saldo = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c2, { modalidad: 'saldo' }));
+  await t.test('un mes viejo a medias en abonos se termina cobrando solo lo que falta', async () => {
+    await db.ref(`pagos/casa1/${c2}`).update({
+      modalidad: 'abonos',
+      pagado: 400000,
+      estado: 'parcial',
+      abonos: {
+        a1: { numero: 1, tipo: 'abono', monto: 400000, estado: 'aprobado', pagadoEn: AHORA - 1000, comprobante: 'MA-DIC26-A1-001' },
+        a2: { numero: 2, tipo: 'abono', monto: 400000, estado: 'pendiente' },
+        a3: { numero: 3, tipo: 'abono', monto: 400000, estado: 'pendiente' },
+      },
+    });
+    const saldo = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c2));
     assert.equal(saldo.estado, 201);
     assert.equal(saldo.cuerpo.monto, 800000);
     assert.equal(llamadas.at(-1).montoCentavos, 80000000);
@@ -282,7 +270,7 @@ test('flujo completo: aceptar → abonos con Nequi → webhook → saldo', { ski
     assert.match(cuota.abonos.a4.comprobante, /^MA-DIC26-SA-/);
   });
 
-  // ---------- Cuota 3: un pago y "Consultar estado" ----------
+  // ---------- Cuota 3: "Consultar estado" ----------
 
   await t.test('"consultar estado" averigua el resultado en Wompi aunque el webhook no haya llegado', async () => {
     const unico = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c3, { modalidad: 'unico' }));
@@ -306,24 +294,18 @@ test('flujo completo: aceptar → abonos con Nequi → webhook → saldo', { ski
 
   // ---------- Cuota 4: Wompi no responde ----------
 
-  await t.test('si Wompi falla, el abono se libera y se puede cambiar de forma de pago', async () => {
+  await t.test('si Wompi falla, el cobro se libera y se puede reintentar', async () => {
     wompiCaido = true;
-    const fallo = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c4, { modalidad: 'abonos' }));
+    const fallo = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c4));
     assert.equal(fallo.estado, 502);
     wompiCaido = false;
-    const cuota = await leerCuota(c4);
-    assert.ok(Object.values(cuota.abonos).every((a) => a.estado === 'pendiente'));
+    assert.ok(Object.values((await leerCuota(c4)).abonos).every((a) => a.estado === 'pendiente'));
 
-    const unico = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c4, { modalidad: 'unico' }));
+    const unico = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c4));
     assert.equal(unico.estado, 201);
     assert.equal(unico.cuerpo.monto, 1200000);
     assert.equal((await leerCuota(c4)).modalidad, 'unico');
     assert.deepEqual(Object.keys((await leerCuota(c4)).abonos), ['a1']);
-  });
-
-  await t.test('el saldo no se puede pagar sin un abono aprobado', async () => {
-    const r = await pedir('/api/pagos/nequi', tokenInquilino, cobro(c4, { modalidad: 'saldo' }));
-    assert.equal(r.estado, 409);
   });
 
   // ---------- Estado de la propiedad ----------

@@ -66,6 +66,7 @@
     <string name="photos_formats">JPG o PNG · hasta 10 imágenes</string>
     <string name="photos_limit">Puedes agregar hasta %1$d fotos</string>
     <string name="photos_remove_title">¿Quitar esta foto?</string>
+    <string name="photos_remove_message">Puedes volver a agregarla antes de publicar.</string>
     <string name="photos_remove">Quitar</string>
     <string name="photo_slot_description">Foto %1$d de la propiedad</string>
     <string name="cancel">Cancelar</string>
@@ -95,6 +96,7 @@
     <string name="publishing_wait">Esto solo toma unos segundos.</string>
     <string name="publishing_done_subtitle">Tu propiedad ya está publicada.</string>
     <string name="publishing_error">No se pudo publicar: %1$s</string>
+    <string name="publishing_error_title">No se pudo publicar</string>
     <string name="publishing_retry">Reintentar</string>
     <string name="publishing_session">Tu sesión expiró. Ingresa de nuevo.</string>
 </resources>

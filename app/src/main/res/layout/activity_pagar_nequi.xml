@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Figma: Inquilino / Pagar completo y Pagar abono 1 de 3: resumen, celular Nequi y aceptación de Wompi -->
+<!-- Figma: Inquilino / Pagar completo: resumen, celular Nequi y aceptación de Wompi -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,15 +34,6 @@
                 layout="@layout/view_payment_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <!-- Periodo y saldo después del abono -->
-            <include
-                android:id="@+id/card_detail"
-                layout="@layout/view_card_detalle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:visibility="gone" />
 
             <!-- Método Nequi -->
             <LinearLayout

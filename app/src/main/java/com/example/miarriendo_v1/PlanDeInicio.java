@@ -6,14 +6,15 @@ import java.util.List;
 
 /**
  * Qué módulos lleva el inicio unificado y en qué orden, según el rol y el estado del usuario.
- * Es el mapa de Figma en código: 00 · Inicio unificado · Mapa de módulos (448:4300, revisión por módulos del 13/10).
- * Si un módulo no aplica no está en la lista: nunca se dibuja deshabilitado.
- * Ya no se usan Atajos, Recordatorios, Atención ni Solicitudes recibidas (las dos últimas se unieron en Pendientes).
+ * Sigue el orden de la Presentación de Figma (531:3895, 19/10): Encabezado con sugerencias → Atajos → módulo
+ * principal → el resto. Si un módulo no aplica no está en la lista: nunca se dibuja deshabilitado.
+ * Atención y Solicitudes recibidas siguen unidas en Pendientes.
  */
 final class PlanDeInicio {
 
     enum Modulo {
         ENCABEZADO,
+        ATAJOS,
         TU_SOLICITUD,
         MI_ARRIENDO,
         RECAUDO,
@@ -21,7 +22,7 @@ final class PlanDeInicio {
         PRIMEROS_PASOS,
         EXPLORAR_MAPA,
         PARA_TI,
-        BUSCAR_HOGAR,
+        DETALLE_ARRIENDO,
         MIS_PROPIEDADES
     }
 
@@ -50,17 +51,19 @@ final class PlanDeInicio {
                 if (solicitudEnviada) {
                     m.add(Modulo.TU_SOLICITUD);
                 }
-                // Sin Buscar hogar ni Atajos: Explorar en mapa lleva al mapa y Para ti muestra los recién publicados.
+                // Sin Atajos: Explorar en mapa lleva al mapa y Para ti muestra los recién publicados.
                 m.add(Modulo.EXPLORAR_MAPA);
                 m.add(Modulo.PARA_TI);
                 break;
             case INQUILINO_CON_ARRIENDO:
                 m.add(Modulo.ENCABEZADO);
+                m.add(Modulo.ATAJOS);
                 m.add(Modulo.MI_ARRIENDO);
-                m.add(Modulo.BUSCAR_HOGAR);
+                m.add(Modulo.DETALLE_ARRIENDO);
                 break;
             case PROPIETARIO:
                 m.add(Modulo.ENCABEZADO);
+                m.add(Modulo.ATAJOS);
                 m.add(Modulo.RECAUDO);
                 if (hayPendientes) {
                     m.add(Modulo.PENDIENTES);

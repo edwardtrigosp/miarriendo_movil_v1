@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Figma: 00 · Inicio unificado · Mapa de módulos (448:4299). Encabezado en blanco. -->
+<!-- Figma: App actual · inicios. Toda la pantalla es blanca, también detrás de la barra de estado (opción 3 del
+     encabezado, 26/10/2026). -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -9,17 +9,10 @@
     android:background="@color/surface_default"
     tools:context=".InicioActivity">
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        app:indicatorColor="@color/brand_primary" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/surface_default"
         android:fillViewport="true">
 
         <LinearLayout
@@ -28,4 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <!-- Va encima del ScrollView para que se vea mientras carga (antes el fondo blanco tapaba el indicador) -->
+    <include layout="@layout/view_inicio_cargando" />
 </FrameLayout>

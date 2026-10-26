@@ -21,6 +21,8 @@ final class DatosInicio {
     final Map<String, List<Cuota>> cuotas;
     /** El propietario registró una cuenta bancaria completa para recibir las transferencias. */
     final boolean tieneCuenta;
+    /** Propietario: daños que le reportaron sus inquilinos. Vacía para el inquilino. */
+    final List<ReporteDano> reportes;
 
     DatosInicio(String rol, List<Propiedad> propiedades, List<SolicitudArriendo> solicitudes) {
         this(rol, propiedades, solicitudes, null, false);
@@ -28,11 +30,17 @@ final class DatosInicio {
 
     DatosInicio(String rol, List<Propiedad> propiedades, List<SolicitudArriendo> solicitudes,
                 Map<String, List<Cuota>> cuotas, boolean tieneCuenta) {
+        this(rol, propiedades, solicitudes, cuotas, tieneCuenta, null);
+    }
+
+    DatosInicio(String rol, List<Propiedad> propiedades, List<SolicitudArriendo> solicitudes,
+                Map<String, List<Cuota>> cuotas, boolean tieneCuenta, List<ReporteDano> reportes) {
         this.rol = rol;
         this.propiedades = propiedades == null ? new ArrayList<>() : propiedades;
         this.solicitudes = solicitudes == null ? new ArrayList<>() : solicitudes;
         this.cuotas = cuotas == null ? new HashMap<>() : cuotas;
         this.tieneCuenta = tieneCuenta;
+        this.reportes = reportes == null ? new ArrayList<>() : reportes;
     }
 
     /** Las cuotas de una propiedad; vacía si no tiene. */
@@ -96,13 +104,13 @@ final class DatosInicio {
         return pendiente != null ? pendiente : respondida;
     }
 
-    /** El propietario tiene algo que atender: un pago vencido o una solicitud por responder. */
+    /** El propietario tiene algo que atender: un pago vencido, una solicitud por responder o un daño reportado. */
     boolean tienePendientes(long ahora) {
         return esPropietario() && !pendientes(ahora).isEmpty();
     }
 
     List<PendientesPropietario.Pendiente> pendientes(long ahora) {
-        return PendientesPropietario.todos(propiedades, cuotas, solicitudes, ahora);
+        return PendientesPropietario.todos(propiedades, cuotas, solicitudes, reportes, ahora);
     }
 
     RecaudoDelMes recaudo(long ahora) {

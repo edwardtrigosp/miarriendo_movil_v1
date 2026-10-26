@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Módulo / Encabezado simple (481:2320). Fondo blanco (decisión del 13/10).
-     Inquilino sin arriendo (497:4613): subtítulo y una sugerencia en franja, solo si hay disparador.
-     El buscador salió del encabezado: ahora lo cubre Módulo / Explorar en mapa. -->
+<!-- Módulo / Encabezado (446:3435): fondo blanco (opción 3, 26/10/2026), avatar, ayuda y notificaciones, y las
+     sugerencias como tarjetas lila claro en carrusel. Sin saludo: el primer módulo hace de título. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,73 +10,63 @@
     android:paddingTop="@dimen/spacing_md"
     android:paddingBottom="@dimen/spacing_lg">
 
-    <!-- Barra de inicio y Bienvenida (497:4614, 497:4637) -->
+    <!-- Fila superior: Avatar → Perfil, ayuda → cómo funciona y notificaciones → solicitudes -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="@dimen/spacing_lg">
 
-        <!-- Fila superior: Avatar → Perfil y notificaciones → Mis solicitudes -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_avatar"
-                style="@style/Widget.Miarriendo.Avatar"
-                android:contentDescription="@string/owner_open_profile"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                tools:text="ML" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/btn_notifications"
-                style="@style/Widget.Miarriendo.IconButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="-12dp"
-                android:padding="12dp"
-                android:contentDescription="@string/tenant_my_requests"
-                android:src="@drawable/ic_notifications" />
-        </LinearLayout>
-
-        <!-- Saludo (497:4638) -->
         <TextView
-            android:id="@+id/tv_greeting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.Miarriendo.H1"
-            tools:text="Hola, María" />
+            android:id="@+id/tv_avatar"
+            style="@style/Widget.Miarriendo.Avatar"
+            android:background="@drawable/bg_circle_accent_soft"
+            android:contentDescription="@string/owner_open_profile"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            tools:text="ML" />
 
-        <TextView
-            android:id="@+id/tv_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_micro"
-            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall"
-            android:textColor="@color/text_secondary"
-            android:visibility="gone"
-            tools:text="@string/home_subtitle_search"
-            tools:visibility="visible" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/btn_help"
+            style="@style/Widget.Miarriendo.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:contentDescription="@string/home_help"
+            android:src="@drawable/ic_help" />
+
+        <ImageButton
+            android:id="@+id/btn_notifications"
+            style="@style/Widget.Miarriendo.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="-12dp"
+            android:padding="12dp"
+            android:contentDescription="@string/tenant_my_requests"
+            android:src="@drawable/ic_notifications" />
     </LinearLayout>
 
-    <!-- Orientación (497:4640): una sugerencia a la vez, en franja -->
-    <FrameLayout
-        android:id="@+id/orientacion"
+    <!-- Sugerencias (scroll horizontal): solo las que aplican; sin ninguna, el carrusel no se dibuja -->
+    <HorizontalScrollView
+        android:id="@+id/carrusel_sugerencias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_md"
+        android:clipToPadding="false"
         android:paddingHorizontal="@dimen/spacing_lg"
+        android:scrollbars="none"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/sugerencias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 </LinearLayout>

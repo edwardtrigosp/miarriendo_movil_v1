@@ -29,6 +29,10 @@ val hostEmuladores: String = (project.findProperty("emuladoresHost") ?: "10.0.2.
 val usarEmuladores: String = (project.findProperty("emuladoresFirebase")
     ?: propiedadesLocales.getProperty("USE_FIREBASE_EMULATORS", "false")).toString()
 
+// Solo para pruebas de accesibilidad: con -PescalaTexto=2.0 la compilación debug agranda el texto de la app
+// (no el del sistema), para revisar el texto al 200 % sin cambiar los ajustes del teléfono.
+val escalaTexto: String = (project.findProperty("escalaTexto") ?: "1.0").toString()
+
 android {
     namespace = "com.example.miarriendo_v1"
     compileSdk {
@@ -45,6 +49,7 @@ android {
         buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
         buildConfigField("boolean", "USE_FIREBASE_EMULATORS", usarEmuladores)
         buildConfigField("String", "EMULATORS_HOST", "\"$hostEmuladores\"")
+        buildConfigField("float", "ESCALA_TEXTO", "${escalaTexto}f")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -33,6 +33,7 @@ public class DetalleArriendoActivity extends AppCompatActivity {
     private MaterialButton btnRequest;
     private TextView tvNote, tvPhotoCounter;
     private boolean yaSolicitada;
+    private boolean esMiArriendo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +120,38 @@ public class DetalleArriendoActivity extends AppCompatActivity {
             }
         }
 
-        btnRequest.setEnabled(p.disponible());
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuario != null && usuario.getUid().equals(p.inquilinoId)) {
+            mostrarComoMiArriendo(p);
+        } else {
+            btnRequest.setEnabled(p.disponible());
+        }
         cargarPropietario(p.propietarioId);
+    }
+
+    /**
+     * La propiedad es el arriendo de quien la mira (Figma: Inquilino / Detalle de mi arriendo, 621:2047):
+     * sin "Solicitar arriendo"; lleva al contrato y a reportar un daño.
+     */
+    private void mostrarComoMiArriendo(Propiedad p) {
+        esMiArriendo = true;
+        ((TextView) findViewById(R.id.tv_app_bar_title)).setText(R.string.my_rental_detail_title);
+        TextView estado = findViewById(R.id.tv_status);
+        estado.setBackgroundTintList(getColorStateList(R.color.status_primary));
+        estado.setTextColor(getColor(R.color.status_on_primary));
+        estado.setText(p.inquilinoDesde > 0
+                ? getString(R.string.my_rental_detail_status, Formato.fechaCorta(this, p.inquilinoDesde))
+                : getString(R.string.my_rental_detail_title));
+        ((TextView) findViewById(R.id.tv_owner_help)).setText(R.string.my_rental_detail_owner_help);
+        tvNote.setVisibility(View.GONE);
+        btnRequest.setEnabled(true);
+        btnRequest.setText(R.string.my_rental_detail_contract);
+        btnRequest.setOnClickListener(v -> startActivity(new Intent(this, ContratoActivity.class)
+                .putExtra(ContratoActivity.EXTRA_PROPIEDAD_ID, p.id)));
+        View reportar = findViewById(R.id.btn_report);
+        reportar.setVisibility(View.VISIBLE);
+        reportar.setOnClickListener(v -> startActivity(new Intent(this, ReportarDanoActivity.class)
+                .putExtra(ReportarDanoActivity.EXTRA_PROPIEDAD_ID, p.id)));
     }
 
     /** "Edward · Propietario" con su primer nombre (regla: usuarios/{uid}/nombre es legible). */
@@ -181,6 +212,9 @@ public class DetalleArriendoActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("solicitudes_arriendo")
                 .orderByChild("inquilinoId").equalTo(usuario.getUid()).get()
                 .addOnSuccessListener(snapshot -> {
+                    if (esMiArriendo) {
+                        return;
+                    }
                     yaSolicitada = false;
                     for (DataSnapshot hijo : snapshot.getChildren()) {
                         SolicitudArriendo s = hijo.getValue(SolicitudArriendo.class);

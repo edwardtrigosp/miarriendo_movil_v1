@@ -1,6 +1,5 @@
 package com.example.miarriendo_v1;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -48,11 +47,10 @@ public class EstadoMiArriendoTest {
     }
 
     @Test
-    public void conUnAbonoPagadoVaEnCursoYElSiguienteCobraSuAbono() {
+    public void unMesViejoAMediasEnAbonosQuedaParcialYSePagaLoQueFalta() {
         Cuota c = porAbonos(AHORA + 3 * DIA, Abono.APROBADO, Abono.PENDIENTE, Abono.PENDIENTE);
-        assertEquals(ReglasPago.EstadoInicio.ABONO_EN_CURSO, ReglasPago.estadoInicio(c, AHORA));
-        assertEquals(150_000, ReglasPago.montoSiguientePago(c));
-        assertArrayEquals(new int[]{1, 3}, ReglasPago.progresoAbonos(c));
+        assertEquals(ReglasPago.EstadoInicio.PARCIAL, ReglasPago.estadoInicio(c, AHORA));
+        assertEquals(300_000, ReglasPago.saldo(c));
     }
 
     @Test
@@ -68,7 +66,7 @@ public class EstadoMiArriendoTest {
     }
 
     @Test
-    public void pagadaEstaAlDiaYElAnilloSeCompletaAunqueSeHayaPagadoElSaldo() {
+    public void pagadaEstaAlDiaAunqueSeHayaTerminadoConElSaldo() {
         Cuota c = porAbonos(AHORA + 3 * DIA, Abono.APROBADO, Abono.PENDIENTE, Abono.PENDIENTE);
         Abono saldo = new Abono();
         saldo.numero = 4;
@@ -79,12 +77,6 @@ public class EstadoMiArriendoTest {
         c.pagado = 450_000;
         c.estado = Cuota.PAGADO;
         assertEquals(ReglasPago.EstadoInicio.AL_DIA, ReglasPago.estadoInicio(c, AHORA));
-        assertArrayEquals(new int[]{3, 3}, ReglasPago.progresoAbonos(c));
-    }
-
-    @Test
-    public void sinAbonosElSiguientePagoEsTodoElSaldo() {
-        assertEquals(450_000, ReglasPago.montoSiguientePago(cuota(Cuota.PENDIENTE, 0, AHORA - DIA)));
     }
 
     @Test

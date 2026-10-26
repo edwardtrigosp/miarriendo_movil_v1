@@ -1,4 +1,4 @@
-// Calendario de cuotas, abonos, comprobantes y estado de pago. Funciones puras.
+// Calendario de cuotas, comprobantes y estado de pago. Funciones puras.
 
 const HORA_MS = 60 * 60 * 1000;
 const DIA_MS = 24 * HORA_MS;
@@ -53,15 +53,7 @@ function codigoDePeriodo(periodo) {
   return `${MESES[Number(mes) - 1]}${anio.slice(2)}`;
 }
 
-/** Reparte {@code monto} en {@code cantidad} abonos; el último absorbe lo que sobre al redondear. */
-function montosDeAbonos(monto, cantidad) {
-  const base = Math.floor(monto / cantidad);
-  const montos = new Array(cantidad - 1).fill(base);
-  montos.push(monto - base * (cantidad - 1));
-  return montos;
-}
-
-/** "MA-NOV26-A1-365": mes, tipo de pago y los 3 últimos caracteres del id de la transacción. */
+/** "MA-NOV26-PU-365": mes, tipo de pago y los 3 últimos caracteres del id de la transacción ("A1" en abonos viejos). */
 function comprobanteDe({ periodo, tipo, numero, transaccionId }) {
   const marca = tipo === 'unico' ? 'PU' : tipo === 'saldo' ? 'SA' : `A${numero}`;
   const sufijo = String(transaccionId || '').replace(/[^A-Za-z0-9]/g, '').slice(-3).toUpperCase().padStart(3, '0');
@@ -88,7 +80,6 @@ module.exports = {
   fechasDeCuotas,
   periodoDe,
   codigoDePeriodo,
-  montosDeAbonos,
   comprobanteDe,
   estadoPagoDe,
   DIAS_AVISO,

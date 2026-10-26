@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -239,12 +238,13 @@ public class PublicandoActivity extends AppCompatActivity {
         if (isFinishing()) {
             return;
         }
-        new MaterialAlertDialogBuilder(this)
-                .setMessage(getString(R.string.publishing_error, mensaje))
-                .setCancelable(false)
-                .setPositiveButton(R.string.publishing_retry, (d, w) -> verificarDatos())
-                .setNegativeButton(R.string.cancel, (d, w) -> finish())
-                .show();
+        Dialogo.nuevo(this)
+                .titulo(R.string.publishing_error_title)
+                .mensaje(mensaje)
+                .obligatorio()
+                .cancelar(R.string.cancel, this::finish)
+                .confirmar(R.string.publishing_retry, Dialogo.Tono.PRINCIPAL, this::verificarDatos)
+                .mostrar();
     }
 
     @Override

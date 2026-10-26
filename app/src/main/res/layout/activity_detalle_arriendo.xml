@@ -248,6 +248,7 @@
                         tools:text="Edward · Propietario" />
 
                     <TextView
+                        android:id="@+id/tv_owner_help"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_micro"
@@ -284,5 +285,15 @@
             android:layout_marginTop="@dimen/spacing_sm"
             android:enabled="false"
             android:text="@string/tenant_detail_request" />
+
+        <!-- Solo en "mi arriendo" (Figma: Inquilino / Detalle de mi arriendo, 621:2047) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_report"
+            style="@style/Widget.Miarriendo.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/my_rental_detail_report"
+            android:visibility="gone"
+            app:icon="@drawable/ic_build" />
     </LinearLayout>
 </LinearLayout>

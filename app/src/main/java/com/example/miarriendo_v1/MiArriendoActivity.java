@@ -167,12 +167,8 @@ public class MiArriendoActivity extends AppCompatActivity {
                 StatusChipView.Tipo.ADVERTENCIA, "");
         VistasPago.chipDeCuota(this, cardPayment.findViewById(R.id.tv_pc_status), cuota, ahora);
 
-        // Con abonos o pagos hechos, la tarjeta lleva al seguimiento.
-        boolean conSeguimiento = cuota.pagado > 0 || Cuota.MODALIDAD_ABONOS.equals(cuota.modalidad);
-        cardPayment.setOnClickListener(conSeguimiento
-                ? v -> startActivity(VistasPago.intent(this, SeguimientoAbonosActivity.class, propiedad.id, cuota.id))
-                : null);
-        cardPayment.setClickable(conSeguimiento);
+        cardPayment.setOnClickListener(null);
+        cardPayment.setClickable(false);
     }
 
     private void mostrarDetalle(Cuota cuota, ReglasPago.EstadoVisible estado) {
@@ -216,41 +212,19 @@ public class MiArriendoActivity extends AppCompatActivity {
             return;
         }
         if (estado == ReglasPago.EstadoVisible.PAGADO) {
-            Abono ultimo = ReglasPago.ultimoAprobado(cuota);
-            boolean variosAbonos = cuota.abonos.size() > 1;
-            btnPrimary.setText(variosAbonos ? R.string.my_rental_see_tracking : R.string.my_rental_see_receipt);
-            btnPrimary.setOnClickListener(v -> {
-                if (variosAbonos || ultimo == null) {
-                    startActivity(VistasPago.intent(this, SeguimientoAbonosActivity.class, propiedad.id, cuota.id));
-                } else {
-                    startActivity(VistasPago.intent(this, ComprobanteActivity.class, propiedad.id, cuota.id)
-                            .putExtra(VistasPago.EXTRA_ABONO, ultimo.numero));
-                }
-            });
+            btnPrimary.setText(R.string.my_rental_see_receipt);
+            btnPrimary.setOnClickListener(v -> VistasPago.abrirCuota(this, propiedad.id, cuota));
             btnSecondary.setVisibility(View.VISIBLE);
             btnSecondary.setText(R.string.my_rental_see_history);
             btnSecondary.setOnClickListener(v -> startActivity(
                     new Intent(this, HistorialInmuebleActivity.class).putExtra(VistasPago.EXTRA_PROPIEDAD_ID, propiedad.id)));
             return;
         }
-        if (conSaldo) {
-            Abono siguiente = ReglasPago.siguientePorPagar(cuota);
-            btnPrimary.setText(R.string.my_rental_pay_next);
-            btnPrimary.setOnClickListener(v -> startActivity(
-                    VistasPago.intent(this, PagarNequiActivity.class, propiedad.id, cuota.id)
-                            .putExtra(VistasPago.EXTRA_ABONO, siguiente == null ? 0 : siguiente.numero)));
-            if (ReglasPago.puedePagarSaldo(cuota)) {
-                btnSecondary.setVisibility(View.VISIBLE);
-                btnSecondary.setText(R.string.my_rental_pay_balance);
-                btnSecondary.setOnClickListener(v -> startActivity(
-                        VistasPago.intent(this, PagarNequiActivity.class, propiedad.id, cuota.id)
-                                .putExtra(VistasPago.EXTRA_MODALIDAD, VistasPago.MODALIDAD_SALDO)));
-            }
-            return;
-        }
-        btnPrimary.setText(estado == ReglasPago.EstadoVisible.VENCIDO ? R.string.my_rental_pay_now : R.string.my_rental_pay);
+        // Se paga lo que falta del mes: todo, o el saldo de un mes viejo que quedó a medias en abonos.
+        btnPrimary.setText(conSaldo ? R.string.my_rental_pay_balance
+                : estado == ReglasPago.EstadoVisible.VENCIDO ? R.string.my_rental_pay_now : R.string.my_rental_pay);
         btnPrimary.setOnClickListener(v -> startActivity(
-                VistasPago.intent(this, ElegirFormaPagoActivity.class, propiedad.id, cuota.id)));
+                VistasPago.intent(this, PagarNequiActivity.class, propiedad.id, cuota.id)));
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Las 4 columnas del mapa de módulos de Figma (448:4300, revisión por módulos del 13/10). */
+/** El orden de los módulos de la Presentación de Figma (531:3325, 19/10). */
 public class PlanDeInicioTest {
 
     private static final String INQ = RegisterRoleActivity.ROL_INQUILINO;
@@ -82,20 +82,20 @@ public class PlanDeInicioTest {
     }
 
     @Test
-    public void inquilinoConArriendo() {
-        assertEquals(Arrays.asList(ENCABEZADO, MI_ARRIENDO, BUSCAR_HOGAR),
+    public void inquilinoConArriendoVeAtajosJustoDebajoDelEncabezado() {
+        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, MI_ARRIENDO, DETALLE_ARRIENDO),
                 plan(INQ, 1, solicitud(SolicitudArriendo.ESTADO_ACEPTADA)));
     }
 
     @Test
     public void propietarioSinPendientes() {
-        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, MIS_PROPIEDADES),
+        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, RECAUDO, MIS_PROPIEDADES),
                 plan(PROP, 2, solicitud(SolicitudArriendo.ESTADO_ACEPTADA)));
     }
 
     @Test
-    public void propietarioConSolicitudPendienteVePendientesEnTercerLugar() {
-        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, PENDIENTES, MIS_PROPIEDADES),
+    public void propietarioConSolicitudPendienteVePendientesDespuesDelRecaudo() {
+        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, RECAUDO, PENDIENTES, MIS_PROPIEDADES),
                 plan(PROP, 1, solicitud(SolicitudArriendo.ESTADO_PENDIENTE)));
     }
 
@@ -116,7 +116,7 @@ public class PlanDeInicioTest {
         Map<String, List<Cuota>> cuotas = new HashMap<>();
         cuotas.put("casa", Collections.singletonList(vencida));
         DatosInicio datos = new DatosInicio(PROP, Collections.singletonList(p), null, cuotas, true);
-        assertEquals(Arrays.asList(ENCABEZADO, RECAUDO, PENDIENTES, MIS_PROPIEDADES), PlanDeInicio.modulos(datos));
+        assertEquals(Arrays.asList(ENCABEZADO, ATAJOS, RECAUDO, PENDIENTES, MIS_PROPIEDADES), PlanDeInicio.modulos(datos));
     }
 
     @Test

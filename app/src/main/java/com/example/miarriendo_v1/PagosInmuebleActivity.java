@@ -64,7 +64,6 @@ public class PagosInmuebleActivity extends AppCompatActivity {
             return;
         }
         configurarAcceso(R.id.item_receipt, R.drawable.ic_receipt_long, R.string.owner_pay_see_receipt);
-        configurarAcceso(R.id.item_installments, R.drawable.ic_list, R.string.owner_pay_see_installments);
         configurarAcceso(R.id.item_history, R.drawable.ic_receipt_long, R.string.owner_pay_see_history);
         findViewById(R.id.item_history).setOnClickListener(v -> startActivity(
                 new Intent(this, HistorialInmuebleActivity.class)
@@ -234,23 +233,17 @@ public class PagosInmuebleActivity extends AppCompatActivity {
         }
     }
 
-    /** Con varios abonos se ve el seguimiento; con un solo pago aprobado, su comprobante. */
+    /** Con un pago aprobado, su comprobante (el último, si un mes viejo se pagó en abonos). */
     private void mostrarAccesos(Cuota cuota) {
         Abono ultimo = ReglasPago.ultimoAprobado(cuota);
-        boolean variosAbonos = cuota.abonos.size() > 1;
-        boolean conComprobante = !variosAbonos && ultimo != null;
+        boolean conComprobante = ultimo != null;
 
         View comprobante = findViewById(R.id.item_receipt);
-        View abonos = findViewById(R.id.item_installments);
         comprobante.setVisibility(conComprobante ? View.VISIBLE : View.GONE);
         findViewById(R.id.divider_receipt).setVisibility(conComprobante ? View.VISIBLE : View.GONE);
-        abonos.setVisibility(variosAbonos ? View.VISIBLE : View.GONE);
-        findViewById(R.id.divider_installments).setVisibility(variosAbonos ? View.VISIBLE : View.GONE);
 
         comprobante.setOnClickListener(v -> startActivity(VistasPago.intent(this, ComprobanteActivity.class, propiedadId, cuota.id)
                 .putExtra(VistasPago.EXTRA_ABONO, ultimo == null ? 1 : ultimo.numero)));
-        abonos.setOnClickListener(v -> startActivity(
-                VistasPago.intent(this, SeguimientoAbonosActivity.class, propiedadId, cuota.id)));
     }
 
     @Override

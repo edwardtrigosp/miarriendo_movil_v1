@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +20,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -107,11 +110,30 @@ public class SolicitudesRecibidasActivity extends AppCompatActivity {
         }
     }
 
+    /** "Visita el miércoles 22 de octubre · 3 personas · sin mascotas"; null en solicitudes de antes. */
+    private String visita(SolicitudArriendo s) {
+        if (s.visitaEn <= 0) {
+            return null;
+        }
+        String dia = Instant.ofEpochMilli(s.visitaEn).atZone(ZoneId.systemDefault()).toLocalDate()
+                .format(DateTimeFormatter.ofPattern("EEEE d 'de' MMMM", new Locale("es", "CO")));
+        String personas = getResources().getQuantityString(R.plurals.request_people_count, Math.max(1, s.personas),
+                Math.max(1, s.personas));
+        return getString(R.string.request_visit_summary, dia, personas,
+                getString(s.mascotas ? R.string.request_with_pets : R.string.request_without_pets));
+    }
+
     private void llenar(View tarjeta, SolicitudArriendo s) {
         ((TextView) tarjeta.findViewById(R.id.tv_date)).setText(Formato.haceCuanto(this, s.creadaEn));
         ((TextView) tarjeta.findViewById(R.id.tv_initials)).setText(Formato.iniciales(s.inquilinoNombre));
         ((TextView) tarjeta.findViewById(R.id.tv_tenant_name)).setText(s.inquilinoNombre);
-        ((TextView) tarjeta.findViewById(R.id.tv_message)).setText(s.mensaje);
+        TextView mensaje = tarjeta.findViewById(R.id.tv_message);
+        mensaje.setText(s.mensaje);
+        mensaje.setVisibility(s.mensaje == null || s.mensaje.trim().isEmpty() ? View.GONE : View.VISIBLE);
+        String visita = visita(s);
+        TextView tvVisita = tarjeta.findViewById(R.id.tv_visit);
+        tvVisita.setText(visita);
+        tvVisita.setVisibility(visita == null ? View.GONE : View.VISIBLE);
         ((TextView) tarjeta.findViewById(R.id.tv_property_name)).setText(s.propiedadTitulo);
         ((TextView) tarjeta.findViewById(R.id.tv_property_address)).setText(s.propiedadDireccion);
         ((TextView) tarjeta.findViewById(R.id.tv_price))
@@ -131,12 +153,12 @@ public class SolicitudesRecibidasActivity extends AppCompatActivity {
     }
 
     private void confirmarAceptar(SolicitudArriendo s) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.received_accept_title, nombreDe(s)))
-                .setMessage(R.string.received_accept_message)
-                .setNegativeButton(R.string.common_cancel, null)
-                .setPositiveButton(R.string.received_accept, (d, w) -> aceptar(s))
-                .show();
+        Dialogo.nuevo(this)
+                .titulo(getString(R.string.received_accept_title, nombreDe(s)))
+                .mensaje(R.string.received_accept_message)
+                .cancelar(R.string.common_cancel)
+                .confirmar(R.string.received_accept, Dialogo.Tono.PRINCIPAL, () -> aceptar(s))
+                .mostrar();
     }
 
     private void aceptar(SolicitudArriendo s) {
@@ -163,12 +185,12 @@ public class SolicitudesRecibidasActivity extends AppCompatActivity {
     }
 
     private void confirmarRechazo(SolicitudArriendo s) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.received_reject_title)
-                .setMessage(getString(R.string.received_reject_message, nombreDe(s)))
-                .setNegativeButton(R.string.common_cancel, null)
-                .setPositiveButton(R.string.received_reject, (d, w) -> rechazar(s))
-                .show();
+        Dialogo.nuevo(this)
+                .titulo(R.string.received_reject_title)
+                .mensaje(getString(R.string.received_reject_message, nombreDe(s)))
+                .cancelar(R.string.common_cancel)
+                .confirmar(R.string.received_reject, Dialogo.Tono.DESTRUCTIVO, () -> rechazar(s))
+                .mostrar();
     }
 
     private void rechazar(SolicitudArriendo s) {

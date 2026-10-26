@@ -93,16 +93,6 @@
                         android:background="@color/border_card" />
 
                     <include
-                        android:id="@+id/item_installments"
-                        layout="@layout/view_list_item" />
-
-                    <View
-                        android:id="@+id/divider_installments"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/border_card" />
-
-                    <include
                         android:id="@+id/item_history"
                         layout="@layout/view_list_item" />
                 </LinearLayout>

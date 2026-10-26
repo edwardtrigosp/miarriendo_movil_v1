@@ -63,7 +63,7 @@ final class VistasPago {
         StatusChipView.aplicar(tarjeta.findViewById(R.id.tv_pc_status), tipo, chip);
     }
 
-    /** "No has pagado", "Parcial · 1 de 3", "Pagado" o "Vencido". */
+    /** "No has pagado", "Parcial" (mes viejo a medias en abonos), "Pagado" o "Vencido". */
     static void chipDeCuota(Context context, TextView chip, Cuota cuota, long ahora) {
         switch (ReglasPago.estadoVisible(cuota, ahora)) {
             case PAGADO:
@@ -73,8 +73,7 @@ final class VistasPago {
                 StatusChipView.aplicar(chip, StatusChipView.Tipo.ERROR, context.getString(R.string.pay_status_overdue));
                 break;
             case PARCIAL:
-                StatusChipView.aplicar(chip, StatusChipView.Tipo.ADVERTENCIA, context.getString(
-                        R.string.pay_status_partial, ReglasPago.abonosAprobados(cuota), Math.max(1, cuota.abonos.size())));
+                StatusChipView.aplicar(chip, StatusChipView.Tipo.ADVERTENCIA, context.getString(R.string.pay_status_partial));
                 break;
             default:
                 StatusChipView.aplicar(chip, StatusChipView.Tipo.ADVERTENCIA, context.getString(R.string.pay_status_unpaid));
@@ -144,11 +143,11 @@ final class VistasPago {
         return context.getString(R.string.pay_date_time, Formato.fechaCorta(context, fecha), hora);
     }
 
-    /** Con varios abonos se abre el seguimiento; con un solo pago, su comprobante. */
+    /** El comprobante del último pago aprobado de la cuota; sin pagos, el historial del inmueble. */
     static void abrirCuota(Context context, String propiedadId, Cuota cuota) {
         Abono ultimo = ReglasPago.ultimoAprobado(cuota);
-        if (cuota.abonos.size() > 1 || ultimo == null) {
-            context.startActivity(intent(context, SeguimientoAbonosActivity.class, propiedadId, cuota.id));
+        if (ultimo == null) {
+            context.startActivity(new Intent(context, HistorialInmuebleActivity.class).putExtra(EXTRA_PROPIEDAD_ID, propiedadId));
         } else {
             context.startActivity(intent(context, ComprobanteActivity.class, propiedadId, cuota.id)
                     .putExtra(EXTRA_ABONO, ultimo.numero));

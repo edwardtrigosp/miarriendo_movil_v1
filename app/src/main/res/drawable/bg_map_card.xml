@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Ayuda de exploración (342:3007): blanco con radius/md; la sombra la da la elevación -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="@color/surface_default" />
-    <corners android:radius="@dimen/radius_md" />
-</shape>

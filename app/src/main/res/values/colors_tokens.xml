@@ -14,6 +14,8 @@
     <!-- Jerarquía de superficies (Figma: surface/*) -->
     <!-- surface_default: fondo de pantalla · surface_card: tarjetas y listas · surface_high: pistas de controles -->
     <color name="surface_high">@color/purple_100</color>
+    <!-- Fondo del encabezado del inicio (Figma: map-block) -->
+    <color name="surface_header">@color/map_block</color>
     <color name="surface_navigation">#F3EDF7</color>
     <color name="surface_card">@color/surface_white</color>
     <!-- Borde de tarjetas y divisores internos (Figma: border/card) -->

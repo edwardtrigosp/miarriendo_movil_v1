@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 /**
- * Figma: Inquilino / Arriendo pagado, Abono aprobado y Pago no completado. Lo que se muestra sale de lo
+ * Figma: Inquilino / Arriendo pagado y Pago no completado ("Abono aprobado" solo para meses viejos en abonos). Lo que se muestra sale de lo
  * que quedó guardado del abono, no de lo que se intentó: así el saldo siempre es el real.
  */
 public class ResultadoPagoActivity extends AppCompatActivity {
@@ -137,8 +137,7 @@ public class ResultadoPagoActivity extends AppCompatActivity {
 
         if (cuota.pagada()) {
             ((TextView) findViewById(R.id.tv_app_bar_title)).setText(R.string.result_paid_title);
-            texto.setText(cuota.abonos.size() <= 1 ? getString(R.string.result_paid_single)
-                    : getString(R.string.result_paid_installments, VistasPago.nombreMes(this, cuota)));
+            texto.setText(R.string.result_paid_single);
             StatusChipView.aplicar(chip, StatusChipView.Tipo.EXITO, getString(R.string.pay_status_paid));
             tituloDetalle.setVisibility(View.VISIBLE);
             tituloDetalle.setText(periodo);
@@ -157,15 +156,9 @@ public class ResultadoPagoActivity extends AppCompatActivity {
                     periodo.toLowerCase(new Locale("es", "CO"))));
             VistasPago.chipDeCuota(this, chip, cuota, System.currentTimeMillis());
             VistasPago.dato(this, filas, getString(R.string.result_balance_left), VistasPago.pesosCop(this, ReglasPago.saldo(cuota)));
-            Abono siguiente = ReglasPago.siguientePorPagar(cuota);
-            btnPrimary.setText(R.string.my_rental_pay_next);
+            btnPrimary.setText(R.string.my_rental_pay_balance);
             btnPrimary.setOnClickListener(v -> {
-                if (siguiente == null) {
-                    irAMiArriendo();
-                    return;
-                }
-                startActivity(VistasPago.intent(this, PagarNequiActivity.class, propiedadId, cuotaId)
-                        .putExtra(VistasPago.EXTRA_ABONO, siguiente.numero));
+                startActivity(VistasPago.intent(this, PagarNequiActivity.class, propiedadId, cuotaId));
                 finish();
             });
             btnSecondary.setVisibility(View.VISIBLE);
@@ -198,8 +191,7 @@ public class ResultadoPagoActivity extends AppCompatActivity {
 
         btnPrimary.setText(R.string.result_retry);
         btnPrimary.setOnClickListener(v -> {
-            startActivity(VistasPago.intent(this, PagarNequiActivity.class, propiedadId, cuotaId)
-                    .putExtra(VistasPago.EXTRA_ABONO, abono.numero));
+            startActivity(VistasPago.intent(this, PagarNequiActivity.class, propiedadId, cuotaId));
             finish();
         });
         btnSecondary.setVisibility(View.VISIBLE);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Sugerencia (430:2335), Tono=Franja: brand/container con radio md -->
+<!-- Sugerencia (430:2335) en el encabezado blanco: surface/high (lila claro), sin borde y radio sm -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="@color/brand_container" />
-    <corners android:radius="@dimen/radius_md" />
+    <solid android:color="@color/surface_high" />
+    <corners android:radius="@dimen/radius_sm" />
 </shape>

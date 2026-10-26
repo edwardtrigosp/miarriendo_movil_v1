@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
@@ -104,14 +103,24 @@ final class ModuloRecaudo implements ModuloInicio {
         padre.addView(fila);
     }
 
-    /** Pagos por inmueble es de una propiedad: con varias arrendadas, primero se elige cuál. */
-    private static void verPagos(ContextoInicio ctx) {
+    /** Las propiedades con cuotas: las únicas que tienen Pagos por inmueble. */
+    private static List<Propiedad> arrendadas(ContextoInicio ctx) {
         List<Propiedad> arrendadas = new ArrayList<>();
         for (Propiedad p : ctx.datos.propiedades) {
             if (!ctx.datos.cuotasDe(p).isEmpty()) {
                 arrendadas.add(p);
             }
         }
+        return arrendadas;
+    }
+
+    static boolean hayArrendadas(ContextoInicio ctx) {
+        return !arrendadas(ctx).isEmpty();
+    }
+
+    /** Pagos por inmueble es de una propiedad: con varias arrendadas, primero se elige cuál. */
+    static void verPagos(ContextoInicio ctx) {
+        List<Propiedad> arrendadas = arrendadas(ctx);
         if (arrendadas.isEmpty()) {
             return;
         }
@@ -121,12 +130,14 @@ final class ModuloRecaudo implements ModuloInicio {
         }
         CharSequence[] nombres = new CharSequence[arrendadas.size()];
         for (int i = 0; i < nombres.length; i++) {
-            nombres[i] = arrendadas.get(i).nombreParaTarjeta();
+            nombres[i] = arrendadas.get(i).tituloPublico();
         }
-        new MaterialAlertDialogBuilder(ctx.activity)
-                .setTitle(R.string.home_collection_choose)
-                .setItems(nombres, (d, i) -> abrirPagos(ctx, arrendadas.get(i)))
-                .show();
+        Dialogo.nuevo(ctx.activity)
+                .titulo(R.string.home_collection_choose)
+                .mensaje(R.string.home_collection_choose_message)
+                .lista(nombres, i -> abrirPagos(ctx, arrendadas.get(i)))
+                .cancelar(R.string.cancel)
+                .mostrar();
     }
 
     static void abrirPagos(ContextoInicio ctx, Propiedad p) {

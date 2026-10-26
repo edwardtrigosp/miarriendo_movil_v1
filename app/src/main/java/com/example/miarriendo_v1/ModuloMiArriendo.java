@@ -7,16 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.List;
 
 /**
  * Módulo / Mi arriendo (446:3500): la cuota del momento con una sola acción principal según su estado
- * (ReglasPago.EstadoInicio). Las acciones abren las mismas pantallas de pago que Mi arriendo.
+ * (ReglasPago.EstadoInicio). Las acciones abren las mismas pantallas de pago que Mi arriendo. El arriendo se paga
+ * completo: no hay abonos (un mes viejo que quedó a medias se termina pagando lo que falta).
  */
 final class ModuloMiArriendo implements ModuloInicio {
 
@@ -62,14 +60,11 @@ final class ModuloMiArriendo implements ModuloInicio {
         TextView detalle = vista.findViewById(R.id.tv_amount_detail);
         TextView chip = vista.findViewById(R.id.tv_status);
         TextView fecha = vista.findViewById(R.id.tv_date);
-        TextView mensaje = vista.findViewById(R.id.tv_message);
         View alerta = vista.findViewById(R.id.alert);
         MaterialButton primario = vista.findViewById(R.id.btn_primary);
         MaterialButton secundario = vista.findViewById(R.id.btn_secondary);
-        mensaje.setVisibility(View.GONE);
         AlertView.ocultar(alerta);
         secundario.setVisibility(View.GONE);
-        mostrarAnillo(cuota);
 
         String total = VistasPago.pesos(c, cuota.monto);
         String saldo = VistasPago.pesos(c, ReglasPago.saldo(cuota));
@@ -95,10 +90,8 @@ final class ModuloMiArriendo implements ModuloInicio {
             case AL_DIA: {
                 etiqueta.setText(R.string.home_rental_label_up_to_date);
                 monto.setText(VistasPago.pesos(c, 0));
-                int abonos = ReglasPago.abonosAprobados(cuota);
-                detalle.setText(abonos > 1
-                        ? c.getString(R.string.home_rental_detail_paid_installments, total, abonos)
-                        : c.getString(R.string.home_rental_detail_paid_single, total));
+                detalle.setText(c.getString(R.string.home_rental_detail_paid_on, total,
+                        Formato.diaMes(c, ReglasPago.fechaDePago(cuota))));
                 StatusChipView.aplicar(chip, StatusChipView.Tipo.EXITO, c.getString(R.string.home_rental_chip_paid, mesTitulo));
                 Cuota siguiente = ReglasPago.siguienteCuota(cuotas, cuota);
                 fecha.setText(siguiente == null ? null
@@ -122,25 +115,18 @@ final class ModuloMiArriendo implements ModuloInicio {
                         c.getResources().getQuantityString(R.plurals.home_rental_chip_overdue, dias, dias));
                 fecha.setText(c.getString(R.string.home_rental_overdue_on, vence));
                 AlertView.mostrar(alerta, AlertView.Tipo.ERROR, c.getString(R.string.home_rental_alert_overdue));
-                primario.setText(c.getString(R.string.home_rental_pay_now, VistasPago.pesos(c, ReglasPago.montoSiguientePago(cuota))));
-                primario.setOnClickListener(v -> pagarSiguiente(ctx, propiedad, cuota));
-                mostrarPagarSaldo(ctx, secundario, propiedad, cuota);
+                primario.setText(R.string.home_rental_pay);
+                primario.setOnClickListener(v -> pagar(ctx, propiedad, cuota));
                 break;
             }
-            case ABONO_EN_CURSO: {
+            case PARCIAL: {
                 etiqueta.setText(R.string.home_rental_label_left);
                 monto.setText(saldo);
                 detalle.setText(c.getString(R.string.home_rental_detail_of, total));
                 chipDeVencimiento(chip, cuota);
                 fecha.setText(c.getString(R.string.home_rental_deadline, vence));
-                Abono siguiente = ReglasPago.siguientePorPagar(cuota);
-                int[] progreso = ReglasPago.progresoAbonos(cuota);
-                primario.setText(siguiente != null && ReglasPago.porAbonos(cuota)
-                        ? c.getString(R.string.home_rental_pay_installment, siguiente.numero, progreso[1],
-                        VistasPago.pesos(c, siguiente.monto))
-                        : c.getString(R.string.home_rental_pay_now, saldo));
-                primario.setOnClickListener(v -> pagarSiguiente(ctx, propiedad, cuota));
-                mostrarPagarSaldo(ctx, secundario, propiedad, cuota);
+                primario.setText(c.getString(R.string.home_rental_pay_now, saldo));
+                primario.setOnClickListener(v -> pagar(ctx, propiedad, cuota));
                 break;
             }
             default: {
@@ -149,12 +135,8 @@ final class ModuloMiArriendo implements ModuloInicio {
                 detalle.setText(c.getString(R.string.home_rental_detail_month, mes));
                 chipDeVencimiento(chip, cuota);
                 fecha.setText(c.getString(R.string.home_rental_due, vence));
-                long abono = ReglasPago.montosDeAbonos(cuota.monto, ReglasPago.ABONOS_POR_CUOTA)[0];
-                mensaje.setText(c.getString(R.string.home_rental_how_to_pay, VistasPago.pesos(c, abono)));
-                mensaje.setVisibility(View.VISIBLE);
                 primario.setText(R.string.home_rental_pay);
-                primario.setOnClickListener(v -> ctx.activity.startActivity(
-                        VistasPago.intent(ctx.activity, ElegirFormaPagoActivity.class, propiedad.id, cuota.id)));
+                primario.setOnClickListener(v -> pagar(ctx, propiedad, cuota));
             }
         }
         fecha.setVisibility(fecha.getText() == null || fecha.getText().length() == 0 ? View.GONE : View.VISIBLE);
@@ -174,45 +156,9 @@ final class ModuloMiArriendo implements ModuloInicio {
         }
     }
 
-    /** AnilloAbonos (430:2355): solo con abonos; verde cuando el mes está completo. */
-    private void mostrarAnillo(Cuota cuota) {
-        View anillo = vista.findViewById(R.id.anillo);
-        if (!ReglasPago.porAbonos(cuota)) {
-            anillo.setVisibility(View.GONE);
-            return;
-        }
-        int[] progreso = ReglasPago.progresoAbonos(cuota);
-        Context c = vista.getContext();
-        CircularProgressIndicator indicador = vista.findViewById(R.id.anillo_progreso);
-        indicador.setMax(progreso[1]);
-        indicador.setProgress(progreso[0]);
-        boolean completo = progreso[0] == progreso[1];
-        indicador.setIndicatorColor(ContextCompat.getColor(c, completo ? R.color.status_on_success : R.color.brand_primary));
-        ((TextView) vista.findViewById(R.id.tv_anillo)).setText(c.getString(R.string.home_rental_ring, progreso[0], progreso[1]));
-        anillo.setContentDescription(c.getString(R.string.home_rental_ring_description, progreso[0], progreso[1]));
-        anillo.setVisibility(View.VISIBLE);
-    }
-
-    /** Siguiente abono si va por abonos; si nunca ha pagado, elegir forma de pago. */
-    private static void pagarSiguiente(ContextoInicio ctx, Propiedad propiedad, Cuota cuota) {
-        Abono siguiente = ReglasPago.siguientePorPagar(cuota);
-        if (cuota.pagado == 0 && siguiente == null) {
-            ctx.activity.startActivity(VistasPago.intent(ctx.activity, ElegirFormaPagoActivity.class, propiedad.id, cuota.id));
-            return;
-        }
-        ctx.activity.startActivity(VistasPago.intent(ctx.activity, PagarNequiActivity.class, propiedad.id, cuota.id)
-                .putExtra(VistasPago.EXTRA_ABONO, siguiente == null ? 0 : siguiente.numero));
-    }
-
-    private static void mostrarPagarSaldo(ContextoInicio ctx, MaterialButton boton, Propiedad propiedad, Cuota cuota) {
-        if (!ReglasPago.puedePagarSaldo(cuota)) {
-            return;
-        }
-        boton.setVisibility(View.VISIBLE);
-        boton.setText(R.string.my_rental_pay_balance);
-        boton.setOnClickListener(v -> ctx.activity.startActivity(
-                VistasPago.intent(ctx.activity, PagarNequiActivity.class, propiedad.id, cuota.id)
-                        .putExtra(VistasPago.EXTRA_MODALIDAD, VistasPago.MODALIDAD_SALDO)));
+    /** Pagar con Nequi lo que falta del mes (todo, salvo en un mes viejo que quedó a medias). */
+    private static void pagar(ContextoInicio ctx, Propiedad propiedad, Cuota cuota) {
+        ctx.activity.startActivity(VistasPago.intent(ctx.activity, PagarNequiActivity.class, propiedad.id, cuota.id));
     }
 
     /** Abre Nequi para aprobar el cobro; si no está instalada, la pantalla de espera del cobro. */

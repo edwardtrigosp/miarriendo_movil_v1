@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Inquilino / Inicio · Explorar arriendos (315:6469) -->
-    <string name="tenant_greeting">Hola %1$s!</string>
-    <string name="tenant_greeting_generic">Hola!</string>
     <string name="tenant_my_requests">Mis solicitudes</string>
     <string name="tenant_search_label">Ciudad o barrio</string>
     <string name="tenant_filters">Filtros de búsqueda</string>
@@ -12,6 +10,7 @@
     </plurals>
     <string name="tenant_empty">Por ahora no hay propiedades disponibles. Vuelve pronto.</string>
     <string name="tenant_load_error">No se pudieron cargar las propiedades: %1$s</string>
+    <string name="inicio_cargando">Cargando tu inicio</string>
 
     <!-- Datos de la tarjeta de propiedad -->
     <string name="stat_bedrooms_short">%1$d hab.</string>
@@ -71,29 +70,105 @@
     <string name="tenant_detail_note_sent">Ya enviaste una solicitud para esta propiedad.</string>
     <string name="tenant_detail_request">Solicitar arriendo</string>
     <string name="tenant_detail_see_request">Ver mi solicitud</string>
+    <!-- Detalle cuando la propiedad ya es el arriendo del inquilino (Figma 621:2047) -->
+    <string name="my_rental_detail_title">Mi arriendo</string>
+    <string name="my_rental_detail_status">Tu arriendo · desde el %1$s</string>
+    <string name="my_rental_detail_owner_help">Recibe tus pagos y tus reportes</string>
+    <string name="my_rental_detail_contract">Ver mi contrato</string>
+    <string name="my_rental_detail_report">Reportar un daño</string>
 
-    <!-- Inquilino / Solicitar arriendo (315:6896) -->
+    <!-- Inquilino / Solicitar arriendo, una sola pantalla (547:2421) -->
     <string name="request_title">Solicitar arriendo</string>
-    <string name="request_step_data">1. Tus datos</string>
-    <string name="request_step_review">2. Revisar</string>
-    <string name="request_message">Mensaje al propietario</string>
-    <string name="request_message_default">Hola, me interesa %1$s. ¿Podemos coordinar una visita?</string>
-    <string name="request_message_required">Escribe un mensaje para el propietario</string>
-    <string name="request_your_message">Tu mensaje</string>
-    <string name="request_privacy">Al enviar la solicitud, compartirás los datos de tu cuenta y tu mensaje con %1$s.</string>
-    <string name="request_privacy_generic">Al enviar la solicitud, compartirás los datos de tu cuenta y tu mensaje con el propietario.</string>
-    <string name="request_review">Revisar solicitud</string>
+    <string name="request_visit_day">¿Qué día quieres visitarla?</string>
+    <string name="request_people">¿Cuántas personas?</string>
+    <string name="request_people_less">Una persona menos</string>
+    <string name="request_people_more">Una persona más</string>
+    <string name="request_pets">¿Tienen mascotas?</string>
+    <string name="request_pets_no">No</string>
+    <string name="request_pets_yes">Sí</string>
+    <string name="request_message_optional">Mensaje para %1$s (opcional)</string>
+    <string name="request_message_optional_generic">Mensaje para el propietario (opcional)</string>
+    <string name="request_message_example">Ej.: trabajo cerca y puedo mudarme en noviembre.</string>
+    <string name="request_privacy">Al enviar la solicitud, compartirás los datos de tu cuenta y de esta solicitud con %1$s.</string>
+    <string name="request_privacy_generic">Al enviar la solicitud, compartirás los datos de tu cuenta y de esta solicitud con el propietario.</string>
     <string name="request_send">Enviar solicitud</string>
     <string name="request_sending">Enviando…</string>
+    <string name="request_sent">Enviamos tu solicitud a %1$s</string>
+    <string name="request_sent_generic">Enviamos tu solicitud al propietario</string>
     <string name="request_error">No se pudo enviar la solicitud: %1$s</string>
+    <!-- Lo que ve el propietario en Solicitudes recibidas -->
+    <string name="request_visit_summary">Visita el %1$s · %2$s · %3$s</string>
+    <plurals name="request_people_count">
+        <item quantity="one">%d persona</item>
+        <item quantity="other">%d personas</item>
+    </plurals>
+    <string name="request_with_pets">con mascotas</string>
+    <string name="request_without_pets">sin mascotas</string>
+    <!-- Calendario de visita (535:2619) -->
+    <string name="calendar_previous">Mes anterior</string>
+    <string name="calendar_next">Mes siguiente</string>
+    <string name="calendar_mon">L</string>
+    <string name="calendar_tue">M</string>
+    <string name="calendar_wed">M</string>
+    <string name="calendar_thu">J</string>
+    <string name="calendar_fri">V</string>
+    <string name="calendar_sat">S</string>
+    <string name="calendar_sun">D</string>
 
-    <!-- Inquilino / Solicitud enviada (315:7044) -->
-    <string name="sent_title">Solicitud enviada</string>
-    <string name="sent_message">¡Tu solicitud fue enviada!</string>
-    <string name="sent_next_title">¿Qué sigue?</string>
-    <string name="sent_next_text">El propietario revisará tu solicitud y podrá contactarte para coordinar una visita.</string>
-    <string name="sent_see_requests">Ver mis solicitudes</string>
-    <string name="sent_keep_exploring">Seguir explorando</string>
+    <!-- Inquilino / Mi contrato (586:3132) y su PDF de resumen -->
+    <string name="contract_title">Mi contrato</string>
+    <string name="contract_conditions">Condiciones del contrato</string>
+    <string name="contract_agreed">Lo que acordaron</string>
+    <string name="contract_status">Estado</string>
+    <string name="contract_status_active">Vigente</string>
+    <string name="contract_status_upcoming">Por empezar</string>
+    <string name="contract_status_ended">Terminado</string>
+    <string name="contract_owner">Propietario</string>
+    <string name="contract_tenant">Inquilino</string>
+    <string name="contract_start">Inicio</string>
+    <string name="contract_end">Termina</string>
+    <string name="contract_duration">Duración</string>
+    <plurals name="contract_months">
+        <item quantity="one">%d mes</item>
+        <item quantity="other">%d meses</item>
+    </plurals>
+    <string name="contract_rent">Canon mensual</string>
+    <string name="contract_pay_day">Día de pago</string>
+    <string name="contract_pay_day_value">%1$d de cada mes</string>
+    <string name="contract_note">Son las condiciones que %1$s registró al publicar. Si algo no coincide con lo que firmaron, avísale.</string>
+    <string name="contract_note_generic">Son las condiciones que el propietario registró al publicar. Si algo no coincide con lo que firmaron, avísale.</string>
+    <string name="contract_download_pdf">Descargar en PDF</string>
+    <string name="contract_pdf_title">Resumen del contrato de arriendo</string>
+    <string name="contract_pdf_generated">Generado en miarriendo el %1$s</string>
+    <string name="contract_pdf_subject">Resumen del contrato · %1$s</string>
+    <string name="contract_pdf_disclaimer">Este documento resume las condiciones registradas en miarriendo. No reemplaza el contrato firmado entre el propietario y el inquilino.</string>
+    <string name="contract_pdf_error">No se pudo crear el PDF: %1$s</string>
+
+    <!-- Inquilino / Reportar un daño (587:2131) -->
+    <string name="report_title">Reportar un daño</string>
+    <string name="report_what">¿Qué se dañó?</string>
+    <string name="report_water">Agua o tuberías</string>
+    <string name="report_electricity">Electricidad</string>
+    <string name="report_doors">Puertas o ventanas</string>
+    <string name="report_appliances">Electrodomésticos</string>
+    <string name="report_other">Otro</string>
+    <string name="report_urgency">¿Qué tan urgente es?</string>
+    <string name="report_urgent">Urgente</string>
+    <string name="report_can_wait">Puede esperar</string>
+    <string name="report_urgent_help">Urgente: fugas grandes, sin luz o sin agua.</string>
+    <string name="report_description">Cuéntale a %1$s qué pasó</string>
+    <string name="report_description_generic">Cuéntale al propietario qué pasó</string>
+    <string name="report_description_example">Ej.: el lavamanos del baño gotea desde ayer.</string>
+    <string name="report_photo">Foto (opcional)</string>
+    <string name="report_photo_add">Agregar foto</string>
+    <string name="report_photo_remove">Quitar foto</string>
+    <string name="report_photo_error">No se pudo usar la foto: %1$s</string>
+    <string name="report_privacy">%1$s verá tu reporte en su inicio, en Pendientes.</string>
+    <string name="report_privacy_generic">El propietario verá tu reporte en su inicio, en Pendientes.</string>
+    <string name="report_send">Enviar reporte</string>
+    <string name="report_sent">Enviamos tu reporte a %1$s</string>
+    <string name="report_sent_generic">Enviamos tu reporte al propietario</string>
+    <string name="report_error">No se pudo enviar el reporte: %1$s</string>
 
     <!-- Inquilino / Mis solicitudes (315:7097) -->
     <string name="my_requests_title">Mis solicitudes</string>

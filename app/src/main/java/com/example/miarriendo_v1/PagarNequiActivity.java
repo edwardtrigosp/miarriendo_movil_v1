@@ -30,14 +30,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Figma: Inquilino / Pagar completo y Pagar abono 1 de 3. Muestra qué se va a cobrar, pide el celular
+ * Figma: Inquilino / Pagar completo. Muestra qué se va a cobrar (el mes completo, o lo que falta de un mes viejo
+ * que quedó a medias en abonos), pide el celular
  * Nequi y la aceptación de los contratos de Wompi, y pide el cobro al servidor. Nequi manda la
  * notificación al celular; el resultado se sigue en {@link ConfirmarNequiActivity}.
  */
 public class PagarNequiActivity extends AppCompatActivity {
 
-    private String propiedadId, cuotaId, modalidad;
-    private int abonoPedido;
+    private String propiedadId, cuotaId;
 
     private Cuota cuota;
     private PlanDeCobro plan;
@@ -61,8 +61,6 @@ public class PagarNequiActivity extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         propiedadId = getIntent().getStringExtra(VistasPago.EXTRA_PROPIEDAD_ID);
         cuotaId = getIntent().getStringExtra(VistasPago.EXTRA_CUOTA_ID);
-        modalidad = getIntent().getStringExtra(VistasPago.EXTRA_MODALIDAD);
-        abonoPedido = getIntent().getIntExtra(VistasPago.EXTRA_ABONO, 0);
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (propiedadId == null || cuotaId == null || usuario == null) {
             finish();
@@ -106,9 +104,9 @@ public class PagarNequiActivity extends AppCompatActivity {
         RepositorioPagos.cuota(propiedadId, cuotaId).get()
                 .addOnSuccessListener(snapshot -> {
                     cuota = RepositorioPagos.leerCuota(snapshot);
-                    plan = PlanDeCobro.de(cuota, modalidad);
+                    plan = PlanDeCobro.de(cuota);
                     if (plan == null) {
-                        // Nada que cobrar (ya está pagada) o falta elegir cómo pagar.
+                        // Nada que cobrar: ya está pagada.
                         finish();
                         return;
                     }
@@ -165,37 +163,17 @@ public class PagarNequiActivity extends AppCompatActivity {
         String titulo;
         String etiqueta;
         String chip;
-        switch (plan.tipo) {
-            case UNICO:
-                titulo = getString(R.string.nequi_title_single);
-                etiqueta = getString(R.string.nequi_label_single);
-                chip = periodo;
-                break;
-            case SALDO:
-                titulo = getString(R.string.nequi_title_balance);
-                etiqueta = getString(R.string.nequi_label_balance);
-                chip = periodo;
-                break;
-            default:
-                titulo = getString(R.string.nequi_title_installment, plan.numero, plan.total);
-                etiqueta = plan.numero == 1 ? getString(R.string.nequi_label_installment_first)
-                        : getString(R.string.nequi_label_installment, plan.numero);
-                chip = getString(R.string.nequi_chip_installment, plan.numero, plan.total);
+        if (plan.tipo == PlanDeCobro.Tipo.SALDO) {
+            titulo = getString(R.string.nequi_title_balance);
+            etiqueta = getString(R.string.nequi_label_balance);
+        } else {
+            titulo = getString(R.string.nequi_title_single);
+            etiqueta = getString(R.string.nequi_label_single);
         }
+        chip = periodo;
         ((TextView) findViewById(R.id.tv_app_bar_title)).setText(titulo);
         VistasPago.tarjetaPago(findViewById(R.id.card_summary), etiqueta, VistasPago.pesos(this, plan.monto),
                 StatusChipView.Tipo.PRIMARIO, chip);
-
-        if (plan.tipo != PlanDeCobro.Tipo.UNICO) {
-            View detalle = findViewById(R.id.card_detail);
-            detalle.setVisibility(View.VISIBLE);
-            TextView tituloCard = detalle.findViewById(R.id.tv_card_title);
-            tituloCard.setVisibility(View.VISIBLE);
-            tituloCard.setText(periodo);
-            android.view.ViewGroup filas = VistasPago.filas(detalle);
-            filas.removeAllViews();
-            VistasPago.dato(this, filas, getString(R.string.nequi_balance_after), VistasPago.pesosCop(this, plan.saldoDespues));
-        }
     }
 
     /** "Acepto los términos de pago y la política de privacidad de Wompi…" con enlaces a los contratos. */
@@ -258,12 +236,7 @@ public class PagarNequiActivity extends AppCompatActivity {
             cuerpo.put("celular", celular());
             cuerpo.put("acceptanceToken", aceptacion.optString("acceptanceToken"));
             cuerpo.put("personalAuthToken", aceptacion.optString("personalAuthToken"));
-            if (modalidad != null) {
-                cuerpo.put("modalidad", modalidad);
-            }
-            if (abonoPedido > 0 && !VistasPago.MODALIDAD_SALDO.equals(modalidad)) {
-                cuerpo.put("abono", abonoPedido);
-            }
+            cuerpo.put("modalidad", plan.modalidad());
         } catch (JSONException e) {
             return;
         }

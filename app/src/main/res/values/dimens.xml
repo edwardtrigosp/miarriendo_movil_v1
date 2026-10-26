@@ -16,9 +16,15 @@
     <dimen name="radius_lg">28dp</dimen>
 
     <dimen name="button_height">52dp</dimen>
+    <!-- Foto dentro de un diálogo (Dialog · Con foto) -->
+    <dimen name="dialogo_foto_alto">160dp</dimen>
     <!-- radius/full del botón de 52 -->
     <dimen name="button_radius">26dp</dimen>
     <dimen name="field_radius">@dimen/radius_lg</dimen>
     <dimen name="border_width">1.34dp</dimen>
     <dimen name="photo_slot_height">100dp</dimen>
+
+    <!-- Calendario de visita (535:2619): filas de 36 y círculo del día de 34 -->
+    <dimen name="calendario_fila">36dp</dimen>
+    <dimen name="calendario_dia">34dp</dimen>
 </resources>

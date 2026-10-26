@@ -25,7 +25,6 @@
     <string name="owner_pay_alert_no_account">Registra tu cuenta bancaria para recibir este pago.</string>
     <string name="owner_pay_register_account">Registrar cuenta</string>
     <string name="owner_pay_see_receipt">Ver comprobante</string>
-    <string name="owner_pay_see_installments">Ver abonos</string>
     <string name="owner_pay_see_history">Ver historial de pagos</string>
     <string name="owner_pay_detail_button">Ver pagos del inmueble</string>
 </resources>

@@ -50,6 +50,18 @@
                 tools:text="María López" />
         </LinearLayout>
 
+        <!-- Día de la visita, personas y mascotas (pantalla única de solicitud, 547:2421) -->
+        <TextView
+            android:id="@+id/tv_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:textAppearance="@style/TextAppearance.Miarriendo.BodySmall.Medium"
+            android:textColor="@color/text_primary"
+            android:visibility="gone"
+            tools:text="Visita el miércoles 22 de octubre · 3 personas · sin mascotas"
+            tools:visibility="visible" />
+
         <TextView
             android:id="@+id/tv_message"
             android:layout_width="match_parent"

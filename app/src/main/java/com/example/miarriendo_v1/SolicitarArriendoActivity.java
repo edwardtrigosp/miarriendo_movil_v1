@@ -2,16 +2,13 @@ package com.example.miarriendo_v1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,22 +16,30 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 /**
- * Figma: Inquilino / Solicitar arriendo (315:6896). Paso 1 "Tus datos": mensaje al propietario.
- * Paso 2 "Revisar": el mensaje tal como se enviará y el botón "Enviar solicitud".
+ * Figma: Inquilino / Solicitar arriendo, una sola pantalla (547:2421). El inquilino elige el día de la visita,
+ * cuántas personas vivirían y si tienen mascotas, y puede dejar un mensaje. Un solo botón: "Enviar solicitud",
+ * activo cuando hay un día elegido. Al enviarla vuelve al inicio, donde "Tu solicitud" muestra cómo va.
  */
 public class SolicitarArriendoActivity extends AppCompatActivity {
+
+    static final int PERSONAS_MIN = 1;
+    static final int PERSONAS_MAX = 10;
 
     private Propiedad propiedad;
     private String propietarioNombre;
     private String inquilinoNombre;
-    private boolean revisando;
+    private int personas = PERSONAS_MIN;
 
-    private TextInputLayout tilMessage;
+    private CalendarioVisita calendario;
+    private TextView tvPersonas;
+    private ChipGroup cgMascotas;
     private TextInputEditText etMessage;
-    private TextView tvStepReview, tvReviewMessage, tvPrivacy;
-    private View stepReviewBar, cardReview;
-    private MaterialButton btnNext;
+    private TextView tvPrivacy;
+    private MaterialButton btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,33 +57,19 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.tv_app_bar_title)).setText(R.string.request_title);
         findViewById(R.id.btn_back).setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
-        tilMessage = findViewById(R.id.til_message);
+        calendario = findViewById(R.id.calendario);
+        tvPersonas = findViewById(R.id.tv_personas);
+        cgMascotas = findViewById(R.id.cg_mascotas);
         etMessage = findViewById(R.id.et_message);
-        tvStepReview = findViewById(R.id.tv_step_review);
-        tvReviewMessage = findViewById(R.id.tv_review_message);
         tvPrivacy = findViewById(R.id.tv_privacy);
-        stepReviewBar = findViewById(R.id.step_review_bar);
-        cardReview = findViewById(R.id.card_review);
-        btnNext = findViewById(R.id.btn_next);
-        btnNext.setEnabled(false);
-        btnNext.setOnClickListener(v -> {
-            if (revisando) {
-                enviar(usuario);
-            } else {
-                revisar();
-            }
-        });
-        // En "Revisar", atrás vuelve a "Tus datos" para editar el mensaje.
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (revisando) {
-                    mostrarPaso(false);
-                } else {
-                    finish();
-                }
-            }
-        });
+        btnSend = findViewById(R.id.btn_send);
+
+        findViewById(R.id.btn_menos).setOnClickListener(v -> cambiarPersonas(-1));
+        findViewById(R.id.btn_mas).setOnClickListener(v -> cambiarPersonas(1));
+        cambiarPersonas(0);
+        calendario.alElegir(dia -> actualizarBoton());
+        btnSend.setOnClickListener(v -> enviar(usuario));
+        actualizarBoton();
 
         cargarNombre(usuario);
         FirebaseDatabase.getInstance().getReference("propiedades").child(propiedadId).get()
@@ -90,13 +81,23 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
                         return;
                     }
                     propiedad.id = propiedadId;
-                    TarjetasPropiedad.compacta(this, findViewById(R.id.card_property), propiedad);
-                    if (TextUtils.isEmpty(etMessage.getText())) {
-                        etMessage.setText(getString(R.string.request_message_default, propiedad.tituloPublico()));
-                    }
                     cargarPropietario(propiedad.propietarioId);
-                    btnNext.setEnabled(true);
+                    actualizarBoton();
                 });
+    }
+
+    private void cambiarPersonas(int delta) {
+        personas = Math.max(PERSONAS_MIN, Math.min(PERSONAS_MAX, personas + delta));
+        tvPersonas.setText(String.valueOf(personas));
+        findViewById(R.id.btn_menos).setEnabled(personas > PERSONAS_MIN);
+        findViewById(R.id.btn_menos).setAlpha(personas > PERSONAS_MIN ? 1f : 0.35f);
+        findViewById(R.id.btn_mas).setEnabled(personas < PERSONAS_MAX);
+        findViewById(R.id.btn_mas).setAlpha(personas < PERSONAS_MAX ? 1f : 0.35f);
+    }
+
+    /** "Enviar solicitud" se activa con la propiedad cargada y un día elegido. */
+    private void actualizarBoton() {
+        btnSend.setEnabled(propiedad != null && calendario.elegido() != null);
     }
 
     private void cargarNombre(FirebaseUser usuario) {
@@ -111,7 +112,7 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
                 });
     }
 
-    /** "…compartirás los datos de tu cuenta y tu mensaje con Edward." */
+    /** "Mensaje para Edward (opcional)" y "…compartirás los datos de tu cuenta y de esta solicitud con Edward." */
     private void cargarPropietario(String uid) {
         if (uid == null) {
             return;
@@ -121,35 +122,20 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
                     String n = s.getValue(String.class);
                     if (n != null && !n.trim().isEmpty()) {
                         propietarioNombre = n.trim().split("\\s+")[0];
+                        ((TextInputLayout) findViewById(R.id.til_message))
+                                .setHint(getString(R.string.request_message_optional, propietarioNombre));
                         tvPrivacy.setText(getString(R.string.request_privacy, propietarioNombre));
                     }
                 });
     }
 
-    private void revisar() {
-        String mensaje = mensaje();
-        if (mensaje.isEmpty()) {
-            tilMessage.setError(getString(R.string.request_message_required));
+    private void enviar(FirebaseUser usuario) {
+        LocalDate dia = calendario.elegido();
+        if (propiedad == null || dia == null) {
             return;
         }
-        tilMessage.setError(null);
-        tvReviewMessage.setText(mensaje);
-        mostrarPaso(true);
-    }
-
-    /** Cambia el avance: "2. Revisar" en brand/primary y el segundo tramo lleno. */
-    private void mostrarPaso(boolean revisar) {
-        revisando = revisar;
-        tilMessage.setVisibility(revisar ? View.GONE : View.VISIBLE);
-        cardReview.setVisibility(revisar ? View.VISIBLE : View.GONE);
-        stepReviewBar.setBackgroundResource(revisar ? R.drawable.bg_step_done : R.drawable.bg_step_pending);
-        tvStepReview.setTextColor(ContextCompat.getColor(this, revisar ? R.color.brand_primary : R.color.text_placeholder));
-        btnNext.setText(revisar ? R.string.request_send : R.string.request_review);
-    }
-
-    private void enviar(FirebaseUser usuario) {
-        btnNext.setEnabled(false);
-        btnNext.setText(R.string.request_sending);
+        btnSend.setEnabled(false);
+        btnSend.setText(R.string.request_sending);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("solicitudes_arriendo").push();
         SolicitudArriendo s = new SolicitudArriendo();
         s.id = ref.getKey();
@@ -158,7 +144,10 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
         s.propietarioNombre = propietarioNombre;
         s.inquilinoId = usuario.getUid();
         s.inquilinoNombre = inquilinoNombre;
-        s.mensaje = mensaje();
+        s.mensaje = etMessage.getText() == null ? "" : etMessage.getText().toString().trim();
+        s.visitaEn = dia.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        s.personas = personas;
+        s.mascotas = cgMascotas.getCheckedChipId() == R.id.chip_con_mascotas;
         s.estado = SolicitudArriendo.ESTADO_PENDIENTE;
         s.propiedadTitulo = propiedad.tituloPublico();
         s.propiedadDireccion = propiedad.direccionCompleta();
@@ -166,18 +155,17 @@ public class SolicitarArriendoActivity extends AppCompatActivity {
         s.creadaEn = System.currentTimeMillis();
         ref.setValue(s)
                 .addOnSuccessListener(v -> {
-                    startActivity(new Intent(this, SolicitudEnviadaActivity.class)
-                            .putExtra(DetalleArriendoActivity.EXTRA_PROPIEDAD_ID, propiedad.id));
+                    Toast.makeText(this, propietarioNombre == null ? getString(R.string.request_sent_generic)
+                            : getString(R.string.request_sent, propietarioNombre), Toast.LENGTH_LONG).show();
+                    // El inicio muestra "Tu solicitud" con el estado en vivo.
+                    startActivity(new Intent(this, InicioActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    btnNext.setEnabled(true);
-                    btnNext.setText(R.string.request_send);
+                    actualizarBoton();
+                    btnSend.setText(R.string.request_send);
                     Toast.makeText(this, getString(R.string.request_error, e.getMessage()), Toast.LENGTH_LONG).show();
                 });
-    }
-
-    private String mensaje() {
-        return etMessage.getText() == null ? "" : etMessage.getText().toString().trim();
     }
 }

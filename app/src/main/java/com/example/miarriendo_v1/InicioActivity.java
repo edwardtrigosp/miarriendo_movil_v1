@@ -1,5 +1,7 @@
 package com.example.miarriendo_v1;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,17 +21,20 @@ import java.util.List;
 
 /**
  * Inicio único por módulos para inquilinos y propietarios (reemplazó a los inicios por rol).
- * Figma: 00 · Inicio unificado · Mapa de módulos (448:4299); inquilino sin arriendo: 01 (497:4729);
- * inquilino con arriendo: 02 (432:2312); propietario: 03 (439:2674), con los módulos simplificados del mapa.
+ * Figma: página Presentación (531:3325), filas 2 a 4: inquilino sin arriendo (531:3446), con arriendo (531:3895)
+ * y propietario (531:4102). El orden de los módulos lo decide PlanDeInicio.
  */
 public class InicioActivity extends AppCompatActivity {
 
     private LinearLayout contenedor;
     private View loading;
+    private ObjectAnimator brilloCarga;
     private String uid;
     private CargaDatosInicio carga;
     private final List<ModuloInicio> activos = new ArrayList<>();
     private List<PlanDeInicio.Modulo> planActual;
+    /** Los módulos quitaron sus listeners en onStop y esperan volver a iniciarse. */
+    private boolean modulosDetenidos;
 
     /** Catálogo compartido por los módulos; se vuelve a pedir cada vez que la pantalla regresa. */
     private List<Propiedad> catalogo;
@@ -53,6 +58,10 @@ public class InicioActivity extends AppCompatActivity {
         Pantallas.aplicarInsets(findViewById(R.id.main));
         contenedor = findViewById(R.id.contenedor_modulos);
         loading = findViewById(R.id.loading);
+        brilloCarga = ObjectAnimator.ofFloat(loading, View.ALPHA, 1f, 0.55f).setDuration(900);
+        brilloCarga.setRepeatMode(ValueAnimator.REVERSE);
+        brilloCarga.setRepeatCount(ValueAnimator.INFINITE);
+        brilloCarga.start();
 
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario == null) {
@@ -99,16 +108,27 @@ public class InicioActivity extends AppCompatActivity {
 
     /** Rehace la lista de módulos solo si el plan cambió (por ejemplo, el inquilino empezó a arrendar). */
     private void armar(DatosInicio datos) {
-        loading.setVisibility(View.GONE);
+        ocultarCarga();
         List<PlanDeInicio.Modulo> plan = PlanDeInicio.modulos(datos);
         ContextoInicio ctx = new ContextoInicio(this, uid, datos);
         if (plan.equals(planActual)) {
-            for (ModuloInicio m : activos) {
-                m.actualizar(ctx);
+            if (modulosDetenidos) {
+                // Se vuelve de otra pantalla con el mismo plan: se reutilizan las vistas en vez de rehacerlas,
+                // así el inicio no parpadea.
+                modulosDetenidos = false;
+                for (int i = 0; i < activos.size(); i++) {
+                    contenedor.getChildAt(i).setVisibility(View.VISIBLE);
+                    activos.get(i).iniciar(ctx);
+                }
+            } else {
+                for (ModuloInicio m : activos) {
+                    m.actualizar(ctx);
+                }
             }
             return;
         }
         planActual = plan;
+        modulosDetenidos = false;
         detenerModulos();
         contenedor.removeAllViews();
         for (PlanDeInicio.Modulo tipo : plan) {
@@ -127,6 +147,8 @@ public class InicioActivity extends AppCompatActivity {
         switch (tipo) {
             case ENCABEZADO:
                 return new ModuloEncabezado();
+            case ATAJOS:
+                return new ModuloAtajos();
             case TU_SOLICITUD:
                 return new ModuloTuSolicitud();
             case EXPLORAR_MAPA:
@@ -135,8 +157,8 @@ public class InicioActivity extends AppCompatActivity {
                 return new ModuloParaTi();
             case MI_ARRIENDO:
                 return new ModuloMiArriendo();
-            case BUSCAR_HOGAR:
-                return new ModuloBuscarHogar();
+            case DETALLE_ARRIENDO:
+                return new ModuloDetalleArriendo();
             case RECAUDO:
                 return new ModuloRecaudo();
             case PENDIENTES:
@@ -186,8 +208,17 @@ public class InicioActivity extends AppCompatActivity {
         });
     }
 
+    /** Quita el esqueleto de carga (Figma 624:8011) con un fundido corto cuando ya están los módulos. */
+    private void ocultarCarga() {
+        if (loading.getVisibility() == View.GONE) {
+            return;
+        }
+        brilloCarga.cancel();
+        loading.animate().alpha(0f).setDuration(150).withEndAction(() -> loading.setVisibility(View.GONE));
+    }
+
     private void mostrarError(Exception e) {
-        loading.setVisibility(View.GONE);
+        ocultarCarga();
         Toast.makeText(this, getString(R.string.tenant_load_error, e.getMessage()), Toast.LENGTH_LONG).show();
     }
 
@@ -204,8 +235,11 @@ public class InicioActivity extends AppCompatActivity {
         if (carga != null) {
             carga.detener();
         }
-        detenerModulos();
-        planActual = null;
+        // Las vistas se conservan; al volver, armar() las reinicia si el plan no cambió.
+        for (ModuloInicio m : activos) {
+            m.detener();
+        }
+        modulosDetenidos = true;
         // Al volver se recarga, por si se publicó o se arrendó alguna propiedad.
         catalogo = null;
         esperandoCatalogo.clear();

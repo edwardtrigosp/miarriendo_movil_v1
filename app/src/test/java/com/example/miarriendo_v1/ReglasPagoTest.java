@@ -1,8 +1,6 @@
 package com.example.miarriendo_v1;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -127,25 +125,6 @@ public class ReglasPagoTest {
     }
 
     @Test
-    public void elSaldoSoloSePuedePagarDespuesDeUnAbonoYSinCobroEnCurso() {
-        Cuota sinPagos = tresAbonos(Abono.PENDIENTE, Abono.PENDIENTE, Abono.PENDIENTE, 0, Cuota.PENDIENTE, AHORA + DIA);
-        assertFalse(ReglasPago.puedePagarSaldo(sinPagos));
-
-        Cuota conUno = tresAbonos(Abono.APROBADO, Abono.PENDIENTE, Abono.PENDIENTE, 150_000, Cuota.PARCIAL, AHORA + DIA);
-        assertTrue(ReglasPago.puedePagarSaldo(conUno));
-
-        Cuota enCurso = tresAbonos(Abono.APROBADO, Abono.EN_PROCESO, Abono.PENDIENTE, 150_000, Cuota.PARCIAL, AHORA + DIA);
-        assertFalse(ReglasPago.puedePagarSaldo(enCurso));
-
-        Cuota pagoUnico = cuota(1, AHORA + DIA, 450_000, 0, Cuota.PENDIENTE);
-        pagoUnico.modalidad = Cuota.MODALIDAD_UNICO;
-        assertFalse(ReglasPago.puedePagarSaldo(pagoUnico));
-
-        Cuota completa = tresAbonos(Abono.APROBADO, Abono.APROBADO, Abono.APROBADO, 450_000, Cuota.PAGADO, AHORA + DIA);
-        assertFalse(ReglasPago.puedePagarSaldo(completa));
-    }
-
-    @Test
     public void laCuotaActivaEsLaPrimeraSinPagarSiEstaCerca() {
         List<Cuota> cuotas = new ArrayList<>(Arrays.asList(
                 cuota(1, AHORA - 20 * DIA, 100, 100, Cuota.PAGADO),
@@ -194,17 +173,5 @@ public class ReglasPagoTest {
                 cuota(1, AHORA - 60 * DIA, 100, 100, Cuota.PAGADO),
                 cuota(2, AHORA - 30 * DIA, 100, 100, Cuota.PAGADO)));
         assertEquals(2, ReglasPago.cuotaActiva(cuotas, AHORA).numero);
-    }
-
-    @Test
-    public void losMontosDeAbonosCoincidenConLosDelServidor() {
-        assertArrayEquals(new long[]{150_000, 150_000, 150_000}, ReglasPago.montosDeAbonos(450_000, 3));
-        assertArrayEquals(new long[]{333_333, 333_333, 333_334}, ReglasPago.montosDeAbonos(1_000_000, 3));
-        assertArrayEquals(new long[]{33, 33, 34}, ReglasPago.montosDeAbonos(100, 3));
-        long suma = 0;
-        for (long m : ReglasPago.montosDeAbonos(999_999, 3)) {
-            suma += m;
-        }
-        assertEquals(999_999, suma);
     }
 }

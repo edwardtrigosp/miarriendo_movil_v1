@@ -144,7 +144,7 @@ Notas técnicas de Cobre: `POST /v1/auth` (token de 20 min), montos en la unidad
 
 1. ¿Quién paga la comisión: inquilino, propietario o plataforma?
 2. ¿Seguir con Wompi (+PSE) o migrar a Cobre/Bre-B?
-3. ¿Encabezado del inicio morado (estilo Nu) o blanco?
+3. ~~¿Encabezado del inicio morado (estilo Nu) o blanco?~~ Decidido el 26/10/2026: **blanco** (opción 3), con las sugerencias en tarjetas `surface/high` (lila claro) sin borde. Aplicado en Figma y en código.
 4. ¿"Activar recordatorios" en la v1 se oculta o usa notificaciones locales?
 5. ¿El recaudo mensual lo calcula la app o el servidor?
 6. ¿Qué solicitud mostrar si el inquilino tiene varias?

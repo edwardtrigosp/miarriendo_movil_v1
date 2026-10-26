@@ -26,9 +26,9 @@
     <string name="received_rejected_done">Solicitud rechazada</string>
     <string name="received_load_error">No se pudieron cargar las solicitudes: %1$s</string>
 
-    <!-- Estados de una cuota y de un abono -->
+    <!-- Estados de una cuota y de cada cobro -->
     <string name="pay_status_unpaid">No has pagado</string>
-    <string name="pay_status_partial">Parcial · %1$d de %2$d</string>
+    <string name="pay_status_partial">Parcial</string>
     <string name="pay_status_paid">Pagado</string>
     <string name="pay_status_overdue">Vencido</string>
     <string name="pay_status_approved">Aprobado</string>
@@ -62,32 +62,16 @@
     <string name="my_rental_alert_waiting">Tienes un cobro esperando tu aprobación en Nequi.</string>
     <string name="my_rental_pay">Pagar arriendo</string>
     <string name="my_rental_pay_now">Pagar arriendo ahora</string>
-    <string name="my_rental_pay_next">Pagar siguiente abono</string>
     <string name="my_rental_pay_balance">Pagar saldo completo</string>
     <string name="my_rental_see_receipt">Ver comprobante</string>
     <string name="my_rental_see_history">Ver historial del inmueble</string>
     <string name="my_rental_see_waiting">Ver cobro en Nequi</string>
-    <string name="my_rental_see_tracking">Ver seguimiento de abonos</string>
-
-    <!-- Inquilino · ¿Cómo quieres pagar? -->
-    <string name="choose_title">¿Cómo quieres pagar?</string>
-    <string name="choose_single">Un pago</string>
-    <string name="choose_installments">3 abonos</string>
-    <string name="choose_each">%1$s cada uno</string>
-    <string name="choose_same_month">Abonos del mismo mes.</string>
-    <string name="choose_last_adjusts">Abonos del mismo mes. El último ajusta el resto.</string>
-    <string name="choose_continue">Continuar</string>
 
     <!-- Inquilino · Pagar con Nequi -->
     <string name="nequi_title_single">Pagar completo</string>
-    <string name="nequi_title_installment">Pagar abono %1$d de %2$d</string>
     <string name="nequi_title_balance">Pagar saldo</string>
     <string name="nequi_label_single">Pago único · COP</string>
-    <string name="nequi_label_installment_first">Primer abono · COP</string>
-    <string name="nequi_label_installment">Abono %1$d · COP</string>
     <string name="nequi_label_balance">Saldo · COP</string>
-    <string name="nequi_chip_installment">%1$d de %2$d</string>
-    <string name="nequi_balance_after">Saldo después</string>
     <string name="nequi_method">Nequi</string>
     <string name="nequi_processor">Procesado por Wompi</string>
     <string name="nequi_phone_label">Celular Nequi</string>
@@ -117,7 +101,6 @@
     <!-- Inquilino · Resultado del pago -->
     <string name="result_paid_title">Arriendo pagado</string>
     <string name="result_paid_single">Tu pago único fue aprobado.</string>
-    <string name="result_paid_installments">Completaste los abonos de %1$s.</string>
     <string name="result_paid_total">Total pagado</string>
     <string name="result_balance">Saldo</string>
     <string name="result_see_rental">Ver mi arriendo</string>
@@ -131,13 +114,7 @@
     <string name="result_failed_balance">Saldo pendiente · %1$s</string>
     <string name="result_retry">Reintentar con Nequi</string>
 
-    <!-- Pagos · Seguimiento, comprobante e historial -->
-    <string name="tracking_title">Seguimiento de abonos</string>
-    <string name="tracking_total">Total del mes</string>
-    <string name="tracking_paid">Pagado</string>
-    <string name="tracking_balance">Saldo</string>
-    <string name="tracking_deadline">Completar antes del %1$s.</string>
-    <string name="tracking_receipt">Ver comprobante</string>
+    <!-- Pagos · Comprobante e historial -->
     <string name="receipt_title_installment">Comprobante de abono</string>
     <string name="receipt_title_payment">Comprobante de pago</string>
     <string name="receipt_amount">Importe aprobado · COP</string>

@@ -51,6 +51,20 @@
         ".read": "auth != null && (data.child('inquilinoId').val() === auth.uid || data.child('propietarioId').val() === auth.uid)",
         ".write": "auth != null && ((!data.exists() && newData.child('inquilinoId').val() === auth.uid && newData.child('estado').val() === 'pendiente') || (data.child('propietarioId').val() === auth.uid && data.child('estado').val() === 'pendiente' && newData.child('estado').val() === 'rechazada'))"
       }
+    },
+    "reportes": {
+      ".indexOn": [
+        "inquilinoId",
+        "propietarioId"
+      ],
+      ".read": "auth != null && ((query.orderByChild == 'inquilinoId' && query.equalTo == auth.uid) || (query.orderByChild == 'propietarioId' && query.equalTo == auth.uid))",
+      "$id": {
+        ".read": "auth != null && (data.child('inquilinoId').val() === auth.uid || data.child('propietarioId').val() === auth.uid)",
+        ".write": "auth != null && !data.exists() && newData.child('inquilinoId').val() === auth.uid && newData.child('estado').val() === 'abierto' && root.child('propiedades').child(newData.child('propiedadId').val()).child('inquilinoId').val() === auth.uid && root.child('propiedades').child(newData.child('propiedadId').val()).child('propietarioId').val() === newData.child('propietarioId').val()",
+        "estado": {
+          ".write": "auth != null && data.parent().child('propietarioId').val() === auth.uid && data.val() === 'abierto' && newData.val() === 'resuelto'"
+        }
+      }
     }
   }
 }

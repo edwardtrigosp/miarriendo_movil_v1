@@ -1,29 +1,32 @@
-// Reglas de negocio: activar un arriendo, cobrar abonos con Nequi y registrar los pagos. Reciben un
+// Reglas de negocio: activar un arriendo, cobrar el mes con Nequi y registrar los pagos. Reciben un
 // contexto { db, wompi, config } y el reloj, para poder probarlas contra el emulador de Firebase.
 //
 // Modelo en la base de datos (las claves de abono llevan prefijo "a" porque la base convierte en
 // arreglo un mapa con claves 1, 2, 3):
 //   pagos/{propiedadId}/{cuotaId}: numero, periodo, vence, monto, inquilinoId, pagado, estado
-//     (pendiente | parcial | pagado), modalidad (unico | abonos, se fija con el primer cobro) y
-//     abonos/a1…: numero, tipo (unico | abono | saldo), monto, estado (pendiente | en_proceso |
-//     aprobado | rechazado) y, según el estado, intento, pagadoEn, medio, comprobante…
+//     (pendiente | parcial | pagado), modalidad (unico; "abonos" solo en meses viejos) y
+//     abonos/a1…: cada cobro del mes. numero, tipo (unico | saldo; "abono" en meses viejos), monto,
+//     estado (pendiente | en_proceso | aprobado | rechazado) y, según el estado, intento, pagadoEn,
+//     medio, comprobante…
+// Desde el 20/10/2026 ya no se paga en abonos: cada mes se cobra completo. Un mes viejo que quedó a
+// medias en abonos se termina con un cobro de "saldo" por lo que falta.
 
 const crypto = require('node:crypto');
 
 const { ErrorHttp } = require('./errores');
 const { firmaIntegridad, nombreDelMedio, normalizarCelular, MONEDA } = require('./wompi');
-const { fechasDeCuotas, periodoDe, montosDeAbonos, comprobanteDe, estadoPagoDe } = require('./cuotas');
+const { fechasDeCuotas, periodoDe, comprobanteDe, estadoPagoDe } = require('./cuotas');
 
 const DURACION_POR_DEFECTO = 12;
 const DURACION_MAXIMA = 36;
-const NUM_ABONOS = 3;
 /**
  * Un cobro de Nequi no se puede cancelar por API: queda pendiente hasta que Nequi dé un resultado.
  * Pasado este tiempo sin resultado se permite un nuevo intento (Wompi no documenta cuánto dura la
  * notificación push; ajustar cuando se sepa).
  */
 const EN_PROCESO_MAX_MS = 30 * 60 * 1000;
-const MODALIDADES = ['unico', 'abonos', 'saldo'];
+/** "saldo" se acepta por las versiones de la app que aún lo envían; el servidor decide igual qué cobrar. */
+const MODALIDADES = ['unico', 'saldo'];
 const ESTADOS_FALLIDOS = ['DECLINED', 'ERROR', 'VOIDED'];
 /** Identificadores que se usan como clave en la base: sin '/', '.', '#', '$', '[' ni ']'. */
 const CLAVE_VALIDA = /^[A-Za-z0-9_-]{1,128}$/;
@@ -162,52 +165,25 @@ async function reservarAbono(db, p) {
       return falla(409, 'Ya hay un cobro en proceso para esta cuota. Revisa Nequi o espera el resultado.');
     }
 
-    // La forma de pago queda fija con el primer abono aprobado; antes se puede elegir o cambiar.
-    let modalidad = cuota.modalidad || null;
-    if (sumaAprobados(abonos) > 0) {
-      if (p.modalidad && p.modalidad !== modalidad && p.modalidad !== 'saldo') {
-        return falla(409, 'Este mes ya tiene elegida su forma de pago.');
+    // Siempre se cobra lo que falta del mes: completo si no hay nada pagado; el saldo si un mes viejo
+    // quedó a medias en abonos. Los cobros sin aprobar se reemplazan por uno solo.
+    const pagado = sumaAprobados(abonos);
+    // Número nuevo para el saldo: no reutiliza el de un cobro anterior (sus eventos viejos no lo pisan).
+    const siguiente = Math.max(0, ...Object.values(abonos).map((a) => a.numero)) + 1;
+    for (const [k, a] of Object.entries(abonos)) {
+      if (a.estado !== 'aprobado') {
+        delete abonos[k];
       }
-    } else {
-      if (p.modalidad === 'saldo') {
-        return falla(409, 'Solo puedes pagar el saldo después de haber pagado un abono.');
-      }
-      const elegida = p.modalidad || modalidad;
-      if (!elegida) {
-        return falla(400, 'Elige pagar en un pago o en 3 abonos.');
-      }
-      if (elegida !== modalidad || Object.keys(abonos).length === 0) {
-        abonos = elegida === 'unico'
-          ? { a1: { numero: 1, tipo: 'unico', monto: cuota.monto, estado: 'pendiente' } }
-          : Object.fromEntries(montosDeAbonos(cuota.monto, NUM_ABONOS).map((monto, i) => [
-            `a${i + 1}`, { numero: i + 1, tipo: 'abono', monto, estado: 'pendiente' }]));
-      }
-      modalidad = elegida;
     }
-
+    let modalidad = cuota.modalidad || 'unico';
     let claveElegida;
-    if (p.modalidad === 'saldo') {
-      const pagado = sumaAprobados(abonos);
-      const restantes = Object.entries(abonos).filter(([, a]) => a.estado !== 'aprobado');
-      if (modalidad !== 'abonos' || restantes.length === 0) {
-        return falla(409, 'Solo puedes pagar el saldo después de haber pagado un abono.');
-      }
-      // Los abonos que faltan se reemplazan por uno solo con el saldo.
-      const siguiente = Math.max(...Object.values(abonos).map((a) => a.numero)) + 1;
-      restantes.forEach(([k]) => delete abonos[k]);
+    if (pagado > 0) {
       claveElegida = `a${siguiente}`;
       abonos[claveElegida] = { numero: siguiente, tipo: 'saldo', monto: cuota.monto - pagado, estado: 'pendiente' };
     } else {
-      const porPagar = Object.entries(abonos)
-        .filter(([, a]) => a.estado === 'pendiente' || a.estado === 'rechazado')
-        .sort(([, x], [, y]) => x.numero - y.numero);
-      if (porPagar.length === 0) {
-        return falla(409, 'No hay abonos por pagar.');
-      }
-      claveElegida = porPagar[0][0];
-      if (p.abonoPedido != null && abonos[claveElegida].numero !== p.abonoPedido) {
-        return falla(409, `Debes pagar primero el abono ${abonos[claveElegida].numero}.`);
-      }
+      modalidad = 'unico';
+      claveElegida = 'a1';
+      abonos = { a1: { numero: 1, tipo: 'unico', monto: cuota.monto, estado: 'pendiente' } };
     }
 
     abonos[claveElegida] = abonoEn(abonos[claveElegida], 'en_proceso', {
@@ -239,7 +215,7 @@ async function liberarAbono(db, propiedadId, cuotaId, claveAbono, referencia) {
 }
 
 /**
- * El inquilino paga un abono con Nequi. El monto sale de la base, nunca de la app. Wompi manda la
+ * El inquilino paga el mes con Nequi. El monto sale de la base, nunca de la app. Wompi manda la
  * notificación push al celular; el resultado llega por webhook (o al consultar el estado).
  */
 async function iniciarCobroNequi(ctx, usuario, body, ahora = Date.now()) {
@@ -254,11 +230,11 @@ async function iniciarCobroNequi(ctx, usuario, body, ahora = Date.now()) {
     || typeof body.personalAuthToken !== 'string' || !body.personalAuthToken) {
     throw new ErrorHttp(400, 'Debes aceptar los términos y la autorización de datos de Wompi.');
   }
+  if (body.modalidad === 'abonos') {
+    throw new ErrorHttp(400, 'Ya no se puede pagar en abonos: el arriendo se paga completo.');
+  }
   if (body.modalidad != null && !MODALIDADES.includes(body.modalidad)) {
     throw new ErrorHttp(400, 'La forma de pago no es válida.');
-  }
-  if (body.abono != null && !Number.isInteger(body.abono)) {
-    throw new ErrorHttp(400, 'El número de abono no es válido.');
   }
   if (!usuario.correo) {
     throw new ErrorHttp(400, 'Tu cuenta no tiene un correo registrado.');
@@ -276,8 +252,6 @@ async function iniciarCobroNequi(ctx, usuario, body, ahora = Date.now()) {
     propiedadId,
     cuotaId,
     uid: usuario.uid,
-    modalidad: body.modalidad || null,
-    abonoPedido: body.abono == null ? null : body.abono,
     referencia,
     celularFin: celular.slice(-4),
     ahora,
